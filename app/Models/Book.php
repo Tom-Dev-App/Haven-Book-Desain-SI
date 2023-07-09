@@ -11,18 +11,13 @@ class Book extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ["image", "slug", "title", "synopsis", "description", "author", "author_attachment", "publisher", "publisher_attachment", "release_date", "release_year", "price"];
+    protected $fillable = ["image", "slug", "title", "synopsis", "description", "author", "author_attachment", "publisher", "publisher_attachment", "release_date", "release_year", "price", "is_used", "keys"];
 
     public function rents()
     {
         return $this->hasMany(BookRent::class);
     }
-
-    public function keys()
-    {
-        return $this->hasMany(BookKey::class);
-    }
-
+    
     public function transactions()
     {
         return $this->hasMany(Transaction::class);

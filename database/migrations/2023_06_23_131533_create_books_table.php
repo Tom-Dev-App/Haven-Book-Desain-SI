@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string("publisher");
             $table->string("publisher_attachment")->nullable();
             $table->unsignedInteger("release_year")->nullable();
+            $table->string("file")->unique()->nullable();
             $table->float('price', 12, 2);
             $table->softDeletes($column = 'deleted_at', $precision = 0);
             $table->timestamp("release_date")->nullable();

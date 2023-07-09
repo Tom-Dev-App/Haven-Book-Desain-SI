@@ -60,11 +60,6 @@ class User extends Authenticatable
         return $this->hasMany(BookRent::class);
     }
 
-    public function bookKey()
-    {
-        return $this->hasMany(BookKey::class);
-    }
-
     public function customerTransactions()
     {
         return $this->hasMany(Transaction::class);

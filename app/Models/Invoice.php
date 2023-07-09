@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Invoice extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        "invoice_number", "transaction_id", ];
 
     public function transaction()
     {

@@ -16,8 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger("user_id");
             $table->unsignedBigInteger("book_id");
             $table->unsignedBigInteger("invoice_id");
-            $table->string("keys");
-            $table->boolean("is_active")->default(false);
+            $table->string("keys")->unique();
+            $table->boolean("is_used")->default(false);
             $table->foreign("user_id")->references("id")->on("users")->onDelete("cascade");
             $table->foreign("book_id")->references("id")->on("books")->onDelete("cascade");
             $table->foreign("invoice_id")->references("id")->on("invoices")->onDelete("cascade");

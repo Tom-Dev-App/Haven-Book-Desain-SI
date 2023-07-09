@@ -40,44 +40,23 @@ class BookController extends Controller
 
     public function store(Request $request)
     {
-
-        // return $request;
-
-        if ($request->slug == null) {
-            $validator = Validator::make($request->all(), [
-                'image' => 'required|image|max:4096',
-                'title' => 'required',
-                'synopsis' => 'required',
-                'description' => 'required',
-                'author' => 'required',
-                'publisher' => 'required',
-                'price' => 'required',
-            ]);
-        } else {
-            $validator = Validator::make($request->all(), [
-                'image' => 'required|image|max:4096',
-                'slug' => 'required|unique:books',
-                'title' => 'required',
-                'synopsis' => 'required',
-                'description' => 'required',
-                'author' => 'required',
-                'publisher' => 'required',
-                'price' => 'required',
-            ]);
-        }
-
-
-        if ($validator->fails()) {
-            Session::flash('alert', 'Gagal menambah buku');
-            Session::flash('alertType', 'Danger');
-            return redirect()->route('manage-book');
-        } else {
+        $request->validate([
+            'image' => 'required|image|max:4096',
+            'slug' => 'required|unique:books',
+            'title' => 'required',
+            'synopsis' => 'required',
+            'description' => 'required',
+            'author' => 'required',
+            'publisher' => 'required',
+            'price' => 'required',
+            'file' => 'required|mimes:pdf',
+        ]);
 
             $priceInput = $request->price;
             $priceInput = str_replace('.', '', $priceInput);
 
             $path = $request->file('image')->store('public/images/books');
-
+            $filePath = $request->file("file")->store("books", 'public');
             $imagePath = Storage::url($path);
 
             $book = Book::create([
@@ -88,14 +67,17 @@ class BookController extends Controller
                 'description' => $request->description,
                 'author' => $request->author,
                 'publisher' => $request->publisher,
-                'price' => $priceInput
+                'price' => $priceInput,
+                "file" => $filePath,
+                "author_attachment" => $request->author_attachment,
+                "publisher_attachment" => $request->publisher_attachment,
             ]);
 
             $book->save();
             Session::flash('alert', 'Berhasil menambah buku!');
             Session::flash('alertType', 'Success');
-            return redirect()->route('manage-book');
-        }
+            return redirect()->back();
+        
     }
 
     public function update(Request $request, $slug)
