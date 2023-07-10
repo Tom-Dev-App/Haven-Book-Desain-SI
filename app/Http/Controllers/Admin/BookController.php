@@ -52,32 +52,31 @@ class BookController extends Controller
             'file' => 'required|mimes:pdf',
         ]);
 
-            $priceInput = $request->price;
-            $priceInput = str_replace('.', '', $priceInput);
+        $priceInput = $request->price;
+        $priceInput = str_replace('.', '', $priceInput);
 
-            $path = $request->file('image')->store('public/images/books');
-            $filePath = $request->file("file")->store("books", 'public');
-            $imagePath = Storage::url($path);
+        $path = $request->file('image')->store('public/images/books');
+        $filePath = $request->file("file")->store("books", 'public');
+        $imagePath = Storage::url($path);
 
-            $book = Book::create([
-                'image' => $imagePath,
-                'slug' => $request->slug,
-                'title' => $request->title,
-                'synopsis' => $request->synopsis,
-                'description' => $request->description,
-                'author' => $request->author,
-                'publisher' => $request->publisher,
-                'price' => $priceInput,
-                "file" => $filePath,
-                "author_attachment" => $request->author_attachment,
-                "publisher_attachment" => $request->publisher_attachment,
-            ]);
+        $book = Book::create([
+            'image' => $imagePath,
+            'slug' => $request->slug,
+            'title' => $request->title,
+            'synopsis' => $request->synopsis,
+            'description' => $request->description,
+            'author' => $request->author,
+            'publisher' => $request->publisher,
+            'price' => $priceInput,
+            "file" => $filePath,
+            "author_attachment" => $request->author_attachment,
+            "publisher_attachment" => $request->publisher_attachment,
+        ]);
 
-            $book->save();
-            Session::flash('alert', 'Berhasil menambah buku!');
-            Session::flash('alertType', 'Success');
-            return redirect()->back();
-        
+        $book->save();
+        Session::flash('alert', 'Berhasil menambah buku!');
+        Session::flash('alertType', 'Success');
+        return redirect()->back();
     }
 
     public function update(Request $request, $slug)
@@ -117,6 +116,7 @@ class BookController extends Controller
 
             $priceInput = $request->price;
             $priceInput = str_replace('.', '', $priceInput);
+            $priceInput = str_replace(',', '', $priceInput);
 
             $path = $request->file('image')->store('public/images/books');
 
@@ -143,6 +143,7 @@ class BookController extends Controller
 
             $priceInput = $request->price;
             $priceInput = str_replace('.', '', $priceInput);
+            $priceInput = str_replace(',', '', $priceInput);
 
             $book->slug = $slug;
             $book->title = $request->title;
@@ -152,6 +153,7 @@ class BookController extends Controller
             $book->author_attachment = $request->author_attachment;
             $book->publisher = $request->publisher;
             $book->price = $priceInput;
+
 
             $book->save();
 
