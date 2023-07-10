@@ -28,11 +28,19 @@
                         </a>
                     </li>
 
-                    <li class="nav-item ">
-                        <a href="#chapter" class="nav-link smoth-scroll">
+                    @auth
+                    <li class="nav-item">
+                        <a href="{{ route('bookshelf') }}" class="nav-link smoth-scroll">
                             My Book
                         </a>
                     </li>
+                    <li class="nav-item" >
+                        <a href="{{ route('notif') }}" class="nav-link smoth-scroll">
+                            Notifications
+                        </a>
+                    </li>
+                    @endauth
+
                     <li class="nav-item ">
                         <a href="#book" class="nav-link smoth-scroll">
                             About

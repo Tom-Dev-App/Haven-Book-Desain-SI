@@ -32,9 +32,11 @@ class BookController extends Controller
         return view('user/books/detail', compact('book'));
     }
 
-    public function readBook(Book $slug) {
+    public function readBook($slug) {
         // cek book is actived by keys or not
         // tgl input keys + 30 hari
+        $book = Book::where('slug', $slug)->first();
+        return view('User.books.read', compact('book'));
     }
 
     public function pay($slug) {
@@ -76,7 +78,7 @@ class BookController extends Controller
         $currentDate = Carbon::now()->format('Y-m-d H:i:s');
         $image_proof = $request->file('image_proof')->store('payments', 'public');
         Transaction::create([
-            'transaction_number' => 'TRANSSACTION'.Str::random(32).$currentDate,
+            'transaction_number' => 'TRANSACTION|'.$currentDate,
             'payment_proof' => $image_proof,
             'bank_company_account_id' => $request->company_bank_account_id,
             'bank_customer_account_id' => $request->customer_bank_account_id,
@@ -89,7 +91,18 @@ class BookController extends Controller
         return Redirect::route('book')->with('success', 'Transaksi Berhasil!');
     }
 
-    public function rents() {
+    public function bookshelf() {
 
+        $userId = Auth::id();
+
+        $books = Book::with(['transactions' => function ($query) use ($userId) {
+            $query->where('user_id', $userId)
+                ->where('status_id', 2);
+            }])->whereHas('transactions', function ($query) use ($userId) {
+                $query->where('user_id', $userId)
+                    ->where('status_id', 2);
+            })->get();
+
+        return view('User.books.bookshelf', compact('books'));
     }
 }

@@ -3,12 +3,12 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>View PDF</title>
+    <title>Read - {{ $book->title }}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('/css/style.css') }}">
-    <script src="{{ asset("/js/pdf.min.js") }}"></script>
-    <script src="{{ asset("/js/pdf.worker.min.js") }}"></script>
-    <script src="{{ asset("/js/pdfReader.js") }}"></script>
+    <script src="{{ asset('/js/pdf.min.js') }}"></script>
+    <script src="{{ asset('/js/pdf.worker.min.js') }}"></script>
+    <script src="{{ asset('/js/pdfReader.js') }}"></script>
     <style>
       input[type="number"]::-webkit-inner-spin-button,
       input[type="number"]::-webkit-outer-spin-button {
@@ -25,7 +25,7 @@
       <div class="row align-items-center">
           <div class="col-5">
             <div class="d-flex align-items-center justify-content-between">
-              <a href="" class="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover text-decoration-none">
+              <a href="{{ route('bookshelf') }}" class="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover text-decoration-none">
                 <i class="fa-solid fa-book"></i> Books</a>
               <div class="d-flex align-items-center justify-content-center gap-1">
                 <input type="number" class="form-control form-control-sm" min="1" style="width: 150px;" id="pageNumberInput" data-bs-toggle="tooltip" data-bs-placement="top" title="Pages">
@@ -57,8 +57,8 @@
             </div>
           </div>
           <div class="col-7">
-            <h5>Atomic Habits by James Clear</h5>
-            <span class="d-none" id="book_path">{{ Storage::url("books/Atomic Habits.pdf") }}</span>
+            <h5>{{ $book->title }}</h5>
+            <span class="d-none" id="book_path">{{ Storage::url($book->file) }}</span>
           </div>
       </div>
     </div>

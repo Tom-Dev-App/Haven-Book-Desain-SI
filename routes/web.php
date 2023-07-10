@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Admin\BookController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AdminController;
@@ -42,8 +43,8 @@ Route::get('/book', [UserBookController::class, 'index'])->name('book');
 Route::get('/book/detail/{slug}', [UserBookController::class, 'detail'])->name('book-detail');
 Route::get('/book-rents/pay/{slug}', [UserBookController::class, 'pay'])->name('pay');
 Route::post('/book-rents/pay', [UserBookController::class, 'payNow'])->name('pay-rent');
-Route::get('book-rents', [UserBookController::class, 'rents']);
-Route::get('book-rents/{slug}', [UserBookController::class, 'readBook']);
+Route::get('/bookshelf', [UserBookController::class, 'bookshelf'])->name('bookshelf');
+Route::get('bookshelf/{slug}', [UserBookController::class, 'readBook'])->name('read');
 Route::get('/profile', [ProfileController::class, 'index'])->name('user-profile');
 Route::post('/profile/update/{id}', [ProfileController::class, 'update'])->name('update-user-profile');
 
@@ -72,3 +73,6 @@ Route::get('/manage-report/print/{invoice_number}', [ReportController::class, 'p
 
 // Superadmin
 Route::get('/manage-admin', [AdminController::class, 'index'])->name('admin-controller');
+
+// Notification
+Route::get('/notification', [NotificationController::class, 'index'])->name('notif');

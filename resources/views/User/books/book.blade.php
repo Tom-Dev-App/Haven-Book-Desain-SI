@@ -22,9 +22,9 @@
                                 <div class="col-md-2 my-3 d-flex justify-content-center border-0">
                                     <div class="card w-100" style="width: 18rem;">
                                         @if ($book->image)
-                                            <img src="{{ asset($book->image) }}" class="card-img-top" alt="...">
+                                            <img src="{{ Storage::url($book->image) }}" class="card-img-top object-fit-cover border rounded" alt="...">
                                         @else
-                                            <img src="{{ asset('image/error.png') }}" class="card-img-top"
+                                            <img src="{{ asset('image/error.png') }}" class="card-img-top object-fit-cover border rounded"
                                                 alt="...">
                                         @endif
                                         <div class="card-img-overlay">

@@ -55,9 +55,8 @@ class BookController extends Controller
             $priceInput = $request->price;
             $priceInput = str_replace('.', '', $priceInput);
 
-            $path = $request->file('image')->store('public/images/books');
+            $imagePath = $request->file('image')->store('images/books', 'public');
             $filePath = $request->file("file")->store("books", 'public');
-            $imagePath = Storage::url($path);
 
             $book = Book::create([
                 'image' => $imagePath,
