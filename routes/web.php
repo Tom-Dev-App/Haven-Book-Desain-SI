@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\BookController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Superadmin\AdminController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\Admin\PaymentController;
@@ -68,4 +68,7 @@ Route::get('/manage-report/detail/{invoice_number}', [ReportController::class, '
 Route::get('/manage-report/print/{invoice_number}', [ReportController::class, 'print'])->name('print-report');
 
 // Superadmin
-Route::get('/manage-admin', [AdminController::class, 'index'])->name('admin-controller');
+Route::get('/manage-admin', [AdminController::class, 'index'])->name('manage-admin');
+Route::post('/manage-admin/add', [AdminController::class, 'store'])->name('add-admin');
+Route::get('/manage-admin/detail/{id}', [AdminController::class, 'detail'])->name('detail-admin');
+Route::get('/manage-admin/delete/{id}', [AdminController::class, 'delete'])->name('delete-admin');

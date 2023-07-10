@@ -76,7 +76,7 @@ class AuthController extends Controller
                 Session::put('role', $user->userhasrole->role['name']);
                 Session::put('id', $user['id']);
 
-                return redirect()->route('admin-controller');
+                return redirect()->route('manage-admin');
             }
         } else {
             Session::flash('alert', 'Gagal, ulangi login');
