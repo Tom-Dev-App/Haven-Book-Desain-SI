@@ -37,7 +37,7 @@
                                     <p class="fw-bolder text-sm">Published by {{ $book->publisher }}</p>
                                 </div>
                                 <div class="button d-flex flex-row justify-content-center">
-                                    <a class="btn btn-lg btn-danger text-light d-flex align-items-center">
+                                    <a class="btn btn-lg btn-danger text-light d-flex align-items-center" href="{{ route('pay', $book->slug) }}">
                                         Sewa Buku<i class="ti-check mr-2 ml-2"></i>Rp {{ $book->price }}
                                     </a>
                                 </div>

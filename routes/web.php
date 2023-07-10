@@ -40,7 +40,10 @@ Route::post('/sign-up', [AuthController::class, 'register'])->name('register');
 Route::get('/', [HomepageController::class, 'index'])->name('homepage');
 Route::get('/book', [UserBookController::class, 'index'])->name('book');
 Route::get('/book/detail/{slug}', [UserBookController::class, 'detail'])->name('book-detail');
-
+Route::get('/book-rents/pay/{slug}', [UserBookController::class, 'pay'])->name('pay');
+Route::post('/book-rents/pay', [UserBookController::class, 'payNow'])->name('pay-rent');
+Route::get('book-rents', [UserBookController::class, 'rents']);
+Route::get('book-rents/{slug}', [UserBookController::class, 'readBook']);
 Route::get('/profile', [ProfileController::class, 'index'])->name('user-profile');
 Route::post('/profile/update/{id}', [ProfileController::class, 'update'])->name('update-user-profile');
 

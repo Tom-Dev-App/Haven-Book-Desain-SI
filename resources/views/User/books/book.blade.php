@@ -11,6 +11,12 @@
                         </div>
                     </div>
                     <div class="col-md-10">
+                        @if(Session::has('success'))
+                            <div class="alert alert-success">
+                                {{ Session::get('success') }}
+                            </div>
+                        @endif
+
                         <div class="row">
                             @foreach ($books as $book)
                                 <div class="col-md-2 my-3 d-flex justify-content-center border-0">

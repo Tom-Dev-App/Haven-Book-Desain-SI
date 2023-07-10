@@ -23,7 +23,8 @@ class TransactionSeeder extends Seeder
             'bank_company_account_id' => 3,
             'bank_customer_account_id' => 1,
             'payment_proof' => 'coba transaksi 1',
-            'created_at' => now()
+            'created_at' => now(),
+            "rent_prices" => 35000
         ]);
 
         DB::table('transactions')->insert([
@@ -35,7 +36,9 @@ class TransactionSeeder extends Seeder
             'bank_company_account_id' => 3,
             'bank_customer_account_id' => 2,
             'payment_proof' => 'coba transaksi 1',
-            'created_at' => now()
+            'created_at' => now(),
+            "rent_prices" => 35000
+
         ]);
 
         DB::table('transactions')->insert([
@@ -47,7 +50,9 @@ class TransactionSeeder extends Seeder
             'bank_company_account_id' => 3,
             'bank_customer_account_id' => 5,
             'payment_proof' => 'coba transaksi 1',
-            'created_at' => now()
+            'created_at' => now(),
+            "rent_prices" => 35000
+
         ]);
 
         DB::table('transactions')->insert([
@@ -59,7 +64,9 @@ class TransactionSeeder extends Seeder
             'bank_company_account_id' => 3,
             'bank_customer_account_id' => 6,
             'payment_proof' => 'coba transaksi 1',
-            'created_at' => now()
+            'created_at' => now(),
+            "rent_prices" => 35000
+
         ]);
     }
 }
