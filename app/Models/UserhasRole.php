@@ -11,8 +11,12 @@ class UserhasRole extends Model
 {
 
     protected $table = 'user_has_role';
-
+    
+    
     use HasFactory;
+    const SUPERADMIN = 1;
+    const ADMIN = 2;
+    const USER = 3;
 
     protected $fillable = [
         'user_id',

@@ -30,17 +30,17 @@
                     <div class="row gx-4">
                         <div class="col-auto">
                             <div class="avatar avatar-xl position-relative">
-                                <img src="https://ui-avatars.com/api/?name=Ilham Soejud" alt="profile_image"
+                                <img src="https://ui-avatars.com/api/?name={{ $user->name }}" alt="profile_image"
                                     class="w-100 border-radius-lg shadow-sm">
                             </div>
                         </div>
                         <div class="col-auto my-auto">
                             <div class="h-100">
                                 <h5 class="">
-                                    Ilham Soejud
+                                    {{ $user->name }}
                                 </h5>
                                 <p class="font-weight-bold text-sm">
-                                    registered at
+                                    registered at {{ $user->created_at }}
                                 </p>
                             </div>
                         </div>

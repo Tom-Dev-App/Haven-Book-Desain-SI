@@ -11,7 +11,7 @@ class Book extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ["image", "slug", "title", "synopsis", "description", "author", "author_attachment", "publisher", "publisher_attachment", "release_date", "release_year", "price", "is_used", "keys"];
+    protected $fillable = ["image", "slug", "title", "synopsis", "description", "author", "author_attachment", "publisher", "publisher_attachment", "release_date", "release_year", "price", "is_used", "keys", 'file'];
 
     public function rents()
     {

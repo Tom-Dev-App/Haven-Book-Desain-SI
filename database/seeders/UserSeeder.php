@@ -49,7 +49,7 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'Admin',
             'email' => 'Admin@localhost.com',
-            'password' => Hash::make('admin123'),
+            'password' => Hash::make('admin'),
             'created_at' => now()
         ]);
 
