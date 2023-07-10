@@ -12,18 +12,19 @@ class ProfileController extends Controller
 {
     function index()
     {
-        if (Session::get('role') != 'User') {
-            return view('auth/sign-in');
-        } else {
-
+        if (Session::get('role') == 'User') {
             $user = User::with('profile')->findOrFail(Session::get('id'));
 
             return view('user/profile/profile', compact('user'));
+        } else {
+            return view('auth/sign-in');
         }
     }
 
     function update(Request $request, $id)
     {
+        dd($request);
+
         $user = User::findOrFail($id);
 
         if ($user) {
