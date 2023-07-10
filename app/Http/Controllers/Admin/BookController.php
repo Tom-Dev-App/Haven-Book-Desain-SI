@@ -52,26 +52,26 @@ class BookController extends Controller
             'file' => 'required|mimes:pdf',
         ]);
 
-        $priceInput = $request->price;
-        $priceInput = str_replace('.', '', $priceInput);
+            $priceInput = $request->price;
+            $priceInput = str_replace('.', '', $priceInput);
 
-        $path = $request->file('image')->store('public/images/books');
-        $filePath = $request->file("file")->store("books", 'public');
-        $imagePath = Storage::url($path);
+            $imagePath = $request->file('image')->store('images/books', 'public');
+            $filePath = $request->file("file")->store("books", 'public');
 
-        $book = Book::create([
-            'image' => $imagePath,
-            'slug' => $request->slug,
-            'title' => $request->title,
-            'synopsis' => $request->synopsis,
-            'description' => $request->description,
-            'author' => $request->author,
-            'publisher' => $request->publisher,
-            'price' => $priceInput,
-            "file" => $filePath,
-            "author_attachment" => $request->author_attachment,
-            "publisher_attachment" => $request->publisher_attachment,
-        ]);
+            $book = Book::create([
+                'image' => $imagePath,
+                'slug' => $request->slug,
+                'title' => $request->title,
+                'synopsis' => $request->synopsis,
+                'description' => $request->description,
+                'author' => $request->author,
+                'publisher' => $request->publisher,
+                'price' => $priceInput,
+                "file" => $filePath,
+                "author_attachment" => $request->author_attachment,
+                "publisher_attachment" => $request->publisher_attachment,
+            ]);
+
 
         $book->save();
         Session::flash('alert', 'Berhasil menambah buku!');

@@ -68,6 +68,7 @@
         .colored-toast .swal2-html-container {
             color: white;
         }
+    @stack('head')
     </style>
     <script>
         const Toast = Swal.mixin({
@@ -132,7 +133,7 @@
     <script src="{{ asset('treaser/js/theme.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Bootstrap 5 CSS -->
-
+    @stack('scripts')
 
 
 </body>
