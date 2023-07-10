@@ -5,7 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Admin\BookController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Superadmin\AdminController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\Admin\PaymentController;
@@ -47,6 +47,7 @@ Route::get('/bookshelf', [UserBookController::class, 'bookshelf'])->name('booksh
 Route::get('bookshelf/{slug}', [UserBookController::class, 'readBook'])->name('read');
 Route::get('/profile', [ProfileController::class, 'index'])->name('user-profile');
 Route::post('/profile/update/{id}', [ProfileController::class, 'update'])->name('update-user-profile');
+Route::post('/profile/upload/{id}', [ProfileController::class, 'upload'])->name('upload-user-profile');
 
 // Admin
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -71,8 +72,12 @@ Route::get('/manage-report', [ReportController::class, 'index'])->name('manage-r
 Route::get('/manage-report/detail/{invoice_number}', [ReportController::class, 'detail'])->name('detail-report');
 Route::get('/manage-report/print/{invoice_number}', [ReportController::class, 'print'])->name('print-report');
 
-// Superadmin
-Route::get('/manage-admin', [AdminController::class, 'index'])->name('admin-controller');
-
 // Notification
 Route::get('/notification', [NotificationController::class, 'index'])->name('notif');
+
+// Superadmin
+Route::get('/manage-admin', [AdminController::class, 'index'])->name('manage-admin');
+Route::post('/manage-admin/add', [AdminController::class, 'store'])->name('add-admin');
+Route::get('/manage-admin/detail/{id}', [AdminController::class, 'detail'])->name('detail-admin');
+Route::get('/manage-admin/delete/{id}', [AdminController::class, 'delete'])->name('delete-admin');
+
