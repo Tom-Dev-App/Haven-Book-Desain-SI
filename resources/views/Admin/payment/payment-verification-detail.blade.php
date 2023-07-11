@@ -73,8 +73,8 @@
                                         <div class="col-md-6">
                                             <label for="" class="form-label mx-3">Bukti Transfer</label>
                                             @if ($transaction->payment_proof)
-                                                <img src="{{ asset($transaction->payment_proof) }}" alt=""
-                                                    class="img-thumbnail" width="70px">
+                                                <img src="{{ Storage::url($transaction->payment_proof) }}"
+                                                    alt="" class="img-thumbnail" width="150px">
                                             @else
                                                 <img src="{{ asset('image/error.png') }}" alt=""
                                                     class="img-thumbnail" width="70px">
@@ -116,8 +116,8 @@
                                 Data Buku
                             </h5>
                             <div class="card-body">
-                                <img src="{{ asset($transaction->book->image) }}" class="img-thumbnail mx-3 my-3"
-                                    alt="asdasd" width="150px">
+                                <img src="{{ Storage::url($transaction->book->image) }}"
+                                    class="img-thumbnail mx-3 my-3" alt="asdasd" width="150px">
                                 <div class="mb-3">
                                     <label for="" class="form-label">Judul Buku</label>
                                     <input readonly type="text" class="form-control" id=""

@@ -11,7 +11,7 @@
                         </div>
                     </div>
                     <div class="col-md-10">
-                        @if(Session::has('success'))
+                        @if (Session::has('success'))
                             <div class="alert alert-success">
                                 {{ Session::get('success') }}
                             </div>
@@ -22,14 +22,15 @@
                                 <div class="col-md-2 my-3 d-flex justify-content-center border-0">
                                     <div class="card w-100" style="width: 18rem;">
                                         @if ($book->image)
-                                            <img src="{{ Storage::url($book->image) }}" class="card-img-top object-fit-cover border rounded" alt="...">
+                                            <img src="{{ Storage::url($book->image) }}"
+                                                class="card-img-top object-fit-cover border rounded" alt="...">
                                         @else
-                                            <img src="{{ asset('image/error.png') }}" class="card-img-top object-fit-cover border rounded"
-                                                alt="...">
+                                            <img src="{{ asset('image/error.png') }}"
+                                                class="card-img-top object-fit-cover border rounded" alt="...">
                                         @endif
                                         <div class="card-img-overlay">
                                             <span class="badge badge-pill badge-lg bg-dark">
-                                                Rp {{ $book->price }}
+                                                Rp {{ number_format($book->price, 2, ',', '.') }}
                                             </span>
                                         </div>
                                         <div class="card-body">

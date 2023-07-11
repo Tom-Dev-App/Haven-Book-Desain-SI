@@ -21,7 +21,7 @@ return new class extends Migration
             $table->unsignedBigInteger("bank_company_account_id");
             $table->unsignedBigInteger("bank_customer_account_id");
             $table->string("payment_proof");
-            $table->double('rent_prices', 8, 2);
+            $table->unsignedBigInteger('rent_prices');
             $table->foreign("user_id")->references("id")->on("users")->onDelete("cascade");
             $table->foreign("book_id")->references("id")->on("books")->onDelete("cascade");
             $table->foreign("status_id")->references("id")->on("transaction_statuses");

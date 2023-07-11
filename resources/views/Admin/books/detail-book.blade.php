@@ -23,7 +23,8 @@
                     <div class="row">
                         <div class="col-md-4">
                             @if ($book->image)
-                                <img src="{{ asset($book->image) }}" class="card-img-top w-100 m-3 rounded" alt="...">
+                                <img src="{{ Storage::url($book->image) }}" class="card-img-top w-100 m-3 rounded"
+                                    alt="...">
                             @else
                                 <img src="{{ asset('image/error.png') }}" class="card-img-top w-100 m-3 rounded"
                                     alt="...">

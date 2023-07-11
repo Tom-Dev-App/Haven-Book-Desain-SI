@@ -32,39 +32,42 @@ class BookController extends Controller
         return view('user/books/detail', compact('book'));
     }
 
-    public function readBook($slug) {
+    public function readBook($slug)
+    {
         // cek book is actived by keys or not
         // tgl input keys + 30 hari
         $book = Book::where('slug', $slug)->first();
         return view('User.books.read', compact('book'));
     }
 
-    public function pay($slug) {
+    public function pay($slug)
+    {
         $book = Book::where('slug', $slug)->first();
         $companyAccounts = BankAccount::with(['user.userhasrole', 'bank'])
-                ->whereHas('user.userhasrole', function ($query) {
-                    $query->where('role_id', UserhasRole::ADMIN);
-                })
-                ->get();
+            ->whereHas('user.userhasrole', function ($query) {
+                $query->where('role_id', UserhasRole::ADMIN);
+            })
+            ->get();
         $userAccounts = auth()->user()->accountBank()->with('bank')->get();
 
-       return view('User.books.payment', compact('book', 'companyAccounts', 'userAccounts'));
+        return view('User.books.payment', compact('book', 'companyAccounts', 'userAccounts'));
     }
 
-    public function payNow(Request $request) {
+    public function payNow(Request $request)
+    {
         $request->validate([
             'customer_bank_account_id' => 'required|exists:bank_accounts,id',
             'company_bank_account_id' => 'required|exists:bank_accounts,id',
             'image_proof' => 'required|image',
-            ]);
-        
+        ]);
+
         $validator = Validator::make($request->all(), [
-                    'number_of_month' => 'required|integer|min:1',
-                    'pricetag' => 'required|numeric|min:0',
-                ]);
+            'number_of_month' => 'required|integer|min:1',
+            'pricetag' => 'required|numeric|min:0',
+        ]);
 
         $validator->after(function ($validator) use ($request) {
-        $totalPrice = $request->number_of_month * $request->pricetag;
+            $totalPrice = $request->number_of_month * $request->pricetag;
             if ($request->total_price != $totalPrice) {
                 $validator->errors()->add('total_price', 'The total price does not match the calculated value.');
             }
@@ -78,30 +81,32 @@ class BookController extends Controller
         $currentDate = Carbon::now()->format('Y-m-d H:i:s');
         $image_proof = $request->file('image_proof')->store('payments', 'public');
         Transaction::create([
-            'transaction_number' => 'TRANSACTION|'.$currentDate,
+            'transaction_number' => 'TRANSACTION|' . $currentDate,
             'payment_proof' => $image_proof,
             'bank_company_account_id' => $request->company_bank_account_id,
             'bank_customer_account_id' => $request->customer_bank_account_id,
             'user_id' => auth()->user()->id,
             'book_id' => $request->book_id,
             'status_id' => TransactionStatus::PENDING,
+            // 'status_id' => $request->,
             'rent_prices' => $request->total_price
-            ]);
-        
+        ]);
+
         return Redirect::route('book')->with('success', 'Transaksi Berhasil!');
     }
 
-    public function bookshelf() {
+    public function bookshelf()
+    {
 
         $userId = Auth::id();
 
         $books = Book::with(['transactions' => function ($query) use ($userId) {
             $query->where('user_id', $userId)
                 ->where('status_id', 2);
-            }])->whereHas('transactions', function ($query) use ($userId) {
-                $query->where('user_id', $userId)
-                    ->where('status_id', 2);
-            })->get();
+        }])->whereHas('transactions', function ($query) use ($userId) {
+            $query->where('user_id', $userId)
+                ->where('status_id', 2);
+        })->get();
 
         return view('User.books.bookshelf', compact('books'));
     }

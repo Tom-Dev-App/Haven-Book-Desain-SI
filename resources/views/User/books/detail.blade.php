@@ -6,7 +6,8 @@
                 <div class="row" style="margin-top: 30px;margin-bottom: 0px">
                     <div class="col-md-4">
                         @if ($book->image)
-                            <img src="{{ asset($book->image) }}" class="card-img-top w-100 m-3 rounded" alt="...">
+                            <img src="{{ Storage::url($book->image) }}" class="card-img-top w-100 m-3 rounded"
+                                alt="...">
                         @else
                             <img src="{{ asset('image/error.png') }}" class="card-img-top w-100 m-3 rounded"
                                 alt="...">
@@ -37,8 +38,10 @@
                                     <p class="fw-bolder text-sm">Published by {{ $book->publisher }}</p>
                                 </div>
                                 <div class="button d-flex flex-row justify-content-center">
-                                    <a class="btn btn-lg btn-danger text-light d-flex align-items-center" href="{{ route('pay', $book->slug) }}">
-                                        Sewa Buku<i class="ti-check mr-2 ml-2"></i>Rp {{ $book->price }}
+                                    <a class="btn btn-lg btn-danger text-light d-flex align-items-center"
+                                        href="{{ route('pay', $book->slug) }}">
+                                        Sewa Buku<i class="ti-check mr-2 ml-2"></i>Rp
+                                        {{ number_format($book->price, 2, ',', '.') }}
                                     </a>
                                 </div>
                             </div>
