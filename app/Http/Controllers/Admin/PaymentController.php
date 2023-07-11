@@ -80,6 +80,7 @@ class PaymentController extends Controller
         // return $transaction;
 
         $transaction->status_id = TransactionStatus::SUCCESS;
+        $transaction->admin_id = Session::get('id');
 
         $invoice = new Invoice();
 

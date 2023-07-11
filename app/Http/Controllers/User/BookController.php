@@ -50,11 +50,15 @@ class BookController extends Controller
             ->get();
         $userAccounts = auth()->user()->accountBank()->with('bank')->get();
 
+        // return $book;
+
         return view('User.books.payment', compact('book', 'companyAccounts', 'userAccounts'));
     }
 
-    public function payNow(Request $request)
+    public function payNow(Request $request, $id)
     {
+        // return $request;
+
         $request->validate([
             'customer_bank_account_id' => 'required|exists:bank_accounts,id',
             'company_bank_account_id' => 'required|exists:bank_accounts,id',
@@ -86,13 +90,12 @@ class BookController extends Controller
             'bank_company_account_id' => $request->company_bank_account_id,
             'bank_customer_account_id' => $request->customer_bank_account_id,
             'user_id' => auth()->user()->id,
-            'book_id' => $request->book_id,
+            'book_id' => $id,
             'status_id' => TransactionStatus::PENDING,
-            // 'status_id' => $request->,
             'rent_prices' => $request->total_price
         ]);
 
-        return Redirect::route('book')->with('success', 'Transaksi Berhasil!');
+        return Redirect::route('notif')->with('success', 'Transaksi Berhasil!');
     }
 
     public function bookshelf()

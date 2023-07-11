@@ -28,7 +28,7 @@
               </div> --}}
 
                 <div class="container-fluid py-4">
-                    <ul class="nav nav-pills mb-2" id="myTab" role="tablist">
+                    <ul class="nav nav-pills mb-5" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active" id="profile-tab" data-bs-toggle="tab"
                                 data-bs-target="#payment" type="button" role="tab" aria-controls="profile"
@@ -43,78 +43,80 @@
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="payment" role="tabpanel"
                             aria-labelledby="profile-tab">
-                            <div class="card">
+                            <div class="card  border-0">
                                 <div class="card-header">
                                     <div class="d-flex align-items-center">
-                                        <p class="mb-0">Informasi Transaksi</p>
+                                        <p class="mb-0 fw-bold ">Riwayat Transaksi</p>
                                     </div>
                                 </div>
-                                <div class="card-body">
-                                    <p class="text-uppercase text-sm">Histori Transaksi</p>
-                                    {{-- <div class="alert alert-danger text-center" role="alert">
-                                      Segera lunasi tagihan anda!
-                                  </div> --}}
-                                    <div class="container">
-                                        <table class="table table-hover ">
-                                            <thead>
-                                                <tr>
-                                                    <td>#</td>
-                                                    <td>Buku</td>
-                                                    <td>Nomor Transaksi</td>
-                                                    <td>Tanggal Transaksi</td>
-                                                    <td>Harga</td>
-                                                    <td>Status</td>
+                                <div class="card-body p-0">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <td>#</td>
+                                                <td>Cover</td>
+                                                <td>Judul</td>
+                                                <td>Nomor Transaksi</td>
+                                                <td>Tanggal Transaksi</td>
+                                                <td>Harga</td>
+                                                <td>Status</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($transactions as $transaction)
+                                                <tr class="">
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td class="p-3">
+                                                        <div>
+                                                            <img src="{{ Storage::url($transaction->book->image) }}"
+                                                                class="me-2 img-thumbnail" style="max-width: 100px">
+                                                        </div>
+                                                    </td>
+                                                    <td class="align-middle">
+                                                        <div class="my-auto ">
+                                                            <h6 class="text-sm mb-0">
+                                                                {{ $transaction->book->title }}</h6>
+                                                        </div>
+                                                    </td>
+                                                    <td class="align-middle">
+                                                        <p class="text-sm mb-0">
+                                                            {{ $transaction->transaction_number }}</p>
+                                                    </td>
+                                                    <td class="align-middle">
+                                                        <p class=" mb-0">
+                                                            {{ $transaction->created_at->diffForHumans() }}
+                                                        </p>
+                                                        <p>
+                                                            <span class="text-sm">{{ $transaction->created_at }}
+                                                            </span>
+                                                        </p>
+                                                    </td>
+                                                    <td class="align-middle">
+                                                        <p class=" mb-0">
+                                                            Rp
+                                                            {{ number_format($transaction->rent_prices, 0, ',', '.') }},-
+                                                        </p>
+                                                    </td>
+                                                    <td class="align-middle">
+                                                        @if ($transaction->status->name == 'PENDING')
+                                                            <span class="bg-warning text-light px-2 py-1 rounded">
+                                                                {{ $transaction->status->name }}
+                                                            </span>
+                                                        @elseif($transaction->status->name == 'SUCCESS')
+                                                            <span class="bg-success px-2 py-1 rounded">
+                                                                {{ $transaction->status->name }}
+                                                            </span>
+                                                        @else
+                                                            <span class="bg-danger text-light px-2 py-1 rounded">
+                                                                {{ $transaction->status->name }}ED
+                                                            </span>
+                                                        @endif
+                                                    </td>
                                                 </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($transactions as $transaction)
-                                                    <tr>
-                                                        <td>{{ $loop->iteration }}</td>
-                                                        <td>
-                                                            <div class="d-flex">
-                                                                <div>
-                                                                    <img src="{{ Storage::url($transaction->book->image) }}"
-                                                                        class="rounded-circle me-2"
-                                                                        style="max-width: 50px">
-                                                                </div>
-                                                                <div class="my-auto ">
-                                                                    <h6 class="text-sm mb-0">
-                                                                        {{ $transaction->book->title }}</h6>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td class="align-middle">
-                                                            <p class="text-sm font-weight-bold mb-0">
-                                                                {{ $transaction->transaction_number }}</p>
-                                                        </td>
-                                                        <td class="align-middle">
-                                                            <p class=" mb-0">
-                                                                {{ $transaction->created_at->diffForHumans() }}</p>
-                                                        </td>
-                                                        <td class="align-middle">
-                                                            <p class=" mb-0">{{ $transaction->rent_prices }}</p>
-                                                        </td>
-                                                        <td class="align-middle">
-                                                            @if ($transaction->status->name == 'PENDING')
-                                                                <span class="bg-warning px-2 py-1 rounded">
-                                                                    {{ $transaction->status->name }}
-                                                                </span>
-                                                            @elseif($transaction->status->name == 'SUCCESS')
-                                                                <span class="bg-success px-2 py-1 rounded">
-                                                                    {{ $transaction->status->name }}
-                                                                </span>
-                                                            @else
-                                                                <span class="bg-danger px-2 py-1 rounded">
-                                                                    {{ $transaction->status->name }}
-                                                                </span>
-                                                            @endif
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
+                                            @endforeach
 
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>

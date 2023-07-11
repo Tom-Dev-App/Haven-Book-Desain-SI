@@ -162,11 +162,11 @@
         <div id="project">
             <div><span>INVOICE NUMBER</span> <br>{{ $invoice->invoice_number }}</div>
             <div><span>PROJECT</span> Book Rents</div>
-            {{-- <div><span>ADMIN</span>{{ $invoice->transaction->admin->name }}</div> --}}
-            {{-- <div>
+            <div><span>ADMIN</span>{{ $invoice->transaction->admin->name }}</div>
+            <div>
                 <span>EMAIL</span>
                 <a href="mailto:{{ $invoice->transaction->admin->email }}">{{ $invoice->transaction->admin->email }}</a>
-            </div> --}}
+            </div>
             <div><span>DATE</span> {{ now() }}</div>
         </div>
     </header>
@@ -206,6 +206,11 @@
         Invoice was created on a computer and is valid without the signature and
         seal.
     </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            window.print()
+        });
+    </script>
 </body>
 
 </html>

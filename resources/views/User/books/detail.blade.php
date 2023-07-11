@@ -37,11 +37,11 @@
                                     <i class="text-sm">Written by ~{{ $book->author }}</i>
                                     <p class="fw-bolder text-sm">Published by {{ $book->publisher }}</p>
                                 </div>
-                                <div class="button d-flex flex-row justify-content-center">
+                                <div class=" d-flex flex-row justify-content-center">
                                     <a class="btn btn-lg btn-danger text-light d-flex align-items-center"
                                         href="{{ route('pay', $book->slug) }}">
                                         Sewa Buku<i class="ti-check mr-2 ml-2"></i>Rp
-                                        {{ number_format($book->price, 2, ',', '.') }}
+                                        {{ number_format($book->price, 0, ',', '.') }},-
                                     </a>
                                 </div>
                             </div>

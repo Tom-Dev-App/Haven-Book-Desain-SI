@@ -136,7 +136,7 @@
                                 <div class="mb-3">
                                     <label for="" class="form-label">Harga</label>
                                     <input readonly type="text" class="form-control" id=""
-                                        value="Rp {{ number_format($transaction->book->price, 2, ',', '.') }}">
+                                        value="Rp {{ number_format($transaction->book->price, 0, ',', '.') }},-">
                                 </div>
                             </div>
                         </div>

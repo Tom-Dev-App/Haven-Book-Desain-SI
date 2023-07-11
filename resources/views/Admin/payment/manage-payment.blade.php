@@ -269,7 +269,7 @@
                                                     <td>
                                                         <p class="text-xs font-weight-bold mb-0">
                                                             Rp
-                                                            {{ number_format($transaction->book->price, 2, ',', '.') }}
+                                                            {{ number_format($transaction->book->price, 0, ',', '.') }},-
                                                         </p>
                                                     </td>
                                                     <td>
