@@ -1,4 +1,21 @@
 <x-base-admin title="Detail Buku">
+    @push('head')
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const slug = document.querySelector('#slug')
+                const title = document.querySelector('#book-title')
+
+                title.addEventListener('change', function(e){
+                    fetch(`/api/checkSlug?title=${title.value}`).then(response => response.json())
+                    .then(data => slug.value = data.slug)
+                    
+                    title.addEventListener('keyup', function(){
+                        if(title.value == "") slug.value = ""
+                    })
+                })
+            })
+        </script>
+    @endpush
     <x-slot:content>
         <x-sidebar-admin />
         <div class="main-content position-relative bg-gray-100 max-height-vh-100 h-100">
@@ -19,6 +36,8 @@
                         })
                     </script>
                 @endif
+
+                {{-- CONTENT START HERE --}}
                 <div class="card m-5">
                     <div class="row">
                         <div class="col-md-4">
@@ -72,6 +91,9 @@
                         </div>
                     </div>
                 </div>
+                {{-- CONTENT END HERE --}}
+
+                {{-- UPDATE MODAL BOX START HERE --}}
                 <div class="modal fade" id="update-buku" tabindex="-1" role="dialog"
                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -99,18 +121,26 @@
                                                     name="image">
                                             </div>
                                             <div class="form-group">
-                                                <label for="slug" class="form-control-label">Slug</label>
-                                                <input class="form-control" readonly type="text"
-                                                    value="{{ $book->slug }}" placeholder="example: $-123-x"
-                                                    id="slug" name="slug">
+                                                <label for="formFile" class="form-label">
+                                                    File PDF
+                                                    <span class="text-danger text-sm">*</span>
+                                                </label>
+                                                <input class="form-control" type="file" id="formFile" value=""
+                                                    name="file">
                                             </div>
                                             <div class="form-group">
                                                 <label for="book-title" class="form-control-label">
                                                     Title
-                                                    <span class="text-danger text-sm">*</span>
+                                                <span class="text-danger text-sm">*</span>
                                                 </label>
-                                                <input class="form-control" type="text" value="{{ $book->title }}"
+                                                <input class="form-control" type="text" value="{{ old('title',$book->title) }}"
                                                     placeholder="example: The Alchemist" id="book-title" name="title">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="slug" class="form-control-label">Slug</label>
+                                                <input class="form-control" readonly type="text"
+                                                    value="{{ old('slug', $book->slug) }}" placeholder="example: $-123-x"
+                                                    id="slug" name="slug">
                                             </div>
 
                                             <div class="form-group">
@@ -118,14 +148,14 @@
                                                     Synopsis
                                                     <span class="text-danger text-sm">*</span>
                                                 </label>
-                                                <textarea class="form-control" name="synopsis" id="synopsis" rows="3">{{ $book->synopsis }}</textarea>
+                                                <textarea class="form-control" name="synopsis" id="synopsis" rows="3">{{ old('synopsis',$book->synopsis) }}</textarea>
                                             </div>
                                             <div class="form-group">
                                                 <label for="desc">
                                                     Description
                                                     <span class="text-danger text-sm">*</span>
                                                 </label>
-                                                <textarea class="form-control" name="description" id="desc" rows="3">{{ $book->description }}</textarea>
+                                                <textarea class="form-control" name="description" id="desc" rows="3">{{ old('description', $book->description) }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -135,7 +165,7 @@
                                                     <span class="text-danger text-sm">*</span>
                                                 </label>
                                                 <input class="form-control" type="text"
-                                                    value="{{ $book->author }}" placeholder="" id="author"
+                                                    value="{{ old('author',$book->author) }}" placeholder="" id="author"
                                                     name="author">
                                             </div>
                                             <div class="form-group">
@@ -144,8 +174,8 @@
                                                 <div class="input-group">
                                                     <span class="input-group-text" id="">Link</span>
                                                     <input type="text" class="form-control" id="author-url"
-                                                        aria-describedby="" value="{{ $book->author_attachment }}"
-                                                        name="author-attachment">
+                                                        aria-describedby="" value="{{ old('author_attachment',$book->author_attachment) }}"
+                                                        name="author_attachment">
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -154,7 +184,7 @@
                                                     <span class="text-danger text-sm">*</span>
                                                 </label>
                                                 <input class="form-control" type="text"
-                                                    value="{{ $book->publisher }}" placeholder="" id="publisher"
+                                                    value="{{ old('publisher', $book->publisher) }}" placeholder="" id="publisher"
                                                     name="publisher">
                                             </div>
                                             <div class="form-group">
@@ -163,8 +193,8 @@
                                                 <div class="input-group">
                                                     <span class="input-group-text" id="">Link</span>
                                                     <input type="text" class="form-control" id="publisher-url"
-                                                        aria-describedby="" value="{{ $book->publisher_attachment }}"
-                                                        name="publishser-attachment">
+                                                        aria-describedby="" value="{{ old('publishser_attachment',$book->publisher_attachment) }}"
+                                                        name="publishser_attachment">
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -174,7 +204,7 @@
                                                     <input type="text" class="form-control" id="priceInput"
                                                         oninput="formatPrice(event)" aria-describedby=""
                                                         name="price"
-                                                        value="{{ number_format($book->price, 2, ',', '.') }}">
+                                                        value="{{ number_format(@old('price',$book->price, 2, ',', '.')) }}">
                                                 </div>
                                             </div>
                                         </div>
@@ -190,6 +220,8 @@
                         </div>
                     </div>
                 </div>
+                {{-- UPDATE MODAL BOX END HERE --}}
+
                 <footer class="footer pt-3">
                     <div class="container-fluid">
                         <div class="row align-items-center justify-content-lg-between">

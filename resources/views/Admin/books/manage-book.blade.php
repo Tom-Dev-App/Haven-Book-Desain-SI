@@ -1,4 +1,21 @@
 <x-base-admin title="Manage Buku">
+    @push('head')
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const slug = document.querySelector('#slug')
+                const title = document.querySelector('#book-title')
+
+                title.addEventListener('change', function(e){
+                    fetch(`/api/checkSlug?title=${title.value}`).then(response => response.json())
+                    .then(data => slug.value = data.slug)
+                    
+                    title.addEventListener('keyup', function(){
+                        if(title.value == "") slug.value = ""
+                    })
+                })
+            })
+        </script>
+    @endpush
 
     <x-slot:content>
 
@@ -37,6 +54,8 @@
                                             @endif
                                         </div>
                                     </div>
+
+                                    {{-- START CREATE MODAL BOX FORM --}}
                                     <div class="modal fade" id="modal-default" tabindex="-1" role="dialog"
                                         aria-labelledby="modal-default" aria-hidden="true">
                                         <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
@@ -85,28 +104,13 @@
                                                                     @enderror
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label for="slug"
-                                                                        class="form-control-label">Slug</label>
-                                                                    <input readonly
-                                                                        class="form-control @error('slug') is-invalid @enderror"
-                                                                        type="text" name="slug"
-                                                                        placeholder="example: $-123-x" id="slug"
-                                                                        value="{{ uniqid() }}"
-                                                                        value="{{ @old('slug') }}">
-                                                                    @error('slug')
-                                                                        <div class="invalid-feedback">
-                                                                            {{ $message }}
-                                                                        </div>
-                                                                    @enderror
-                                                                </div>
-                                                                <div class="form-group">
                                                                     <label for="book-title" class="form-control-label">
                                                                         Title
                                                                         <span class="text-danger text-sm">*</span>
                                                                     </label>
                                                                     <input required
                                                                         class="form-control @error('title') is-invalid @enderror"
-                                                                        type="text" value="" name="title"
+                                                                        type="text" name="title"
                                                                         placeholder="example: The Alchemist"
                                                                         id="book-title" value="{{ @old('title') }}">
                                                                     @error('title')
@@ -115,6 +119,21 @@
                                                                         </div>
                                                                     @enderror
                                                                 </div>
+                                                                <div class="form-group">
+                                                                    <label for="slug"
+                                                                        class="form-control-label">Slug</label>
+                                                                    <input
+                                                                        class="form-control @error('slug') is-invalid @enderror"
+                                                                        type="text" name="slug"
+                                                                        placeholder="example: $-123-x" id="slug"
+                                                                        value="{{ @old('slug') }}" readonly>
+                                                                    @error('slug')
+                                                                        <div class="invalid-feedback">
+                                                                            {{ $message }}
+                                                                        </div>
+                                                                    @enderror
+                                                                </div>
+                                                                
                                                                 <div class="form-group">
                                                                     <label for="synopsis">
                                                                         Synopsis
@@ -149,7 +168,7 @@
                                                                     </label>
                                                                     <input required
                                                                         class="form-control @error('author') is-invalid @enderror"
-                                                                        type="text" value="" placeholder=""
+                                                                        type="text" value="{{ @old('author') }}" placeholder=""
                                                                         name="author" id="author">
                                                                     @error('author')
                                                                         <div class="invalid-feedback">
@@ -166,7 +185,7 @@
                                                                         <input type="text"
                                                                             class="form-control @error('author_attachment') is-invalid @enderror"
                                                                             id="author-url" name="author_attachment"
-                                                                            aria-describedby="">
+                                                                            aria-describedby="" value="{{ @old('author_attachment') }}">
                                                                         @error('author_attachment')
                                                                             <div class="invalid-feedback">
                                                                                 {{ $message }}
@@ -181,7 +200,7 @@
                                                                     </label>
                                                                     <input required
                                                                         class="form-control @error('publisher') is-invalid @enderror"
-                                                                        type="text" value="" placeholder=""
+                                                                        type="text" value="{{ @old('publisher')}}" placeholder=""
                                                                         id="publisher" name="publisher">
                                                                     @error('publisher')
                                                                         <div class="invalid-feedback">
@@ -199,7 +218,7 @@
                                                                         <input type="text"
                                                                             class="form-control @error('publisher_attachment') is-invalid @enderror"
                                                                             id="publisher-url" aria-describedby=""
-                                                                            name="publisher_attachment">
+                                                                            name="publisher_attachment" value="{{@old('publisher_attachment')}}">
                                                                         @error('publisher_attachment')
                                                                             <div class="invalid-feedback">
                                                                                 {{ $message }}
@@ -241,6 +260,10 @@
                                     </div>
                                 </div>
                             </div>
+                            {{-- END CREATE MODAL BOX FORM --}}
+
+
+                            {{-- START CONTENT HERE --}}
                             <div class="card-body px-0 pt-0 pb-2">
                                 <div class="table-responsive p-0">
                                     <table class="table align-items-center justify-content-center mb-0">
@@ -335,6 +358,7 @@
                                 </div>
                             </div>
                         </div>
+                            {{-- END CONTENT ABOVE --}}
 
                     </div>
                 </div>

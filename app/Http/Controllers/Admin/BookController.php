@@ -9,6 +9,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use \Cviebrock\EloquentSluggable\Services\SlugService;
+use Illuminate\Support\Facades\File;
 
 class BookController extends Controller
 {
@@ -82,97 +84,81 @@ class BookController extends Controller
     public function update(Request $request, $slug)
     {
         $book = Book::where('slug', $slug)->first();
+        $imagePath = null;
+        $oldImagePath = null;
+        $pdfPath = null;
+        $oldPdfPath = null;
 
-        if ($request->image) {
+        if($request->hasFile('image')) $oldImagePath = $book->image;
+        if($request->hasFile('file'))  $oldPdfPath = $book->file;
 
-            $validator = Validator::make($request->all(), [
-                'image' => 'image|max:4096',
-                'title' => 'required',
-                'synopsis' => 'required',
-                'description' => 'required',
-                'author' => 'required',
-                'publisher' => 'required',
-                'price' => 'required',
-            ]);
-        } else {
-            $validator = Validator::make($request->all(), [
-                'title' => 'required',
-                'synopsis' => 'required',
-                'description' => 'required',
-                'author' => 'required',
-                'publisher' => 'required',
-                'price' => 'required',
-            ]);
+        $rules = [
+            'image' => 'image|max:4096',
+            'file' => 'mimes:pdf',
+            'title' => 'required',
+            'synopsis' => 'required',
+            'description' => 'required',
+            'author' => 'required',
+            'publisher' => 'required',
+            'price' => 'required',
+        ];
+
+        $request->validate($rules);
+
+        $priceInput = $request->price;
+        $priceInput = str_replace('.', '', $priceInput);
+        $priceInput = str_replace(',', '', $priceInput);
+
+        if($request->hasFile('image')){
+        $imagePath = $request->file('image')->store('images/books', 'public');
+        $book->image = $imagePath;
         }
 
-        if ($validator->fails()) {
-            Session::flash('alert', 'Gagal mengubah buku');
-            Session::flash('alertType', 'Danger');
-
-            return redirect()->route('manage-book');
+        if($request->hasFile('file')) {
+        $pdfPath = $request->file('file')->store('books', 'public');
+        $book->file = $pdfPath;
         }
 
-        if ($request->image) {
+        $book->slug = $slug;
+        $book->title = $request->title;
+        $book->synopsis = $request->synopsis;
+        $book->description = $request->description;
+        $book->author = $request->author;
+        $book->author_attachment = $request->author_attachment;
+        $book->publisher = $request->publisher;
+        $book->publisher_attachment = $request->publisher_attachment;
+        $book->price = $priceInput;
 
-            $priceInput = $request->price;
-            $priceInput = str_replace('.', '', $priceInput);
-            $priceInput = str_replace(',', '', $priceInput);
+        $book->save();
 
-            $path = $request->file('image')->store('public/images/books');
+        if($oldImagePath !== null && File::exists(storage_path('app/public/'.$oldImagePath)))
+            unlink(storage_path('app/public/'.$oldImagePath));
 
-            $imagePath = Storage::url($path);
+        if($oldPdfPath !== null && File::exists(storage_path('app/public/'.$oldPdfPath)))
+            unlink(storage_path('app/public/'.$oldPdfPath));
 
-            $book->image = $imagePath;
-            $book->slug = $slug;
-            $book->title = $request->title;
-            $book->synopsis = $request->synopsis;
-            $book->description = $request->description;
-            $book->author = $request->author;
-            $book->author_attachment = $request->author_attachment;
-            $book->publisher = $request->publisher;
-            $book->publisher_attachment = $request->publisher_attachment;
-            $book->price = $priceInput;
+        Session::flash('alert', 'Berhasil mengubah buku!');
+        Session::flash('alertType', 'Success');
 
-            $book->save();
+        return redirect()->route('detail-book', $slug);
 
-            Session::flash('alert', 'Berhasil mengubah buku!');
-            Session::flash('alertType', 'Success');
-
-            return redirect()->route('detail-book', $slug);
-        } else {
-
-            $priceInput = $request->price;
-            $priceInput = str_replace('.', '', $priceInput);
-            $priceInput = str_replace(',', '', $priceInput);
-
-            $book->slug = $slug;
-            $book->title = $request->title;
-            $book->synopsis = $request->synopsis;
-            $book->description = $request->description;
-            $book->author = $request->author;
-            $book->author_attachment = $request->author_attachment;
-            $book->publisher = $request->publisher;
-            $book->price = $priceInput;
-
-
-            $book->save();
-
-            Session::flash('alert', 'Berhasil mengubah buku!');
-            Session::flash('alertType', 'Success');
-
-            return redirect()->route('detail-book', $slug);
-        }
     }
+
 
     public function delete($id)
     {
         $book = Book::findOrFail($id);
 
-        // return $book;
         $book->delete();
 
         Session::flash('alert', 'Berhasil menghapus buku!');
         Session::flash('alertType', 'Success');
         return redirect()->route('manage-book');
+    }
+
+    public function createSlug(Request $request) {
+        $slug = SlugService::createSlug(Book::class, 'slug', $request->title);
+
+        return response()->json(['slug' => $slug]);
     }
 }
