@@ -15,7 +15,7 @@
                             </h5>
                             <div class="card-body">
                                 <div class="mb-3">
-                                    <label for="" class="form-label">A.N</label>
+                                    <label for="" class="form-label">Atas nama</label>
                                     <input type="text" readonly class="form-control" id=""
                                         value="{{ $transaction->companyBank->user->name }}">
                                 </div>

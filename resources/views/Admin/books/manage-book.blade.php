@@ -120,7 +120,12 @@
                                                                         Synopsis
                                                                         <span class="text-danger text-sm">*</span>
                                                                     </label>
-                                                                    <textarea class="form-control @error('synopsis') is-invalid @enderror" name="synopsis" id="synopsis" rows="3">{{ old('synopsis') }}</textarea>
+                                                                    <textarea class="form-control @error('synopsis') is-invalid @enderror" name="synopsis" id="synopsis" rows="3"
+                                                                        aria-describedby="synopsisHelp">{{ old('synopsis') }}</textarea>
+                                                                    <div class="form-text text-sm">
+                                                                        <span id="synopsisCounter">25</span> character
+                                                                        remains
+                                                                    </div>
                                                                     @error('synopsis')
                                                                         <div class="invalid-feedback">
                                                                             {{ $message }}
@@ -134,6 +139,11 @@
                                                                     </label>
                                                                     <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="desc"
                                                                         rows="3">{{ old('description') }}</textarea>
+                                                                    <div class="form-text text-sm">
+                                                                        <span id="descCounter">40</span>
+                                                                        character remains
+                                                                    </div>
+
                                                                     @error('description')
                                                                         <div class="invalid-feedback">
                                                                             {{ $message }}
@@ -478,6 +488,48 @@
                 // Mengatur nilai input dengan format harga
                 event.target.value = formattedPrice;
             }
+
+            var maxSynopsis = 25;
+
+            const synopsis = document.getElementById('synopsis');
+            const synopsisCounter = document.getElementById('synopsisCounter');
+
+            synopsis.addEventListener('keydown', function(e) {
+                if (maxSynopsis === 0 && e.key !== 'Backspace' || maxSynopsis === 25 && e.key === 'Backspace') {
+                    e.preventDefault();
+                    return;
+                }
+
+                if (e.key === 'Backspace') {
+                    maxSynopsis = maxSynopsis + 1;
+                    synopsisCounter.innerHTML = maxSynopsis;
+                } else {
+                    maxSynopsis = maxSynopsis - 1;
+                    synopsisCounter.innerHTML = maxSynopsis;
+                }
+
+            });
+
+            var maxDesc = 40;
+
+            const desc = document.getElementById('desc');
+            const descCounter = document.getElementById('descCounter');
+
+            desc.addEventListener('keydown', function(e) {
+                if (maxDesc === 0 && e.key !== 'Backspace' || maxDesc === 40 && e.key === 'Backspace') {
+                    e.preventDefault();
+                    return;
+                }
+
+                if (e.key === 'Backspace') {
+                    maxDesc = maxDesc + 1;
+                    descCounter.innerHTML = maxDesc;
+                } else {
+                    maxDesc = maxDesc - 1;
+                    descCounter.innerHTML = maxDesc;
+                }
+
+            });
         </script>
     </x-slot:content>
 </x-base-admin>
