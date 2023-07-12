@@ -36,9 +36,9 @@ class DatabaseSeeder extends Seeder
             BankSeeder::class
         ]);
 
-        $this->call([
-            BankAccountSeeder::class
-        ]);
+        // $this->call([
+        //     BankAccountSeeder::class
+        // ]);
 
         $this->call([
             RoleSeeder::class
@@ -52,8 +52,8 @@ class DatabaseSeeder extends Seeder
             TransactionStatusSeeder::class,
         ]);
 
-        $this->call([
-            TransactionSeeder::class
-        ]);
+        // $this->call([
+        //     TransactionSeeder::class
+        // ]);
     }
 }

@@ -133,16 +133,18 @@
                                 Akun Rekening
                             </h5>
                             <div class="card-body">
-                                <div class="mb-3">
-                                    <label for="" class="form-label">A.N</label>
-                                    <input type="text" readonly class="form-control" id=""
-                                        value="{{ $bankAccount->accountBank->user->name }}">
-                                </div>
-                                <div class="">
-                                    <label for="" class="form-label">Rekening Pembayaran</label>
-                                    <input type="text" readonly class="form-control" id=""
-                                        value="{{ $bankAccount->accountBank->bank->codename }} - {{ $bankAccount->accountBank->account_number }}">
-                                </div>
+                                @if ($bankAccount->accountBank)
+                                    <div class="mb-3">
+                                        <label for="" class="form-label">A.N</label>
+                                        <input type="text" readonly class="form-control" id=""
+                                            value="{{ $bankAccount->accountBank->user->name }}">
+                                    </div>
+                                    <div class="">
+                                        <label for="" class="form-label">Rekening Pembayaran</label>
+                                        <input type="text" readonly class="form-control" id=""
+                                            value="{{ $bankAccount->accountBank->bank->codename }} - {{ $bankAccount->accountBank->account_number }}">
+                                    </div>
+                                @endif
                             </div>
                             <div class="card-footer ">
                                 <button type="submit" class="btn btn-dark mt-3 w-100">Tambah rekening</button>

@@ -6,24 +6,44 @@
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Daftar Rekening</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                         </div>
-                        <div class="modal-body">
-                            ...
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
-                        </div>
+                        <form action="{{ route('bank-user-profile', $user->id) }}" method="POST">
+                            <div class="modal-body">
+                                @csrf
+
+                                <div class="mb-3">
+                                    <label for="">Bank</label>
+                                    <select class="form-select form-select-sm" aria-label=".form-select-sm example"
+                                        name="bank">
+                                        @foreach ($banks as $bank)
+                                            <option value="{{ $bank->id }}">{{ $bank->codename }} -
+                                                {{ $bank->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput1" class="form-label">Rekening</label>
+                                    <input type="text" class="form-control" id="exampleFormControlInput1"
+                                        name="account_number" oninput="formatPrice(event) ">
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
             <div class="container">
 
                 <div class="container-fluid py-4">
-                    <ul class="nav nav-pills mb-2" id="myTab" role="tablist">
+                    <ul class="nav nav-pills mb-5" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
                                 data-bs-target="#profile" type="button" role="tab" aria-controls="home"
@@ -42,7 +62,7 @@
                                 <div class="col-md-8">
                                     <div class="card">
 
-                                        <input type="hidden" value="{{ $user->email }}" name="old_email">
+
                                         <div class="card-header">
                                             <div class="d-flex align-items-center">
                                                 <p class="mb-0">Ubah Biodata</p>
@@ -69,6 +89,7 @@
                                             <form action="{{ route('upload-user-profile', $user->id) }}" method="POST"
                                                 enctype="multipart/form-data">
                                                 @csrf
+
                                                 <div class="row mb-3">
                                                     <div class="col-md-6">
                                                         <label for="username" class="form-control-label">Foto
@@ -84,6 +105,7 @@
 
                                             <form action="{{ route('update-user-profile', $user->id) }}" method="POST">
                                                 @csrf
+                                                <input type="hidden" value="{{ $user->email }}" name="old_email">
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
@@ -107,18 +129,28 @@
                                                         <div class="form-group">
                                                             <label for="" class="form-control-label">Nama
                                                                 Depan</label>
-                                                            <input readonly class="form-control hide-readonly"
-                                                                type="text" name="first_name"
-                                                                value="{{ $user->profile['first_name'] }}">
+                                                            @if ($user->profile->first_name)
+                                                                <input readonly class="form-control hide-readonly"
+                                                                    type="text" name="first_name"
+                                                                    value="{{ $user->profile['first_name'] }}">
+                                                            @else
+                                                                <input readonly class="form-control hide-readonly"
+                                                                    type="text" name="first_name" value="">
+                                                            @endif
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label for="" class="form-control-label">Nama
                                                                 Belakang</label>
-                                                            <input readonly class="form-control hide-readonly"
-                                                                type="text" name="last_name"
-                                                                value="{{ $user->profile['last_name'] }}">
+                                                            @if ($user->profile->last_name)
+                                                                <input readonly class="form-control hide-readonly"
+                                                                    type="text" name="last_name"
+                                                                    value="{{ $user->profile['last_name'] }}">
+                                                            @else
+                                                                <input readonly class="form-control hide-readonly"
+                                                                    type="text" name="last_name" value="">
+                                                            @endif
                                                         </div>
                                                     </div>
                                                     {{-- disini --}}
@@ -132,10 +164,9 @@
 
                                         </div>
                                         <div class="card-footer d-flex">
-                                            <a href="" id="btn-changes" style="display: "
-                                                class="mr-2 btn btn-outline-secondary" onclick="update()"
-                                                data-bs-toggle="modal" data-bs-target="#">Ubah
-                                                Biodata</a>
+                                            <a href="" id="btn-changes" class="mr-2 btn btn-outline-danger"
+                                                onclick="update()" data-bs-toggle="modal" data-bs-target="#">
+                                                Ubah Biodata</a>
                                             <a href="" id="btn-cancel" style="display: none"
                                                 class="mr-2 btn btn-secondary text-light"
                                                 onclick="cancelUpdate()">Cancel</a>
@@ -153,10 +184,10 @@
                                                     <a href="javascript:;">
                                                         @if ($user->profile->profile_path)
                                                             <img src="{{ asset($user->profile->profile_path) }}"
-                                                                class="rounded-circle img-fluid border border-2 border-white">
+                                                                class="img-fluid">
                                                         @else
                                                             <img src="{{ asset('image/user.png') }}"
-                                                                class="rounded-circle img-fluid border border-2 border-white">
+                                                                class="img-fluid">
                                                         @endif
                                                     </a>
                                                 </div>
@@ -184,30 +215,95 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <div class="card-body">
-                                        <div class="mb-3">
-                                            <label for="" class="form-label">A.N</label>
-                                            <input type="text" readonly class="form-control" id=""
-                                                value="{{ $user->name }}">
-                                        </div>
-                                        <div class="">
-                                            <label for="" class="form-label">Rekening Pembayaran</label>
-                                            <input type="text" readonly class="form-control" id=""
-                                                value="{{ $user->accountBank->bank->codename }} - {{ $user->accountBank->account_number }}">
-                                        </div>
+
+                                    <div class="mb-3">
+                                        <label for="" class="form-label"><strong>A.N</strong></label>
+                                        <input type="text" readonly class="form-control bg-light" id=""
+                                            value="{{ $user->name }}">
                                     </div>
+                                    @foreach ($userAccounts as $userAccount)
+                                        <div class="mb-3">
+                                            @if ($userAccount)
+                                                <div class="row">
+                                                    <div class="col-md-9">
+                                                        <label for="" class="form-label"><b>Rekening
+                                                                Pembayaran {{ $loop->iteration }}</b> </label>
+                                                        <input type="text" readonly class="form-control bg-light"
+                                                            id=""
+                                                            value="{{ $userAccount->bank->codename }} - {{ $userAccount->account_number }}">
+                                                    </div>
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-2 d-flex align-items-center">
+                                                        <a href="{{ route('delete-bank-user-profile', $userAccount->id) }}"
+                                                            class="btn-delete-rekening my-3" style="display: none">
+                                                            <i class="fa-solid fa-xmark fa-lg"
+                                                                style="color: #dc3545;"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            @else
+                                                <label for="" class="form-label"><strong>Rekening
+                                                        Pembayaran</strong></label>
+                                                <input type="text" readonly class="form-control" id=""
+                                                    value="">
+                                            @endif
+                                        </div>
+                                    @endforeach
                                 </div>
-                                <div class="card-footer">
-                                    <button class="btn btn-outline-secondary" data-bs-toggle="modal"
+
+                                <div class="card-footer d-flex justify-content-between">
+                                    <button class="btn btn-outline-danger" data-bs-toggle="modal"
                                         data-bs-target="#add-rekening">+ akun rekening</button>
+                                    <a href="#" class="btn btn-danger" id="btn-edit-rekening"
+                                        onclick="deleteRekening(event)">Hapus rekening</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            </div>
         </section>
         <script>
+            function formatPrice(event) {
+                // Mengambil nilai input
+                var value = event.target.value;
+
+                // Menghapus semua karakter non-digit
+                var formattedValue = value.replace(/\D/g, '');
+
+                // // Memisahkan nilai menjadi bagian pecahan dan desimal
+                var fraction = formattedValue.slice(0, -3); // Bagian pecahan
+                var decimal = formattedValue.slice(-3); // Bagian desimal
+
+                // Menggabungkan bagian pecahan dan desimal dengan tanda titik sebagai pemisah ribuan
+                var formattedPrice = fraction.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1') + '' + decimal;
+
+                // Mengatur nilai input dengan format harga
+                event.target.value = formattedPrice;
+            }
+
+            var counterDeleteRekening = 1;
+
+            function deleteRekening(event) {
+                // mengambil button edit
+                var btnDelete = document.querySelectorAll(".btn-delete-rekening");
+
+                counterDeleteRekening += 1;
+                for (var i = 0; i < btnDelete.length; i++) {
+
+                    if (counterDeleteRekening % 2 === 0) {
+
+                        btnDelete[i].style.display = 'block';
+                    } else {
+
+                        btnDelete[i].style.display = 'none';
+                    }
+                }
+
+
+            }
+
             function update() {
                 var inputs = document.querySelectorAll('input.hide-readonly');
                 var buttonSaveChanges = document.getElementById('btn-save-changes');

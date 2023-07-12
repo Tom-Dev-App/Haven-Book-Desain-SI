@@ -48,6 +48,8 @@ Route::get('bookshelf/{slug}', [UserBookController::class, 'readBook'])->name('r
 Route::get('/profile', [ProfileController::class, 'index'])->name('user-profile');
 Route::post('/profile/update/{id}', [ProfileController::class, 'update'])->name('update-user-profile');
 Route::post('/profile/upload/{id}', [ProfileController::class, 'upload'])->name('upload-user-profile');
+Route::post('/profile/addBankAccount/{id}', [ProfileController::class, 'addBankAccount'])->name('bank-user-profile');
+Route::GET('/profile/deleteBankAccount/{id}', [ProfileController::class, 'deleteBankAccount'])->name('delete-bank-user-profile');
 
 // Admin
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
