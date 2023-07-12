@@ -206,6 +206,11 @@
         Invoice was created on a computer and is valid without the signature and
         seal.
     </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            window.print()
+        });
+    </script>
 </body>
 
 </html>

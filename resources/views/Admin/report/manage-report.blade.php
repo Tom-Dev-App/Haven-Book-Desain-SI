@@ -74,9 +74,6 @@
                             </table>
                         </div>
                     </div>
-                    <div class="card-footer">
-                        <a href="" class="btn bg-gradient-primary">Cetak kwitansi</a>
-                    </div>
                 </div>
                 <div class="card">
                     <h5 class="card-header">Transaksi</h5>
@@ -295,9 +292,6 @@
                             </table>
                         </div>
 
-                    </div>
-                    <div class="card-footer">
-                        <a href="" class="btn bg-gradient-primary">Cetak Transaksi</a>
                     </div>
                 </div>
                 <footer class="footer pt-3">

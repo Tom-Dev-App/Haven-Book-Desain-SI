@@ -31,7 +31,7 @@ class PaymentController extends Controller
                 ->where('transactions.status_id', '=', '1')
                 ->whereHas('companyBank', function ($query) use ($userId) {
                     $query->where('user_id', $userId);
-                })
+                })->orderBy('id', 'desc')
                 ->get();
 
             $cardholder = User::with('accountBank.bank')->findOrFail($userId);
@@ -80,6 +80,7 @@ class PaymentController extends Controller
         // return $transaction;
 
         $transaction->status_id = TransactionStatus::SUCCESS;
+        $transaction->admin_id = Session::get('id');
 
         $invoice = new Invoice();
 

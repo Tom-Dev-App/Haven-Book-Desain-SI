@@ -14,7 +14,7 @@ class BookSeeder extends Seeder
     public function run(): void
     {
         DB::table('books')->insert([
-            'image' => '/storage/images/books/siksa-neraka.jpeg',
+            'image' => 'images/books/siksa-neraka.jpeg',
             'slug' => uniqid(),
             'title' => 'siksa neraka',
             'synopsis' => '"Sebuah perjalanan penuh petualangan dan keberanian dalam mencari jati diri dan menghadapi tantangan hidup.',
@@ -26,7 +26,7 @@ class BookSeeder extends Seeder
         ]);
 
         DB::table('books')->insert([
-            'image' => '/storage/images/books/mqdefault.jpg',
+            'image' => 'images/books/mqdefault.jpg',
             'slug' => uniqid(),
             'title' => 'Ilmu Pengetahuan Alam',
             'synopsis' => '
@@ -57,7 +57,7 @@ class BookSeeder extends Seeder
         ]);
 
         DB::table('books')->insert([
-            'image' => '/storage/images/books/19021605.jpg',
+            'image' => 'images/books/19021605.jpg',
             'slug' => uniqid(),
             'title' => 'Naruto',
             'synopsis' => '
@@ -94,7 +94,7 @@ Komik Naruto telah mendapatkan popularitas global karena karakter yang kuat, alu
         ]);
 
         DB::table('books')->insert([
-            'image' => '/storage/images/books/kenny-eliason-ch_z2RsV7uc-unsplash.jpg',
+            'image' => 'images/books/kenny-eliason-ch_z2RsV7uc-unsplash.jpg',
             'slug' => uniqid(),
             'title' => 'E-Bisnis',
             'synopsis' => '

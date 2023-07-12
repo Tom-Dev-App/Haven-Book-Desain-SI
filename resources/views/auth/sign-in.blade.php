@@ -11,16 +11,6 @@
                                     <div class="card-header pb-0 text-left bg-transparent">
                                         <h3 class="font-weight-bolder text-info text-gradient">Welcome back</h3>
                                         <p class="mb-0">Enter your email and password to sign in</p>
-                                        <div class="login">
-                                            <div class="mt-3 mb-0 alert alert-success text-light" role="alert">
-                                                Admin :<strong>21081000005@student.unmer.ac.id</strong>
-                                                <strong> ilham123</strong>
-                                                <br>
-                                                User : <strong>21081000002@student.unmer.ac.id</strong>
-                                                <strong> candra123</strong>
-
-                                            </div>
-                                        </div>
                                     </div>
                                     <div class="card-body">
                                         @if (session('alert') && session('alertType') == 'Danger')

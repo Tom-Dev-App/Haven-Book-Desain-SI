@@ -34,11 +34,6 @@
                                 type="button" role="tab" aria-controls="profile"
                                 aria-selected="false">Rekening</button>
                         </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link " id="contact-tab" data-bs-toggle="tab" data-bs-target="#faktur"
-                                type="button" role="tab" aria-controls="contact"
-                                aria-selected="false">Faktur</button>
-                        </li>
                     </ul>
                     <div class="tab-content " id="myTabContent">
                         <div class="tab-pane fade show active" id="profile" role="tabpanel"
@@ -205,116 +200,6 @@
                                 <div class="card-footer">
                                     <button class="btn btn-outline-secondary" data-bs-toggle="modal"
                                         data-bs-target="#add-rekening">+ akun rekening</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade w-100" id="faktur" role="tabpanel"
-                            aria-labelledby="contact-tab">
-                            <div class="card">
-                                <div class="card-header">
-                                    <div class="d-flex align-items-center">
-                                        <p class="mb-0">Informasi Transaksi</p>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <p class="text-uppercase text-sm">Faktur Pembayaran</p>
-                                    <div class="container">
-                                        <table class="table table-hover ">
-                                            <thead>
-                                                <tr>
-                                                    <td>#</td>
-                                                    <td>Buku</td>
-                                                    <td>Harga</td>
-                                                    <td>Tanggal Transaksi</td>
-                                                    <td>Batas Waktu</td>
-                                                    <td>Action</td>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>
-                                                        <div class="d-flex">
-                                                            <div>
-                                                                <img src="{{ asset('soft-ui-dashboard-main/img/small-logos/logo-spotify.svg') }}"
-                                                                    class="rounded-circle me-2" alt="spotify"
-                                                                    style="max-width: 50px">
-                                                            </div>
-                                                            <div class="my-auto ">
-                                                                <h6 class="text-sm mb-0">Spotify</h6>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <p class="text-sm font-weight-bold mb-0">$2,500</p>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <p class=" mb-0">4 July 2023</p>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <p class=" mb-0">5 July 2023</p>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <a href="#" class="btn btn-primary">Cetak</a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td>
-                                                        <div class="d-flex">
-                                                            <div>
-                                                                <img src="{{ asset('soft-ui-dashboard-main/img/small-logos/logo-spotify.svg') }}"
-                                                                    class="rounded-circle me-2" alt="spotify"
-                                                                    style="max-width: 50px">
-                                                            </div>
-                                                            <div class="my-auto ">
-                                                                <h6 class="text-sm mb-0">Spotify</h6>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <p class="text-sm font-weight-bold mb-0">$2,500</p>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <p class=" mb-0">4 July 2023</p>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <p class=" mb-0">5 July 2023</p>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <a href="#" class="btn btn-primary">Cetak</a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3</td>
-                                                    <td>
-                                                        <div class="d-flex">
-                                                            <div>
-                                                                <img src="{{ asset('soft-ui-dashboard-main/img/small-logos/logo-spotify.svg') }}"
-                                                                    class="rounded-circle me-2" alt="spotify"
-                                                                    style="max-width: 50px">
-                                                            </div>
-                                                            <div class="my-auto ">
-                                                                <h6 class="text-sm mb-0">Spotify</h6>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <p class="text-sm font-weight-bold mb-0">$2,500</p>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <p class=" mb-0">4 July 2023</p>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <p class=" mb-0">5 July 2023</p>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <a href="#" class="btn btn-primary">Cetak</a>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
                                 </div>
                             </div>
                         </div>

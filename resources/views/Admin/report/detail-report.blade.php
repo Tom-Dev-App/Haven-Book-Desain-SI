@@ -58,7 +58,7 @@
                                 Data Buku
                             </h5>
                             <div class="card-body">
-                                <img src="{{ asset($invoice->transaction->book->image) }}"
+                                <img src="{{ Storage::url($invoice->transaction->book->image) }}"
                                     class="img-thumbnail mx-3 my-3" alt="asdasd" width="150px">
                                 <div class="mb-3">
                                     <label for="" class="form-label">Judul Buku</label>

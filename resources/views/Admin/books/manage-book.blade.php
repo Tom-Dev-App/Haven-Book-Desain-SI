@@ -61,8 +61,9 @@
                                                                         Cover
                                                                         <span class="text-danger text-sm">*</span>
                                                                     </label>
-                                                                    <input required class="form-control @error('image') is-invalid @enderror" type='file'
-                                                                        name="image">
+                                                                    <input required
+                                                                        class="form-control @error('image') is-invalid @enderror"
+                                                                        type='file' name="image">
                                                                     @error('image')
                                                                         <div class="invalid-feedback">
                                                                             {{ $message }}
@@ -74,8 +75,9 @@
                                                                         File PDF
                                                                         <span class="text-danger text-sm">*</span>
                                                                     </label>
-                                                                    <input required class="form-control @error('file') is-invalid @enderror" type="file"
-                                                                        name="file">
+                                                                    <input required
+                                                                        class="form-control @error('file') is-invalid @enderror"
+                                                                        type="file" name="file">
                                                                     @error('file')
                                                                         <div class="invalid-feedback">
                                                                             {{ $message }}
@@ -85,9 +87,12 @@
                                                                 <div class="form-group">
                                                                     <label for="slug"
                                                                         class="form-control-label">Slug</label>
-                                                                    <input readonly class="form-control @error('slug') is-invalid @enderror" type="text"
-                                                                        name="slug" placeholder="example: $-123-x"
-                                                                        id="slug" value="{{ uniqid() }}" value="{{ @old('slug') }}">
+                                                                    <input readonly
+                                                                        class="form-control @error('slug') is-invalid @enderror"
+                                                                        type="text" name="slug"
+                                                                        placeholder="example: $-123-x" id="slug"
+                                                                        value="{{ uniqid() }}"
+                                                                        value="{{ @old('slug') }}">
                                                                     @error('slug')
                                                                         <div class="invalid-feedback">
                                                                             {{ $message }}
@@ -99,8 +104,9 @@
                                                                         Title
                                                                         <span class="text-danger text-sm">*</span>
                                                                     </label>
-                                                                    <input required class="form-control @error('title') is-invalid @enderror" type="text"
-                                                                        value="" name="title"
+                                                                    <input required
+                                                                        class="form-control @error('title') is-invalid @enderror"
+                                                                        type="text" value="" name="title"
                                                                         placeholder="example: The Alchemist"
                                                                         id="book-title" value="{{ @old('title') }}">
                                                                     @error('title')
@@ -126,7 +132,8 @@
                                                                         Description
                                                                         <span class="text-danger text-sm">*</span>
                                                                     </label>
-                                                                    <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="desc" rows="3">{{ old('description') }}</textarea>
+                                                                    <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="desc"
+                                                                        rows="3">{{ old('description') }}</textarea>
                                                                     @error('description')
                                                                         <div class="invalid-feedback">
                                                                             {{ $message }}
@@ -140,9 +147,10 @@
                                                                         Author
                                                                         <span class="text-danger text-sm">*</span>
                                                                     </label>
-                                                                    <input required class="form-control @error('author') is-invalid @enderror" type="text"
-                                                                        value="" placeholder="" name="author"
-                                                                        id="author">
+                                                                    <input required
+                                                                        class="form-control @error('author') is-invalid @enderror"
+                                                                        type="text" value="" placeholder=""
+                                                                        name="author" id="author">
                                                                     @error('author')
                                                                         <div class="invalid-feedback">
                                                                             {{ $message }}
@@ -155,9 +163,10 @@
                                                                     <div class="input-group">
                                                                         <span class="input-group-text"
                                                                             id="">Link</span>
-                                                                        <input type="text" class="form-control @error('author_attachment') is-invalid @enderror"
+                                                                        <input type="text"
+                                                                            class="form-control @error('author_attachment') is-invalid @enderror"
                                                                             id="author-url" name="author_attachment"
-                                                                            aria-describedby="" >
+                                                                            aria-describedby="">
                                                                         @error('author_attachment')
                                                                             <div class="invalid-feedback">
                                                                                 {{ $message }}
@@ -170,7 +179,8 @@
                                                                         Publisher
                                                                         <span class="text-danger text-sm">*</span>
                                                                     </label>
-                                                                    <input required class="form-control @error('publisher') is-invalid @enderror"
+                                                                    <input required
+                                                                        class="form-control @error('publisher') is-invalid @enderror"
                                                                         type="text" value="" placeholder=""
                                                                         id="publisher" name="publisher">
                                                                     @error('publisher')
@@ -186,7 +196,8 @@
                                                                     <div class="input-group">
                                                                         <span class="input-group-text"
                                                                             id="">Link</span>
-                                                                        <input type="text" class="form-control @error('publisher_attachment') is-invalid @enderror"
+                                                                        <input type="text"
+                                                                            class="form-control @error('publisher_attachment') is-invalid @enderror"
                                                                             id="publisher-url" aria-describedby=""
                                                                             name="publisher_attachment">
                                                                         @error('publisher_attachment')
@@ -202,8 +213,10 @@
                                                                     <div class="input-group">
                                                                         <input required type="text" id="priceInput"
                                                                             oninput="formatPrice(event)"
-                                                                            class="form-control @error('price') is-invalid @enderror" aria-describedby=""
-                                                                            name="price" placeholder="0" value="{{ old('price') }}">
+                                                                            class="form-control @error('price') is-invalid @enderror"
+                                                                            aria-describedby="" name="price"
+                                                                            placeholder="0"
+                                                                            value="{{ old('price') }}">
                                                                         @error('price')
                                                                             <div class="invalid-feedback">
                                                                                 {{ $message }}
@@ -267,7 +280,7 @@
                                                         <div class="d-flex px-2">
                                                             <div>
                                                                 @if ($book->image)
-                                                                    <img src="{{ asset($book->image) }}"
+                                                                    <img src="{{ Storage::url($book->image) }}"
                                                                         class="avatar me-2" alt="">
                                                                 @else
                                                                     <img src="{{ asset('image/error.png') }}"
