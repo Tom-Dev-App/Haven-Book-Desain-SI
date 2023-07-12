@@ -5,6 +5,44 @@
         <main class="main-content position-relative border-radius-lg " style="min-height: 100vh">
             <!-- Navbar -->
             <x-navbar-admin />
+            <div class="modal fade" id="add-rekening" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content w-50 mx-auto">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Daftar Rekening</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <form action="{{ route('bank-admin-profile', $user->id) }}" method="POST">
+                            <div class="modal-body">
+                                @csrf
+
+                                <div class="mb-3">
+                                    <label for="">Bank</label>
+                                    <select class="form-select form-select-sm" aria-label=".form-select-sm example"
+                                        name="bank">
+                                        @foreach ($banks as $bank)
+                                            <option value="{{ $bank->id }}">{{ $bank->codename }} -
+                                                {{ $bank->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput1" class="form-label">Rekening</label>
+                                    <input type="text" class="form-control" id="exampleFormControlInput1"
+                                        name="account_number" oninput="formatPrice(event) ">
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
             <!-- End Navbar -->
             <div class="container-fluid">
                 @if (session('alert') && session('alertType') == 'Success')
@@ -133,21 +171,41 @@
                                 Akun Rekening
                             </h5>
                             <div class="card-body">
-                                @if ($bankAccount->accountBank)
+
+                                <div class="mb-3">
+                                    <label for="" class="form-label">A.N</label>
+                                    <input type="text" readonly class="form-control" id=""
+                                        value="{{ $user->name }}">
+                                </div>
+                                @foreach ($bankAccounts as $bankAccount)
                                     <div class="mb-3">
-                                        <label for="" class="form-label">A.N</label>
-                                        <input type="text" readonly class="form-control" id=""
-                                            value="{{ $bankAccount->accountBank->user->name }}">
+                                        @if ($bankAccount)
+                                            <div class="row">
+                                                <div class="col-md-11">
+                                                    <label for="" class="form-label">Rekening Pembayaran
+                                                        {{ $loop->iteration }}</label>
+                                                    <input type="text" readonly class="form-control"
+                                                        id=""
+                                                        value="{{ $bankAccount->bank->codename }} - {{ $bankAccount->account_number }}">
+                                                </div>
+                                                <div class="col-md-1 d-flex align-items-center">
+                                                    <a href="{{ route('delete-bank-admin-profile', $bankAccount->id) }}"
+                                                        class="btn-delete-rekening mt-4" style="display: none">
+                                                        <i class="fa-solid fa-xmark fa-lg"
+                                                            style="color: #dc3545;"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        @endif
                                     </div>
-                                    <div class="">
-                                        <label for="" class="form-label">Rekening Pembayaran</label>
-                                        <input type="text" readonly class="form-control" id=""
-                                            value="{{ $bankAccount->accountBank->bank->codename }} - {{ $bankAccount->accountBank->account_number }}">
-                                    </div>
-                                @endif
+                                @endforeach
+
                             </div>
-                            <div class="card-footer ">
-                                <button type="submit" class="btn btn-dark mt-3 w-100">Tambah rekening</button>
+                            <div class="card-footer d-flex justify-content-between">
+                                <button data-bs-toggle="modal" data-bs-target="#add-rekening"
+                                    class="btn btn-dark">Tambah rekening</button>
+                                <button class="btn btn-danger" id="" onclick="deleteRekening(event)">Hapus
+                                    rekening</button>
                             </div>
                         </div>
                     </div>
@@ -452,6 +510,27 @@
             });
         </script>
         <script>
+            var counterDeleteRekening = 1;
+
+            function deleteRekening(event) {
+
+                var btnDelete = document.querySelectorAll(".btn-delete-rekening");
+
+                counterDeleteRekening += 1;
+                for (var i = 0; i < btnDelete.length; i++) {
+
+                    if (counterDeleteRekening % 2 === 0) {
+
+                        btnDelete[i].style.display = 'block';
+                    } else {
+
+                        btnDelete[i].style.display = 'none';
+                    }
+                }
+
+
+            }
+
             var win = navigator.platform.indexOf('Win') > -1;
             if (win && document.querySelector('#sidenav-scrollbar')) {
                 var options = {

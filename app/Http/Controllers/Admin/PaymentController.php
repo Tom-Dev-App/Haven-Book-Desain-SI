@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\BankAccount;
 use App\Models\BookRent;
 use App\Models\Invoice;
 use App\Models\TransactionStatus;
@@ -34,9 +35,9 @@ class PaymentController extends Controller
                 })->orderBy('id', 'desc')
                 ->get();
 
-            $cardholder = User::with('accountBank.bank')->findOrFail($userId);
+            $cardholders = BankAccount::with('bank', 'user')->where('user_id', $userId)->get();
 
-            return view('admin/payment/manage-payment', compact('transactions', 'cardholder'));
+            return view('admin/payment/manage-payment', compact('transactions', 'cardholders'));
         } else {
             return redirect()->route('sign-in');
         }

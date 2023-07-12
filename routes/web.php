@@ -54,6 +54,8 @@ Route::GET('/profile/deleteBankAccount/{id}', [ProfileController::class, 'delete
 // Admin
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Route::post('/dashboard/update/{id}', [DashboardController::class, 'update'])->name('update-admin-profile');
+Route::post('/dashboard/addBankAccount', [DashboardController::class, 'addBankAccount'])->name('bank-admin-profile');
+Route::GET('/dashboard/deleteBankAccount/{id}', [DashboardController::class, 'deleteBankAccount'])->name('delete-bank-admin-profile');
 
 Route::get('/manage-user', [UserController::class, 'index'])->name('manage-user');
 Route::get('/manage-user/detail/{id}', [UserController::class, 'detail'])->name('detail-user');
