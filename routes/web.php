@@ -69,7 +69,7 @@ Route::get('/manage-payment/detail/{transaction_number}', [PaymentController::cl
 Route::get('/manage-payment/accept/{transaction_number}', [PaymentController::class, 'accPembayaran'])->name('accept-payment')->middleware('auth');
 Route::get('/manage-payment/reject/{transaction_number}', [PaymentController::class, 'rejectPembayaran'])->name('reject-payment')->middleware('auth');
 
-Route::get('/manage-report', [ReportController::class, 'index'])->name('manage-report');
+Route::get('/manage-report', [ReportController::class, 'index'])->name('manage-report')->middleware('auth');
 Route::get('/manage-report/detail/{invoice_number}', [ReportController::class, 'detail'])->name('detail-report')->middleware('auth');
 Route::get('/manage-report/print/{invoice_number}', [ReportController::class, 'print'])->name('print-report')->middleware('auth');
 
