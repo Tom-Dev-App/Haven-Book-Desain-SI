@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\BankAccount;
 use App\Models\Book;
+use App\Models\BookRent;
+use App\Models\Invoice;
 use App\Models\Transaction;
 use App\Models\TransactionStatus;
 use App\Models\UserhasRole;
@@ -21,33 +23,56 @@ class BookController extends Controller
     function index()
     {
         $books = Book::all();
-        return view('user/books/book', compact('books'));
+        $title = "Books";
+        return view('user/books/book', compact('books', 'title'));
     }
 
     public function detail($slug)
     {
         $book = Book::where('slug', $slug)->first();
+        $title = $book->title;
         $bankAccounts = BankAccount::where('user_id', Session::get('id'))->get();
         $companyAccounts = BankAccount::with(['user.userhasrole', 'bank'])
             ->whereHas('user.userhasrole', function ($query) {
                 $query->where('role_id', UserhasRole::ADMIN);
             })
             ->get();
-
-        // return $book;
-        return view('user/books/detail', compact('book', 'bankAccounts', 'companyAccounts'));
+      
+        return view('user/books/detail', compact('book', 'bankAccounts', 'companyAccounts', 'title'));
     }
 
     public function readBook($slug)
     {
-        // cek book is actived by keys or not
-        // tgl input keys + 30 hari
-        $book = Book::where('slug', $slug)->first();
-        return view('User.books.read', compact('book'));
+        $book = Book::with('transactions')->where('slug', $slug)->first();
+        $transaction_id = $book->transactions()->first()->id;
+        $invoice = Invoice::firstWhere('transaction_id', $transaction_id);
+        $rent = BookRent::firstWhere('invoice_id', $invoice->id);
+        $is_used = $rent->is_used;
+        return view('User.books.read', compact('book', 'is_used', 'transaction_id'));
     }
+
+
+    public function activateKeys(Request $request)
+    
+    {
+        $invoice_id = Invoice::where('transaction_id', $request->transaction_id)->first()->id;
+        $rent = BookRent::where('invoice_id', $invoice_id)->first();
+        if ($rent && $rent->keys && $rent->keys === $request->keys) {
+            $invoice = Invoice::with(['transaction'])->find($invoice_id);
+            $month = $invoice->transaction->months;
+            $rent->is_used = true;
+            $rent->due_date = Carbon::parse($rent->due_date)->addMonths($month);
+            $rent->save();
+            return redirect()->back()->with("success", "Keys activated successfully.");
+        }
+
+        return redirect()->back()->with("error", "The keys you entered don't match.");
+    }
+
 
     public function pay($slug)
     {
+        $title = 'Rent Payment';
         $book = Book::where('slug', $slug)->first();
         $companyAccounts = BankAccount::with(['user.userhasrole', 'bank'])
             ->whereHas('user.userhasrole', function ($query) {
@@ -56,15 +81,11 @@ class BookController extends Controller
             ->get();
         $userAccounts = auth()->user()->accountBank()->with('bank')->get();
 
-        // return $book;
-
-        return view('User.books.payment', compact('book', 'companyAccounts', 'userAccounts'));
+        return view('User.books.payment', compact('book', 'companyAccounts', 'userAccounts', 'title'));
     }
 
     public function payNow(Request $request, $id)
     {
-        // return $request;
-
         $request->validate([
             'customer_bank_account_id' => 'required|exists:bank_accounts,id',
             'company_bank_account_id' => 'required|exists:bank_accounts,id',
@@ -84,7 +105,6 @@ class BookController extends Controller
         });
 
         if ($validator->fails()) {
-            // Validation failed
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
@@ -99,25 +119,22 @@ class BookController extends Controller
             'book_id' => $id,
             'status_id' => TransactionStatus::PENDING,
             'rent_prices' => $request->total_price,
-            'duration' => $request->number_of_month
+            'months' => $request->number_of_month,
+
         ]);
 
         return Redirect::route('notif')->with('success', 'Transaksi Berhasil!');
     }
 
     public function bookshelf()
-    {
+    {   
+        $title = 'My Books';
+        $transactions = Transaction::with(['book'])
+            ->where('user_id', Auth::id())
+            ->where('status_id', TransactionStatus::SUCCESS)
+            ->get();
 
-        $userId = Auth::id();
-
-        $books = Book::with(['transactions' => function ($query) use ($userId) {
-            $query->where('user_id', $userId)
-                ->where('status_id', 2);
-        }])->whereHas('transactions', function ($query) use ($userId) {
-            $query->where('user_id', $userId)
-                ->where('status_id', 2);
-        })->get();
-
-        return view('User.books.bookshelf', compact('books'));
+        $books = $transactions->map(fn ($transaction) => $transaction->book ?? null)->filter();
+        return view('User.books.bookshelf', compact('books', 'title'));
     }
 }

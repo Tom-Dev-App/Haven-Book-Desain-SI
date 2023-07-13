@@ -15,4 +15,8 @@ class Invoice extends Model
     {
         return $this->belongsTo(Transaction::class);
     }
+
+    public function rents() {
+        return $this->hasMany(BookRent::class);
+    }
 }

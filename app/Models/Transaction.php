@@ -10,7 +10,7 @@ class Transaction extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ["transaction_number", "user_id", "book_id", "status_id", "admin_id", "bank_name_id", "cardholder_name", "card_number", "payment_proof", "bank_customer_account_id", "bank_company_account_id", 'rent_prices', "duration"];
+    protected $fillable = ["transaction_number", "user_id", "book_id", "status_id", "admin_id", "bank_name_id", "cardholder_name", "card_number", "payment_proof", "bank_customer_account_id", "bank_company_account_id", 'rent_prices', 'months'];
 
     public function status()
     {

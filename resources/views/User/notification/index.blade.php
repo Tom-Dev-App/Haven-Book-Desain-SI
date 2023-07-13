@@ -1,4 +1,6 @@
 <x-base>
+    <x-slot:title>{{ $title ?? '' }}</x-slot:title>
+
     <x-slot:content>
         <x-navbar />
         <section class="profile py-7" id="" style="min-height: 100%">
@@ -38,6 +40,11 @@
                             <button class="nav-link " id="contact-tab" data-bs-toggle="tab" data-bs-target="#faktur"
                                 type="button" role="tab" aria-controls="contact"
                                 aria-selected="false">Faktur</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link " id="contact-tab" data-bs-toggle="tab" data-bs-target="#activation"
+                                type="button" role="tab" aria-controls="contact"
+                                aria-selected="false">Activation Keys</button>
                         </li>
                     </ul>
                     <div class="tab-content" id="myTabContent">
@@ -93,16 +100,14 @@
                                                     </td>
                                                     <td class="align-middle">
                                                         @if ($transaction->status->name == 'PENDING')
-                                                            <span class="bg-warning text-light px-2 py-1 rounded">
-                                                                {{ $transaction->status->name }}
-                                                            </span>
+                                                            <span class="badge bg-warning">{{ $transaction->status->name }}</span>
                                                         @elseif($transaction->status->name == 'SUCCESS')
                                                             <span class="bg-success text-light px-2 py-1 rounded">
                                                                 {{ $transaction->status->name }}
                                                             </span>
                                                         @else
-                                                            <span class="bg-danger text-light px-2 py-1 rounded">
-                                                                {{ $transaction->status->name }}ED
+                                                            <span class="badge bg-danger"> 
+                                                                {{ $transaction->status->name }}
                                                             </span>
                                                         @endif
                                                     </td>
@@ -114,6 +119,8 @@
                                 </div>
                             </div>
                         </div>
+
+                        {{-- Informasi Transaksi --}}
                         <div class="tab-pane fade" id="faktur" role="tabpanel" aria-labelledby="contact-tab">
                             <div class="card">
                                 <div class="card-header">
@@ -223,6 +230,76 @@
                                 </div>
                             </div>
                         </div>
+                        {{-- END Informasi Transaksi --}}
+
+
+                        {{-- Activation Keys --}}
+                        <div class="tab-pane fade" id="activation" role="tabpanel" aria-labelledby="contact-tab">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="d-flex align-items-center">
+                                        <p class="mb-0">Kunci Aktivasi</p>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <p class="text-uppercase text-sm">Kunci Aktivasi Buku</p>
+                                    <div class="container">
+                                        <table class="table table-hover ">
+                                            <thead>
+                                                <tr>
+                                                    <td>#</td>
+                                                    <td>Buku</td>
+                                                    <td>Status pakai</td>
+                                                    <td>Batas Waktu</td>
+                                                    <td>Keys</td>
+                                                    <td>Action</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach($rents as $rent)
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>
+                                                        <div class="d-flex">
+                                                            <div>
+                                                                <img src="{{ Storage::url($rent->book->image) }}"
+                                                                    class="me-2" alt="..."
+                                                                    style="max-width: 50px">
+                                                            </div>
+                                                            <div class="my-auto ">
+                                                                <h6 class="text-sm mb-0">{{ $rent->book->title }}</h6>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="align-middle">
+                                                        @if($rent->is_used)
+                                                            <span class="badge bg-info">Terpakai</span>
+                                                        @else
+                                                            <span class="badge bg-success">Belum dipakai</span>
+                                                        @endif
+
+                                                    </td>
+                                                    <td class="align-middle">
+                                                        <p class=" mb-0">{{ $rent->due_date }}</p>
+                                                        
+                                                    </td>
+                                                    <td class="align-middle">
+                                                        <p class=" mb-0">{{ $rent->keys }}</p>
+                                                    </td>
+                                                    <td class="align-middle">
+                                                        <button class="btn btn-outline-secondary copy-to-clipboard" data-book-keys="{{ $rent->keys }}">
+                                                            <i class="fa-solid fa-copy"  ></i> Copy
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- END Informasi Transaksi --}}
                     </div>
 
 
@@ -262,6 +339,29 @@
                 buttonChanges.style.display = 'none'
                 buttonSaveChanges.style.display = 'block'
             }
+        </script>
+        <script defer>
+             document.addEventListener('DOMContentLoaded', function() {
+              var buttons = document.querySelectorAll('.copy-to-clipboard'); // Replace with your button class
+
+              buttons.forEach(function(button) {
+                button.addEventListener('click', function() {
+                  var keys = button.getAttribute('data-book-keys');
+                  copyToClipboard(keys);
+                });
+              });
+
+              function copyToClipboard(text) {
+                navigator.clipboard.writeText(text)
+                  .then(function() {
+                    alert('Keys copied to clipboard!');
+                  })
+                  .catch(function(error) {
+                    console.error('Failed to copy keys to clipboard:', error);
+                  });
+              }
+            });
+
         </script>
     </x-slot:content>
 </x-base>

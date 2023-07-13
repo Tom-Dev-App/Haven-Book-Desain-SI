@@ -60,7 +60,7 @@ class ProfileController extends Controller
         return redirect()->route('user-profile');
     }
 
-    function update(Request $request, $id)
+   function update(Request $request, $id)
     {
 
         $user = User::findOrFail($id);

@@ -22,38 +22,15 @@ class DatabaseSeeder extends Seeder
         // ]);
         $this->call([
             UserSeeder::class,
-        ]);
-
-        $this->call([
-            UserProfileSeeder::class
-        ]);
-
-        // $this->call([
-        //     BookSeeder::class
-        // ]);
-
-        $this->call([
-            BankSeeder::class
-        ]);
-
-        // $this->call([
-        //     BankAccountSeeder::class
-        // ]);
-
-        $this->call([
-            RoleSeeder::class
-        ]);
-
-        $this->call([
-            UserHasRoleSeeder::class
-        ]);
-
-        $this->call([
+            UserProfileSeeder::class,
+            // BookSeeder::class,
+            BankSeeder::class,
+            BankAccountSeeder::class,
+            RoleSeeder::class,
+            UserHasRoleSeeder::class,
             TransactionStatusSeeder::class,
+            // TransactionSeeder::class,
+          
         ]);
-
-        // $this->call([
-        //     TransactionSeeder::class
-        // ]);
     }
 }

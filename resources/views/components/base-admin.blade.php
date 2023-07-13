@@ -76,7 +76,7 @@
             timerProgressBar: true
         })
     </script>
-
+    @stack('head')
 
 </head>
 

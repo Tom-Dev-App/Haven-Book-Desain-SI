@@ -2,6 +2,7 @@
       use Illuminate\Support\Str;
   @endphp
   <x-base>
+    <x-slot:title>{{ $title ?? '' }}</x-slot:title>
       <x-slot:content>
           <x-navbar />
           <section class="profile py-7" id="" style="min-height: 100%">
