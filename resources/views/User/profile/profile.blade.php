@@ -254,8 +254,10 @@
                                 <div class="card-footer d-flex justify-content-between">
                                     <button class="btn btn-outline-danger" data-bs-toggle="modal"
                                         data-bs-target="#add-rekening">+ akun rekening</button>
-                                    <a href="#" class="btn btn-danger" id="btn-edit-rekening"
-                                        onclick="deleteRekening(event)">Hapus rekening</a>
+                                    @if (!$userAccounts->isEmpty())
+                                        <a href="#" class="btn btn-danger" id="btn-edit-rekening"
+                                            onclick="deleteRekening(event)">Hapus rekening</a>
+                                    @endif
                                 </div>
                             </div>
                         </div>

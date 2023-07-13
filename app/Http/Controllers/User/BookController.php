@@ -24,12 +24,18 @@ class BookController extends Controller
         return view('user/books/book', compact('books'));
     }
 
-    function detail($slug)
+    public function detail($slug)
     {
         $book = Book::where('slug', $slug)->first();
+        $bankAccounts = BankAccount::where('user_id', Session::get('id'))->get();
+        $companyAccounts = BankAccount::with(['user.userhasrole', 'bank'])
+            ->whereHas('user.userhasrole', function ($query) {
+                $query->where('role_id', UserhasRole::ADMIN);
+            })
+            ->get();
 
         // return $book;
-        return view('user/books/detail', compact('book'));
+        return view('user/books/detail', compact('book', 'bankAccounts', 'companyAccounts'));
     }
 
     public function readBook($slug)
@@ -92,7 +98,8 @@ class BookController extends Controller
             'user_id' => auth()->user()->id,
             'book_id' => $id,
             'status_id' => TransactionStatus::PENDING,
-            'rent_prices' => $request->total_price
+            'rent_prices' => $request->total_price,
+            'duration' => $request->number_of_month
         ]);
 
         return Redirect::route('notif')->with('success', 'Transaksi Berhasil!');

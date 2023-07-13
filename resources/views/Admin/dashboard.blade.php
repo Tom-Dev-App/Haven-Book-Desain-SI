@@ -179,24 +179,20 @@
                                 </div>
                                 @foreach ($bankAccounts as $bankAccount)
                                     <div class="mb-3">
-                                        @if ($bankAccount)
-                                            <div class="row">
-                                                <div class="col-md-11">
-                                                    <label for="" class="form-label">Rekening Pembayaran
-                                                        {{ $loop->iteration }}</label>
-                                                    <input type="text" readonly class="form-control"
-                                                        id=""
-                                                        value="{{ $bankAccount->bank->codename }} - {{ $bankAccount->account_number }}">
-                                                </div>
-                                                <div class="col-md-1 d-flex align-items-center">
-                                                    <a href="{{ route('delete-bank-admin-profile', $bankAccount->id) }}"
-                                                        class="btn-delete-rekening mt-4" style="display: none">
-                                                        <i class="fa-solid fa-xmark fa-lg"
-                                                            style="color: #dc3545;"></i>
-                                                    </a>
-                                                </div>
+                                        <div class="row">
+                                            <div class="col-md-11">
+                                                <label for="" class="form-label">Rekening Pembayaran
+                                                    {{ $loop->iteration }}</label>
+                                                <input type="text" readonly class="form-control" id=""
+                                                    value="{{ $bankAccount->bank->codename }} - {{ $bankAccount->account_number }}">
                                             </div>
-                                        @endif
+                                            <div class="col-md-1 d-flex align-items-center">
+                                                <a href="{{ route('delete-bank-admin-profile', $bankAccount->id) }}"
+                                                    class="btn-delete-rekening mt-4" style="display: none">
+                                                    <i class="fa-solid fa-xmark fa-lg" style="color: #dc3545;"></i>
+                                                </a>
+                                            </div>
+                                        </div>
                                     </div>
                                 @endforeach
 
@@ -204,8 +200,11 @@
                             <div class="card-footer d-flex justify-content-between">
                                 <button data-bs-toggle="modal" data-bs-target="#add-rekening"
                                     class="btn btn-dark">Tambah rekening</button>
-                                <button class="btn btn-danger" id="" onclick="deleteRekening(event)">Hapus
-                                    rekening</button>
+                                @if (!$bankAccounts->isEmpty())
+                                    <button class="btn btn-danger" id=""
+                                        onclick="deleteRekening(event)">Hapus
+                                        rekening</button>
+                                @endif
                             </div>
                         </div>
                     </div>

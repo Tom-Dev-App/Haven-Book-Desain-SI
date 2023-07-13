@@ -99,7 +99,7 @@
                                                 <div class="alert alert-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
-                                        <hr class="my-5">
+                                        <hr class="mt-5 mb-4">
 
                                         <div class="row">
                                             <div class="col-md-6">
@@ -343,6 +343,10 @@
 
                             // Menghitung total harga
                             var totalHarga = harga * kuantitas;
+
+                            // if (isNaN(hargaTotal)) {
+                            //     hargaTotal.textContent = "Rp 0";
+                            // }
 
                             // Mengubah teks di tag <p> menjadi "Total Harga: [total harga]"
                             durasiSewa.textContent = kuantitas + " bulan";

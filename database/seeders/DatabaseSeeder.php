@@ -28,9 +28,9 @@ class DatabaseSeeder extends Seeder
             UserProfileSeeder::class
         ]);
 
-        $this->call([
-            BookSeeder::class
-        ]);
+        // $this->call([
+        //     BookSeeder::class
+        // ]);
 
         $this->call([
             BankSeeder::class

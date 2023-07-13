@@ -51,17 +51,11 @@
                                 </div>
                                 <div class="card-body p-0">
                                     <table class="table table-hover">
-                                        <thead>
-                                            <tr>
-                                                <td>#</td>
-                                                <td>Cover</td>
-                                                <td>Judul</td>
-                                                <td>Nomor Transaksi</td>
-                                                <td>Tanggal Transaksi</td>
-                                                <td>Harga</td>
-                                                <td>Status</td>
-                                            </tr>
-                                        </thead>
+                                        @if ($transactions->isEmpty())
+                                            <div class="alert alert-primary m-3 text-center" role="alert">
+                                                Belum ada transaksi
+                                            </div>
+                                        @endif
                                         <tbody>
                                             @foreach ($transactions as $transaction)
                                                 <tr class="">
@@ -103,7 +97,7 @@
                                                                 {{ $transaction->status->name }}
                                                             </span>
                                                         @elseif($transaction->status->name == 'SUCCESS')
-                                                            <span class="bg-success px-2 py-1 rounded">
+                                                            <span class="bg-success text-light px-2 py-1 rounded">
                                                                 {{ $transaction->status->name }}
                                                             </span>
                                                         @else

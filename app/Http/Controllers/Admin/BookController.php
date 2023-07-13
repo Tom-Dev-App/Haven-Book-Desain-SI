@@ -52,25 +52,23 @@ class BookController extends Controller
             'file' => 'required|mimes:pdf',
         ]);
 
-            $priceInput = $request->price;
-            $priceInput = str_replace('.', '', $priceInput);
+        $priceInput = $request->price;
+        $priceInput = str_replace('.', '', $priceInput);
 
-            $imagePath = $request->file('image')->store('images/books', 'public');
-            $filePath = $request->file("file")->store("books", 'public');
+        $imagePath = $request->file('image')->store('images/books', 'public');
+        $filePath = $request->file("file")->store("books", 'public');
 
-            $book = Book::create([
-                'image' => $imagePath,
-                'slug' => $request->slug,
-                'title' => $request->title,
-                'synopsis' => $request->synopsis,
-                'description' => $request->description,
-                'author' => $request->author,
-                'publisher' => $request->publisher,
-                'price' => $priceInput,
-                "file" => $filePath,
-                "author_attachment" => $request->author_attachment,
-                "publisher_attachment" => $request->publisher_attachment,
-            ]);
+        $book = Book::create([
+            'image' => $imagePath,
+            'slug' => $request->slug,
+            'title' => $request->title,
+            'synopsis' => $request->synopsis,
+            'description' => $request->description,
+            'author' => $request->author,
+            'publisher' => $request->publisher,
+            'price' => $priceInput,
+            "file" => $filePath
+        ]);
 
 
         $book->save();
@@ -118,9 +116,7 @@ class BookController extends Controller
             $priceInput = str_replace('.', '', $priceInput);
             $priceInput = str_replace(',', '', $priceInput);
 
-            $path = $request->file('image')->store('public/images/books');
-
-            $imagePath = Storage::url($path);
+            $imagePath = $request->file('image')->store('images/books', 'public');
 
             $book->image = $imagePath;
             $book->slug = $slug;
@@ -128,9 +124,7 @@ class BookController extends Controller
             $book->synopsis = $request->synopsis;
             $book->description = $request->description;
             $book->author = $request->author;
-            $book->author_attachment = $request->author_attachment;
             $book->publisher = $request->publisher;
-            $book->publisher_attachment = $request->publisher_attachment;
             $book->price = $priceInput;
 
             $book->save();
@@ -150,7 +144,6 @@ class BookController extends Controller
             $book->synopsis = $request->synopsis;
             $book->description = $request->description;
             $book->author = $request->author;
-            $book->author_attachment = $request->author_attachment;
             $book->publisher = $request->publisher;
             $book->price = $priceInput;
 

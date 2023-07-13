@@ -123,7 +123,7 @@
                                                                     <textarea class="form-control @error('synopsis') is-invalid @enderror" name="synopsis" id="synopsis" rows="3"
                                                                         aria-describedby="synopsisHelp">{{ old('synopsis') }}</textarea>
                                                                     <div class="form-text text-sm">
-                                                                        <span id="synopsisCounter">25</span> character
+                                                                        <span id="synopsisCounter">200</span> character
                                                                         remains
                                                                     </div>
                                                                     @error('synopsis')
@@ -140,7 +140,7 @@
                                                                     <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="desc"
                                                                         rows="3">{{ old('description') }}</textarea>
                                                                     <div class="form-text text-sm">
-                                                                        <span id="descCounter">40</span>
+                                                                        <span id="descCounter">300</span>
                                                                         character remains
                                                                     </div>
 
@@ -168,23 +168,6 @@
                                                                     @enderror
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label class="form-control-label"
-                                                                        for="author-url">Author attachment</label>
-                                                                    <div class="input-group">
-                                                                        <span class="input-group-text"
-                                                                            id="">Link</span>
-                                                                        <input type="text"
-                                                                            class="form-control @error('author_attachment') is-invalid @enderror"
-                                                                            id="author-url" name="author_attachment"
-                                                                            aria-describedby="">
-                                                                        @error('author_attachment')
-                                                                            <div class="invalid-feedback">
-                                                                                {{ $message }}
-                                                                            </div>
-                                                                        @enderror
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
                                                                     <label for="publisher" class="form-control-label">
                                                                         Publisher
                                                                         <span class="text-danger text-sm">*</span>
@@ -198,24 +181,6 @@
                                                                             {{ $message }}
                                                                         </div>
                                                                     @enderror
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="form-control-label"
-                                                                        for="publisher-url">Publisher
-                                                                        Attachment</label>
-                                                                    <div class="input-group">
-                                                                        <span class="input-group-text"
-                                                                            id="">Link</span>
-                                                                        <input type="text"
-                                                                            class="form-control @error('publisher_attachment') is-invalid @enderror"
-                                                                            id="publisher-url" aria-describedby=""
-                                                                            name="publisher_attachment">
-                                                                        @error('publisher_attachment')
-                                                                            <div class="invalid-feedback">
-                                                                                {{ $message }}
-                                                                            </div>
-                                                                        @enderror
-                                                                    </div>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="form-control-label"
@@ -489,13 +454,13 @@
                 event.target.value = formattedPrice;
             }
 
-            var maxSynopsis = 25;
+            var maxSynopsis = 400;
 
             const synopsis = document.getElementById('synopsis');
             const synopsisCounter = document.getElementById('synopsisCounter');
 
             synopsis.addEventListener('keydown', function(e) {
-                if (maxSynopsis === 0 && e.key !== 'Backspace' || maxSynopsis === 25 && e.key === 'Backspace') {
+                if (maxSynopsis === 0 && e.key !== 'Backspace' || maxSynopsis === 400 && e.key === 'Backspace') {
                     e.preventDefault();
                     return;
                 }
@@ -510,13 +475,13 @@
 
             });
 
-            var maxDesc = 40;
+            var maxDesc = 500;
 
             const desc = document.getElementById('desc');
             const descCounter = document.getElementById('descCounter');
 
             desc.addEventListener('keydown', function(e) {
-                if (maxDesc === 0 && e.key !== 'Backspace' || maxDesc === 40 && e.key === 'Backspace') {
+                if (maxDesc === 0 && e.key !== 'Backspace' || maxDesc === 500 && e.key === 'Backspace') {
                     e.preventDefault();
                     return;
                 }

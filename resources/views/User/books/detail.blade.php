@@ -37,12 +37,30 @@
                                     <i class="text-sm">Written by ~{{ $book->author }}</i>
                                     <p class="fw-bolder text-sm">Published by {{ $book->publisher }}</p>
                                 </div>
-                                <div class=" d-flex flex-row justify-content-center">
-                                    <a class="btn btn-lg btn-danger text-light d-flex align-items-center"
-                                        href="{{ route('pay', $book->slug) }}">
-                                        Sewa Buku<i class="ti-check mr-2 ml-2"></i>Rp
-                                        {{ number_format($book->price, 0, ',', '.') }},-
-                                    </a>
+                                <div class="">
+                                    @if ($bankAccounts->isEmpty())
+                                        <button disabled
+                                            class="btn btn-lg btn-danger text-light d-flex align-items-center"
+                                            href="{{ route('pay', $book->slug) }}">
+                                            Sewa Buku<i class="ti-check mr-2 ml-2"></i>Rp
+                                            {{ number_format($book->price, 0, ',', '.') }},-
+                                        </button>
+                                        <p class="fw-light text-danger">Rekening tidak ditemukan</p>
+                                    @elseif($companyAccounts->isEmpty())
+                                        <button disabled
+                                            class="btn btn-lg btn-danger text-light d-flex align-items-center"
+                                            href="{{ route('pay', $book->slug) }}">
+                                            Sewa Buku<i class="ti-check mr-2 ml-2"></i>Rp
+                                            {{ number_format($book->price, 0, ',', '.') }},-
+                                        </button>
+                                        <p class="fw-light text-danger">Buku belum tersedia</p>
+                                    @else
+                                        <a class="btn btn-lg btn-danger text-light d-flex align-items-center"
+                                            href="{{ route('pay', $book->slug) }}">
+                                            Sewa Buku<i class="ti-check mr-2 ml-2"></i>Rp
+                                            {{ number_format($book->price, 0, ',', '.') }},-
+                                        </a>
+                                    @endif
                                 </div>
                             </div>
                         </div>
