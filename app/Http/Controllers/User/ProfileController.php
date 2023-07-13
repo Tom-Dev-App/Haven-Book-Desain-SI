@@ -56,11 +56,48 @@ class ProfileController extends Controller
         return redirect()->route('user-profile');
     }
 
-    function update(Request $request)
+   function update(Request $request, $id)
     {
 
-        $profile = auth()->user()->profile;
+        $user = User::findOrFail($id);
 
-        dd($request);
+        if ($user) {
+
+            if ($request->email != $request->old_email) {
+                $validator = Validator::make($request->all(), [
+                    'name' => 'required|regex:/^\S*$/',
+                    'email' => 'required|email|unique:users',
+                ]);
+                $email = $request->email;
+            } else {
+                $validator = Validator::make($request->all(), [
+                    'name' => 'required|regex:/^\S*$/'
+                ]);
+                $email = $request->old_email;
+            }
+
+            if ($validator->fails()) {
+                Session::flash('alert', 'Gagal mengubah data');
+                Session::flash('alertType', 'Danger');
+
+                return redirect()->route('user-profile');
+            }
+
+            $user->name = $request->name;
+            $user->email = $email;
+            $user->profile()->first_name = $request->first_name;
+            $user->profile()->last_name = $request->last_name;
+
+            $user->save();
+
+            Session::flash('alert', 'Data telah diubah');
+            Session::flash('alertType', 'Success');
+            return redirect()->route('user-profile');
+        } else {
+
+            Session::flash('alert', 'User tidak terdaftar');
+            Session::flash('alertType', 'Danger');
+            return redirect()->route('user-profile');
+        }
     }
 }
