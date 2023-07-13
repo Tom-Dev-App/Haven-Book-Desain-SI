@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class NotificationController extends Controller
 {
     public function index()
-    {
+    {   
+        $title = 'Payments';
         $transactions = auth()->user()->customerTransactions()->with(['invoice', 'status', 'book'])->orderByDesc('id')->get();
-        $rents = auth()->user()->rents()->get();
-        return view('User.notification.index', compact('transactions'));
+        $rents = auth()->user()->rents()->with('book')->get();
+        return view('User.notification.index', compact('transactions', 'title', 'rents'));
     }
 }

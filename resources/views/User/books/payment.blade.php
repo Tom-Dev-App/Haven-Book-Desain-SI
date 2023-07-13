@@ -1,4 +1,5 @@
     <x-base>
+    <x-slot:title>{{ $title ?? '' }}</x-slot:title>
         <x-slot:content>
             <x-navbar></x-navbar>
             <section class="banner-main py-7" id="banner" style="min-height: 100vh">
@@ -38,8 +39,8 @@
                                                     <label for="" class="form-label">
                                                         <p class="my-0">Pilih sumber dana</p>
                                                     </label>
-                                                    <select @error('customer_bank_account_id') is-invalid @enderror"
-                                                        class="form-select form-select-sm"
+                                                    <select 
+                                                        class="form-select form-select-sm @error('customer_bank_account_id') is-invalid @enderror"
                                                         name="customer_bank_account_id"
                                                         aria-label=".form-select-sm example">
                                                         <option value="{{ $userAccounts->first()->id }}" selected>
@@ -99,7 +100,7 @@
                                                 <div class="alert alert-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
-                                        <hr class="my-5">
+                                        <hr class="mt-5 mb-4">
 
                                         <div class="row">
                                             <div class="col-md-6">
@@ -343,6 +344,10 @@
 
                             // Menghitung total harga
                             var totalHarga = harga * kuantitas;
+
+                            // if (isNaN(hargaTotal)) {
+                            //     hargaTotal.textContent = "Rp 0";
+                            // }
 
                             // Mengubah teks di tag <p> menjadi "Total Harga: [total harga]"
                             durasiSewa.textContent = kuantitas + " bulan";

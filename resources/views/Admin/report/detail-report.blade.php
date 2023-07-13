@@ -34,7 +34,7 @@
                                         value="{{ $invoice->transaction->user->email }}">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="" class="form-label">A.N</label>
+                                    <label for="" class="form-label">Atas nama</label>
                                     <input readonly type="text" class="form-control" id=""
                                         value="{{ $invoice->transaction->user->name }}">
                                 </div>
@@ -52,7 +52,6 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-
                         <div class="card h-100">
                             <h5 class="card-header">
                                 Data Buku

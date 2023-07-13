@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Support\Facades\Session;
 
@@ -27,11 +28,25 @@ class UserController extends Controller
     {
         if (Session::get('role') == 'Admin') {
 
-            $user = User::with('userhasrole.role', 'profile')->withTrashed()->findOrFail($id);
+            $user = User::with(
+                'userhasrole.role',
+                'profile'
+            )->withTrashed()->findOrFail($id);
 
-            // return $user;
+            $transactions = Transaction::with(
+                'book',
+                'status',
+                'admin',
+                'companyBank',
+                'customerBank'
+            )
+                ->where('user_id', $id)
+                ->withTrashed()
+                ->get();
 
-            return view('admin/users/detail-user', compact('user'));
+            // return $transactions;
+
+            return view('admin/users/detail-user', compact('user', 'transactions'));
         } else {
             return redirect()->route('sign-in');
         }

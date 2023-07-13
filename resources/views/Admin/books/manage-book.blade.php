@@ -1,4 +1,21 @@
 <x-base-admin title="Manage Buku">
+    @push('head')
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const slug = document.querySelector('#slug')
+                const title = document.querySelector('#book-title')
+
+                title.addEventListener('change', function(e){
+                    fetch(`/api/checkSlug?title=${title.value}`).then(response => response.json())
+                    .then(data => slug.value = data.slug)
+                    
+                    title.addEventListener('keyup', function(){
+                        if(title.value == "") slug.value = ""
+                    })
+                })
+            })
+        </script>
+    @endpush
 
     <x-slot:content>
 
@@ -37,6 +54,8 @@
                                             @endif
                                         </div>
                                     </div>
+
+                                    {{-- START CREATE MODAL BOX FORM --}}
                                     <div class="modal fade" id="modal-default" tabindex="-1" role="dialog"
                                         aria-labelledby="modal-default" aria-hidden="true">
                                         <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
@@ -85,28 +104,13 @@
                                                                     @enderror
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label for="slug"
-                                                                        class="form-control-label">Slug</label>
-                                                                    <input readonly
-                                                                        class="form-control @error('slug') is-invalid @enderror"
-                                                                        type="text" name="slug"
-                                                                        placeholder="example: $-123-x" id="slug"
-                                                                        value="{{ uniqid() }}"
-                                                                        value="{{ @old('slug') }}">
-                                                                    @error('slug')
-                                                                        <div class="invalid-feedback">
-                                                                            {{ $message }}
-                                                                        </div>
-                                                                    @enderror
-                                                                </div>
-                                                                <div class="form-group">
                                                                     <label for="book-title" class="form-control-label">
                                                                         Title
                                                                         <span class="text-danger text-sm">*</span>
                                                                     </label>
                                                                     <input required
                                                                         class="form-control @error('title') is-invalid @enderror"
-                                                                        type="text" value="" name="title"
+                                                                        type="text" name="title"
                                                                         placeholder="example: The Alchemist"
                                                                         id="book-title" value="{{ @old('title') }}">
                                                                     @error('title')
@@ -116,11 +120,31 @@
                                                                     @enderror
                                                                 </div>
                                                                 <div class="form-group">
+                                                                    <label for="slug"
+                                                                        class="form-control-label">Slug</label>
+                                                                    <input
+                                                                        class="form-control @error('slug') is-invalid @enderror"
+                                                                        type="text" name="slug"
+                                                                        placeholder="example: $-123-x" id="slug"
+                                                                        value="{{ @old('slug') }}" readonly>
+                                                                    @error('slug')
+                                                                        <div class="invalid-feedback">
+                                                                            {{ $message }}
+                                                                        </div>
+                                                                    @enderror
+                                                                </div>
+                                                                
+                                                                <div class="form-group">
                                                                     <label for="synopsis">
                                                                         Synopsis
                                                                         <span class="text-danger text-sm">*</span>
                                                                     </label>
-                                                                    <textarea class="form-control @error('synopsis') is-invalid @enderror" name="synopsis" id="synopsis" rows="3">{{ old('synopsis') }}</textarea>
+                                                                    <textarea class="form-control @error('synopsis') is-invalid @enderror" name="synopsis" id="synopsis" rows="3"
+                                                                        aria-describedby="synopsisHelp">{{ old('synopsis') }}</textarea>
+                                                                    <div class="form-text text-sm">
+                                                                        <span id="synopsisCounter">200</span> character
+                                                                        remains
+                                                                    </div>
                                                                     @error('synopsis')
                                                                         <div class="invalid-feedback">
                                                                             {{ $message }}
@@ -134,6 +158,11 @@
                                                                     </label>
                                                                     <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="desc"
                                                                         rows="3">{{ old('description') }}</textarea>
+                                                                    <div class="form-text text-sm">
+                                                                        <span id="descCounter">300</span>
+                                                                        character remains
+                                                                    </div>
+
                                                                     @error('description')
                                                                         <div class="invalid-feedback">
                                                                             {{ $message }}
@@ -149,7 +178,7 @@
                                                                     </label>
                                                                     <input required
                                                                         class="form-control @error('author') is-invalid @enderror"
-                                                                        type="text" value="" placeholder=""
+                                                                        type="text" value="{{ @old('author') }}" placeholder=""
                                                                         name="author" id="author">
                                                                     @error('author')
                                                                         <div class="invalid-feedback">
@@ -158,6 +187,7 @@
                                                                     @enderror
                                                                 </div>
                                                                 <div class="form-group">
+
                                                                     <label class="form-control-label"
                                                                         for="author-url">Author attachment</label>
                                                                     <div class="input-group">
@@ -166,7 +196,7 @@
                                                                         <input type="text"
                                                                             class="form-control @error('author_attachment') is-invalid @enderror"
                                                                             id="author-url" name="author_attachment"
-                                                                            aria-describedby="">
+                                                                            aria-describedby="" value="{{ @old('author_attachment') }}">
                                                                         @error('author_attachment')
                                                                             <div class="invalid-feedback">
                                                                                 {{ $message }}
@@ -175,13 +205,14 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group">
+
                                                                     <label for="publisher" class="form-control-label">
                                                                         Publisher
                                                                         <span class="text-danger text-sm">*</span>
                                                                     </label>
                                                                     <input required
                                                                         class="form-control @error('publisher') is-invalid @enderror"
-                                                                        type="text" value="" placeholder=""
+                                                                        type="text" value="{{ @old('publisher')}}" placeholder=""
                                                                         id="publisher" name="publisher">
                                                                     @error('publisher')
                                                                         <div class="invalid-feedback">
@@ -191,6 +222,7 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="form-control-label"
+
                                                                         for="publisher-url">Publisher
                                                                         Attachment</label>
                                                                     <div class="input-group">
@@ -199,7 +231,7 @@
                                                                         <input type="text"
                                                                             class="form-control @error('publisher_attachment') is-invalid @enderror"
                                                                             id="publisher-url" aria-describedby=""
-                                                                            name="publisher_attachment">
+                                                                            name="publisher_attachment" value="{{@old('publisher_attachment')}}">
                                                                         @error('publisher_attachment')
                                                                             <div class="invalid-feedback">
                                                                                 {{ $message }}
@@ -241,6 +273,10 @@
                                     </div>
                                 </div>
                             </div>
+                            {{-- END CREATE MODAL BOX FORM --}}
+
+
+                            {{-- START CONTENT HERE --}}
                             <div class="card-body px-0 pt-0 pb-2">
                                 <div class="table-responsive p-0">
                                     <table class="table align-items-center justify-content-center mb-0">
@@ -335,6 +371,7 @@
                                 </div>
                             </div>
                         </div>
+                            {{-- END CONTENT ABOVE --}}
 
                     </div>
                 </div>
@@ -478,6 +515,48 @@
                 // Mengatur nilai input dengan format harga
                 event.target.value = formattedPrice;
             }
+
+            var maxSynopsis = 400;
+
+            const synopsis = document.getElementById('synopsis');
+            const synopsisCounter = document.getElementById('synopsisCounter');
+
+            synopsis.addEventListener('keydown', function(e) {
+                if (maxSynopsis === 0 && e.key !== 'Backspace' || maxSynopsis === 400 && e.key === 'Backspace') {
+                    e.preventDefault();
+                    return;
+                }
+
+                if (e.key === 'Backspace') {
+                    maxSynopsis = maxSynopsis + 1;
+                    synopsisCounter.innerHTML = maxSynopsis;
+                } else {
+                    maxSynopsis = maxSynopsis - 1;
+                    synopsisCounter.innerHTML = maxSynopsis;
+                }
+
+            });
+
+            var maxDesc = 500;
+
+            const desc = document.getElementById('desc');
+            const descCounter = document.getElementById('descCounter');
+
+            desc.addEventListener('keydown', function(e) {
+                if (maxDesc === 0 && e.key !== 'Backspace' || maxDesc === 500 && e.key === 'Backspace') {
+                    e.preventDefault();
+                    return;
+                }
+
+                if (e.key === 'Backspace') {
+                    maxDesc = maxDesc + 1;
+                    descCounter.innerHTML = maxDesc;
+                } else {
+                    maxDesc = maxDesc - 1;
+                    descCounter.innerHTML = maxDesc;
+                }
+
+            });
         </script>
     </x-slot:content>
 </x-base-admin>

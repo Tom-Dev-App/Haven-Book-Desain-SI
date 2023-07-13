@@ -3,9 +3,9 @@
     <x-slot:content>
 
         <x-sidebar-admin />
-        <div class="main-content position-relative bg-gray-100" style="min-height: 100vh">
+        <div class="main-content position-relative bg-gray-100">
             <x-navbar-admin />
-            <div class="container-fluid py-4" style="min-height: 100%">
+            <div class="container-fluid py-4" style="min-height: 100vh">
                 <div class="card mb-3">
                     <h5 class="card-header">Invoices</h5>
                     <div class="card-body">
@@ -75,7 +75,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card">
+                {{-- <div class="card">
                     <h5 class="card-header">Transaksi</h5>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -293,7 +293,7 @@
                         </div>
 
                     </div>
-                </div>
+                </div> --}}
                 <footer class="footer pt-3">
                     <div class="container-fluid">
                         <div class="row align-items-center justify-content-lg-between">
@@ -316,16 +316,16 @@
                                             target="_blank">Creative Tim</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="https://www.creative-tim.com/presentation"
-                                            class="nav-link text-muted" target="_blank">About Us</a>
+                                        <a href="https://www.creative-tim.com/presentation" class="nav-link text-muted"
+                                            target="_blank">About Us</a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="https://www.creative-tim.com/blog" class="nav-link text-muted"
                                             target="_blank">Blog</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="https://www.creative-tim.com/license"
-                                            class="nav-link pe-0 text-muted" target="_blank">License</a>
+                                        <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted"
+                                            target="_blank">License</a>
                                     </li>
                                 </ul>
                             </div>

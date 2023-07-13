@@ -16,10 +16,14 @@ class BookRent extends Model
     }
 
     public function user () {
-        return $this->belongTo(User::class, "user_id");
+        return $this->belongsTo(User::class, "user_id");
     }
 
     public function transaction () {
-        return $this->belongTo(Transaction::class, "transaction_id");
+        return $this->belongsTo(Transaction::class);
+    }
+
+    public function invoice() {
+        return $this->belongsTo(Invoice::class, "invoice_id");
     }
 }

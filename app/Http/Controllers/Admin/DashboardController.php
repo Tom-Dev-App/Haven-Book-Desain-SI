@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Bank;
+use App\Models\BankAccount;
+use App\Models\UserProfile;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
@@ -15,12 +18,10 @@ class DashboardController extends Controller
         if (Session::get('role') == 'Admin') {
 
             $user = User::with('userhasrole.role')->findOrFail(Session::get('id'));
-            $bankAccount = User::with(
-                'accountBank.bank',
-                'accountBank.user'
-            )->findOrFail(Session::get('id'));
+            $banks = Bank::get();
+            $bankAccounts = BankAccount::with('bank', 'user')->where('user_id', Session::get('id'))->get();
 
-            return view('Admin/dashboard', compact('user', 'bankAccount'));
+            return view('Admin/dashboard', compact('user', 'bankAccounts', 'banks'));
         } else {
             return redirect()->route('sign-in');
         }
@@ -29,6 +30,7 @@ class DashboardController extends Controller
     function update(Request $request, $id)
     {
         $user = User::with('profile')->findOrFail($id);
+        $profile = UserProfile::where('user_id', $id)->first();
 
         if ($request->name != $request->old_name) {
 
@@ -49,7 +51,7 @@ class DashboardController extends Controller
             Session::flash('alert', 'Berhasil ubah username');
             Session::flash('alertType', 'Success');
 
-            return redirect()->route('dashboard');
+            // return redirect()->route('dashboard');
         }
 
         if ($request->email != $request->old_email) {
@@ -71,7 +73,7 @@ class DashboardController extends Controller
             Session::flash('alert', 'Berhasil ubah email');
             Session::flash('alertType', 'Success');
 
-            return redirect()->route('dashboard');
+            // return redirect()->route('dashboard');
         }
 
         if ($request->first_name != $request->old_first_name) {
@@ -87,13 +89,13 @@ class DashboardController extends Controller
                 return redirect()->route('dashboard');
             }
 
-            $user->profile()->first_name = $request->first_name;
-            $user->save();
+            $profile->first_name = $request->first_name;
+            $profile->save();
 
             Session::flash('alert', 'Berhasil ubah nama depan');
             Session::flash('alertType', 'Success');
 
-            return redirect()->route('dashboard');
+            // return redirect()->route('dashboard');
         }
 
         if ($request->last_name != $request->old_last_name) {
@@ -109,14 +111,54 @@ class DashboardController extends Controller
                 return redirect()->route('dashboard');
             }
 
-            $user->profile()->last_name = $request->last_name;
-            $user->save();
+            $profile->last_name = $request->last_name;
+            $profile->save();
 
             Session::flash('alert', 'Berhasil ubah nama belakang');
             Session::flash('alertType', 'Success');
 
+            // return redirect()->route('dashboard');
+        }
+
+        return redirect()->route('dashboard');
+    }
+
+    public function addBankAccount(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'account_number' => 'required|unique:bank_accounts'
+        ]);
+
+        if ($validator->fails()) {
+            Session::flash('alert', 'Gagal menambah rekening');
+            Session::flash('alertType', 'Danger');
+
             return redirect()->route('dashboard');
         }
+
+        $bankAccount = BankAccount::create([
+
+            'user_id' => Session::get('id'),
+            'bank_id' => $request->bank,
+            'account_number' => $request->account_number
+        ]);
+
+        $bankAccount->save();
+
+        Session::flash('alert', 'Berhasil daftar rekening');
+        Session::flash('alertType', 'Success');
+
+        return redirect()->route('dashboard');
+    }
+
+    public function deleteBankAccount($id)
+    {
+        $bankAccount = BankAccount::findOrFail($id);
+
+        $bankAccount->delete();
+
+        Session::flash('alert', 'Berhasil hapus rekening');
+        Session::flash('alertType', 'Success');
 
         return redirect()->route('dashboard');
     }

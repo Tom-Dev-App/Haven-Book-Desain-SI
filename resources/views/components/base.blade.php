@@ -12,7 +12,7 @@
     <meta name="author" content="dreambuzz">
     <link rel="icon" type="image/png" href="{{ asset('image/havenbook.png') }}">
 
-    <title>The Haven Book | @yield('title')</title>
+    <title>The Haven Book | {{ $title ?? '' }}</title>
 
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('treaser/images/favicon.ico') }}" />

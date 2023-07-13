@@ -15,7 +15,7 @@
                             </h5>
                             <div class="card-body">
                                 <div class="mb-3">
-                                    <label for="" class="form-label">A.N</label>
+                                    <label for="" class="form-label">Atas nama</label>
                                     <input type="text" readonly class="form-control" id=""
                                         value="{{ $transaction->companyBank->user->name }}">
                                 </div>
@@ -63,49 +63,64 @@
                             </h5>
                             <div class="card-body">
                                 <div class="mb-3">
+                                    <label for="" class="form-label">Nomor Transaksi</label>
+                                    <input readonly type="text" readonly class="form-control" id=""
+                                        aria-describedby="emailHelp" value="{{ $transaction->transaction_number }}">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="" class="form-label mx-3">Bukti Transfer</label>
+                                    @if ($transaction->payment_proof)
+                                        <img src="{{ Storage::url($transaction->payment_proof) }}" alt=""
+                                            class="img-thumbnail" width="150px">
+                                    @else
+                                        <img src="{{ asset('image/error.png') }}" alt="" class="img-thumbnail"
+                                            width="70px">
+                                    @endif
+                                </div>
+                                <div class="mb-3">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <label for="" class="form-label">Nomor Transaksi</label>
-                                            <input readonly type="text" readonly class="form-control" id=""
-                                                aria-describedby="emailHelp"
-                                                value="{{ $transaction->transaction_number }}">
+                                            <label for="" class="form-label">Username</label>
+                                            <input readonly type="text" class="form-control" id=""
+                                                value="{{ $transaction->customerBank->user->name }}">
                                         </div>
                                         <div class="col-md-6">
-                                            <label for="" class="form-label mx-3">Bukti Transfer</label>
-                                            @if ($transaction->payment_proof)
-                                                <img src="{{ Storage::url($transaction->payment_proof) }}"
-                                                    alt="" class="img-thumbnail" width="150px">
-                                            @else
-                                                <img src="{{ asset('image/error.png') }}" alt=""
-                                                    class="img-thumbnail" width="70px">
-                                            @endif
+                                            <label for="" class="form-label">Email</label>
+                                            <input readonly type="text" class="form-control" id=""
+                                                value="{{ $transaction->customerBank->user->email }}">
                                         </div>
                                     </div>
+
                                 </div>
                                 <div class="mb-3">
-                                    <label for="" class="form-label">Username</label>
-                                    <input readonly type="text" class="form-control" id=""
-                                        value="{{ $transaction->customerBank->user->name }}">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="" class="form-label">A.N</label>
+                                            <input readonly type="text" class="form-control" id=""
+                                                value="{{ $transaction->customerBank->user->name }}">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="" class="form-label">Rekening User</label>
+                                            <input readonly type="text" class="form-control" id=""
+                                                value="{{ $transaction->customerBank->bank->codename }} - {{ $transaction->customerBank->account_number }}">
+                                        </div>
+                                    </div>
+
                                 </div>
                                 <div class="mb-3">
-                                    <label for="" class="form-label">Email</label>
-                                    <input readonly type="text" class="form-control" id=""
-                                        value="{{ $transaction->customerBank->user->email }}">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="" class="form-label">A.N</label>
-                                    <input readonly type="text" class="form-control" id=""
-                                        value="{{ $transaction->customerBank->user->name }}">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="" class="form-label">Rekening User</label>
-                                    <input readonly type="text" class="form-control" id=""
-                                        value="{{ $transaction->customerBank->bank->codename }} - {{ $transaction->customerBank->account_number }}">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="" class="form-label">Tanggal sewa</label>
-                                    <input readonly type="text" class="form-control" id=""
-                                        value="{{ $transaction->created_at }}">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="" class="form-label">Tanggal sewa</label>
+                                            <input readonly type="text" class="form-control" id=""
+                                                value="{{ $transaction->created_at }}">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="" class="form-label">Durasi Penyewaan</label>
+                                            <input readonly type="text" class="form-control w-25" id=""
+                                                value="{{ $transaction->duration }}">
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -137,6 +152,31 @@
                                     <label for="" class="form-label">Harga</label>
                                     <input readonly type="text" class="form-control" id=""
                                         value="Rp {{ number_format($transaction->book->price, 0, ',', '.') }},-">
+                                </div>
+                                <hr class="my-3">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="mb-3">
+                                            <p class="h4">Total Pembayaran</p>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <p class="h5">Rp
+                                                        {{ number_format($transaction->book->price, 0, ',', '.') }},- x
+                                                        {{ $transaction->duration }} bulan</p>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p class="h5">Rp
+                                                        {{ number_format($transaction->book->price * $transaction->duration, 0, ',', '.') }},-
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
