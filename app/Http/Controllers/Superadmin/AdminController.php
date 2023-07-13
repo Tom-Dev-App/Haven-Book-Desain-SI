@@ -2,35 +2,25 @@
 
 namespace App\Http\Controllers\Superadmin;
 
-use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use Spatie\Permission\Models\Role;
 
 class AdminController extends Controller
 {
     public function index()
     {
-        if (Session::get('role') == 'Superadmin') {
-
-            $admins = User::with([
-                'userhasrole.role',
-                'accountBank.bank'
-            ])
-                ->whereHas('userhasrole.role', function ($query) {
-                    $query->where('name', 'Admin');
-                })->withTrashed()
+        $role = Role::where('name', 'superadmin')->first();
+        $admins = User::role($role)
+                ->with(['profile', 'accountBank.bank'])
+                ->withTrashed()
                 ->get();
 
-            // return $admins;
-
-            return view('superadmin/admin/manage-admin', compact('admins'));
-        } else {
-            return redirect()->route('sign-in');
-        }
+        return view('superadmin/admin/manage-admin', compact('admins'));
     }
 
     public function store(Request $request)
@@ -55,10 +45,7 @@ class AdminController extends Controller
             'password' => Hash::make($request->password)
         ]);
 
-        $user->userhasrole()->create([
-            'user_id' => $user->id,
-            'role_id' => Role::ADMIN
-        ]);
+        $user->assignRole('admin');
 
         $user->profile()->create([
             'user_id' => $user->id,
@@ -76,11 +63,9 @@ class AdminController extends Controller
     {
 
         $admin = User::with([
-            'userhasrole.role',
+            'roles',
             'accountBank.bank'
-        ])->findOrFail($id);
-
-        // return $admin;
+            ])->findOrFail($id);
 
         return view('Superadmin/admin/detail-admin', compact('admin'));
     }

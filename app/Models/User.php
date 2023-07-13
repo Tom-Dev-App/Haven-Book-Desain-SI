@@ -13,10 +13,12 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, HasRoles;
 
     protected $table = 'users';
     /**
@@ -70,13 +72,12 @@ class User extends Authenticatable
         return $this->hasMany(Transaction::class);
     }
 
-    public function userhasrole()
-    {
-        return $this->hasOne(UserhasRole::class);
-    }
-
     public function accountBank()
     {
         return $this->hasMany(BankAccount::class);
+    }
+
+    public function roles() {
+        return $this->belongsToMany(Role::class);
     }
 }

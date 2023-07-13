@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Bank;
 use App\Models\BankAccount;
 use App\Models\UserProfile;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
@@ -15,16 +16,11 @@ class DashboardController extends Controller
 {
     function index()
     {
-        if (Session::get('role') == 'Admin') {
-
-            $user = User::with('userhasrole.role')->findOrFail(Session::get('id'));
+            $user = User::find(Auth::id());
             $banks = Bank::get();
-            $bankAccounts = BankAccount::with('bank', 'user')->where('user_id', Session::get('id'))->get();
+            $bankAccounts = BankAccount::with('bank', 'user')->get();
 
             return view('Admin/dashboard', compact('user', 'bankAccounts', 'banks'));
-        } else {
-            return redirect()->route('sign-in');
-        }
     }
 
     function update(Request $request, $id)

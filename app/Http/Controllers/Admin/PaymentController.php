@@ -12,15 +12,16 @@ use App\Models\Invoice;
 use App\Models\TransactionStatus;
 use DateTime;
 use Illuminate\Database\DBAL\TimestampType;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class PaymentController extends Controller
 {
+
     function index()
     {
-        if (Session::get('role') == 'Admin') {
 
-            $userId = Session::get('id');
+            $userId = Auth::id();
 
             $transactions = Transaction::with([
                 'companyBank.user',
@@ -38,16 +39,11 @@ class PaymentController extends Controller
             $cardholders = BankAccount::with('bank', 'user')->where('user_id', $userId)->get();
 
             return view('admin/payment/manage-payment', compact('transactions', 'cardholders'));
-        } else {
-            return redirect()->route('sign-in');
-        }
     }
 
     function detail($transaction_number)
     {
-        if (Session::get('role') == 'Admin') {
-
-            $userId = Session::get('id');
+            $userId = Auth::id();
 
             $transaction = Transaction::with([
                 'companyBank.user',
@@ -62,12 +58,8 @@ class PaymentController extends Controller
                 })
                 ->where('transaction_number', $transaction_number)->first();
 
-            // return $transaction;
 
             return view('admin/payment/payment-verification-detail', compact('transaction'));
-        } else {
-            return redirect()->route('sign-in');
-        }
     }
 
     function accPembayaran($transaction_number)
@@ -78,10 +70,8 @@ class PaymentController extends Controller
             'status',
         )->where('transaction_number', $transaction_number)->first();
 
-        // return $transaction;
-
         $transaction->status_id = TransactionStatus::SUCCESS;
-        $transaction->admin_id = Session::get('id');
+        $transaction->admin_id = Auth::id();
 
         $invoice = new Invoice();
 

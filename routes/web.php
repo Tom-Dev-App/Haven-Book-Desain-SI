@@ -30,11 +30,15 @@ use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 // });
 
 // Auth
-Route::get('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
+// logout
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
+// view login
 Route::get('/sign-in', [AuthController::class, 'signIn'])->name('sign-in')->middleware('guest');
+// process login
 Route::post('/sign-in', [AuthController::class, 'login'])->name('sign-in-process')->middleware('guest');
-
+// view register
 Route::get('/sign-up', [AuthController::class, 'signUp'])->name('sign-up')->middleware('guest');
+// process register
 Route::post('/sign-up', [AuthController::class, 'register'])->name('register')->middleware('guest');
 
 // User
