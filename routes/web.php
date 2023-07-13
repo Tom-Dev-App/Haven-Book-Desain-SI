@@ -53,6 +53,10 @@ Route::post('/books-activation', [UserBookController::class, 'activateKeys'])->n
 // Admin
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
 Route::post('/dashboard/update/{id}', [DashboardController::class, 'update'])->name('update-admin-profile')->middleware('auth');
+Route::post('/profile/addBankAccount/{id}', [ProfileController::class, 'addBankAccount'])->name('bank-user-profile')->middleware('auth');
+Route::GET('/profile/deleteBankAccount/{id}', [ProfileController::class, 'deleteBankAccount'])->name('delete-bank-user-profile')->middleware('auth');
+Route::post('/dashboard/addBankAccount', [DashboardController::class, 'addBankAccount'])->name('bank-admin-profile')->middleware('auth');
+Route::GET('/dashboard/deleteBankAccount/{id}', [DashboardController::class, 'deleteBankAccount'])->name('delete-bank-admin-profile')->middleware('auth');
 
 Route::get('/manage-user', [UserController::class, 'index'])->name('manage-user')->middleware('auth');
 Route::get('/manage-user/detail/{id}', [UserController::class, 'detail'])->name('detail-user')->middleware('auth');

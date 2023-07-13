@@ -29,8 +29,8 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             UserHasRoleSeeder::class,
             TransactionStatusSeeder::class,
-            // TransactionSeeder::class
+            // TransactionSeeder::class,
+          
         ]);
-
     }
 }

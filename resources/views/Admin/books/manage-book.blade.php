@@ -139,7 +139,12 @@
                                                                         Synopsis
                                                                         <span class="text-danger text-sm">*</span>
                                                                     </label>
-                                                                    <textarea class="form-control @error('synopsis') is-invalid @enderror" name="synopsis" id="synopsis" rows="3">{{ old('synopsis') }}</textarea>
+                                                                    <textarea class="form-control @error('synopsis') is-invalid @enderror" name="synopsis" id="synopsis" rows="3"
+                                                                        aria-describedby="synopsisHelp">{{ old('synopsis') }}</textarea>
+                                                                    <div class="form-text text-sm">
+                                                                        <span id="synopsisCounter">200</span> character
+                                                                        remains
+                                                                    </div>
                                                                     @error('synopsis')
                                                                         <div class="invalid-feedback">
                                                                             {{ $message }}
@@ -153,6 +158,11 @@
                                                                     </label>
                                                                     <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="desc"
                                                                         rows="3">{{ old('description') }}</textarea>
+                                                                    <div class="form-text text-sm">
+                                                                        <span id="descCounter">300</span>
+                                                                        character remains
+                                                                    </div>
+
                                                                     @error('description')
                                                                         <div class="invalid-feedback">
                                                                             {{ $message }}
@@ -177,6 +187,7 @@
                                                                     @enderror
                                                                 </div>
                                                                 <div class="form-group">
+
                                                                     <label class="form-control-label"
                                                                         for="author-url">Author attachment</label>
                                                                     <div class="input-group">
@@ -194,6 +205,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group">
+
                                                                     <label for="publisher" class="form-control-label">
                                                                         Publisher
                                                                         <span class="text-danger text-sm">*</span>
@@ -210,6 +222,7 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="form-control-label"
+
                                                                         for="publisher-url">Publisher
                                                                         Attachment</label>
                                                                     <div class="input-group">
@@ -502,6 +515,48 @@
                 // Mengatur nilai input dengan format harga
                 event.target.value = formattedPrice;
             }
+
+            var maxSynopsis = 400;
+
+            const synopsis = document.getElementById('synopsis');
+            const synopsisCounter = document.getElementById('synopsisCounter');
+
+            synopsis.addEventListener('keydown', function(e) {
+                if (maxSynopsis === 0 && e.key !== 'Backspace' || maxSynopsis === 400 && e.key === 'Backspace') {
+                    e.preventDefault();
+                    return;
+                }
+
+                if (e.key === 'Backspace') {
+                    maxSynopsis = maxSynopsis + 1;
+                    synopsisCounter.innerHTML = maxSynopsis;
+                } else {
+                    maxSynopsis = maxSynopsis - 1;
+                    synopsisCounter.innerHTML = maxSynopsis;
+                }
+
+            });
+
+            var maxDesc = 500;
+
+            const desc = document.getElementById('desc');
+            const descCounter = document.getElementById('descCounter');
+
+            desc.addEventListener('keydown', function(e) {
+                if (maxDesc === 0 && e.key !== 'Backspace' || maxDesc === 500 && e.key === 'Backspace') {
+                    e.preventDefault();
+                    return;
+                }
+
+                if (e.key === 'Backspace') {
+                    maxDesc = maxDesc + 1;
+                    descCounter.innerHTML = maxDesc;
+                } else {
+                    maxDesc = maxDesc - 1;
+                    descCounter.innerHTML = maxDesc;
+                }
+
+            });
         </script>
     </x-slot:content>
 </x-base-admin>

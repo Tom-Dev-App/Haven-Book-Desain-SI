@@ -77,6 +77,6 @@ class User extends Authenticatable
 
     public function accountBank()
     {
-        return $this->hasOne(BankAccount::class);
+        return $this->hasMany(BankAccount::class);
     }
 }
