@@ -28,7 +28,7 @@
                         </a>
                     </li>
 
-                    @auth
+                    @role('user')
                         <li class="nav-item">
                             <a href="{{ route('bookshelf') }}" class="nav-link smoth-scroll">
                                 My Book
@@ -39,7 +39,7 @@
                                 Payment
                             </a>
                         </li>
-                    @endauth
+                    @endrole
 
 
                     <li class="nav-item ">
@@ -47,8 +47,8 @@
                             About
                         </a>
                     </li>
-
                     @guest
+
                     <li class="nav-item ">
                             <a href="{{ route('sign-in') }}" class="nav-link smoth-scroll">
                                 Sign in
@@ -65,11 +65,13 @@
                         </a>
 
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            @role('user')
                             <li>
                                 <a class="dropdown-item" href="{{ route('user-profile') }}">
                                     Profile
                                 </a>
                             </li>
+                            @endrole
                             <li>
                                 <form action="{{ route('logout') }}" method="post">
                                     @csrf

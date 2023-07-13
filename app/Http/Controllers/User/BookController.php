@@ -31,12 +31,8 @@ class BookController extends Controller
     {
         $book = Book::where('slug', $slug)->first();
         $title = $book->title;
-        $bankAccounts = BankAccount::where('user_id', Session::get('id'))->get();
-        $companyAccounts = BankAccount::with(['user.userhasrole', 'bank'])
-            ->whereHas('user.userhasrole', function ($query) {
-                $query->where('role_id', UserhasRole::ADMIN);
-            })
-            ->get();
+        $bankAccounts = BankAccount::where('user_id', Auth::id())->get();
+        $companyAccounts = BankAccount::with(['bank', 'user'])->whereHas('user', fn($query) => $query->where('role_id', 2)->orWhere('role_id', 1))->get();
       
         return view('user/books/detail', compact('book', 'bankAccounts', 'companyAccounts', 'title'));
     }
@@ -74,13 +70,9 @@ class BookController extends Controller
     {
         $title = 'Rent Payment';
         $book = Book::where('slug', $slug)->first();
-        $companyAccounts = BankAccount::with(['user.userhasrole', 'bank'])
-            ->whereHas('user.userhasrole', function ($query) {
-                $query->where('role_id', UserhasRole::ADMIN);
-            })
-            ->get();
-        $userAccounts = auth()->user()->accountBank()->with('bank')->get();
+        $companyAccounts = BankAccount::with(['bank', 'user'])->whereHas('user', fn($query) => $query->where('role_id', 2)->orWhere('role_id', 1))->get();
 
+        $userAccounts = auth()->user()->accountBank()->with('bank')->get();
         return view('User.books.payment', compact('book', 'companyAccounts', 'userAccounts', 'title'));
     }
 

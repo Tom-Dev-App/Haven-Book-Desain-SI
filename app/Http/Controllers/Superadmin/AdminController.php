@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Superadmin;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\BankAccount;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -14,11 +15,7 @@ class AdminController extends Controller
 {
     public function index()
     {
-        $role = Role::where('name', 'superadmin')->first();
-        $admins = User::role($role)
-                ->with(['profile', 'accountBank.bank'])
-                ->withTrashed()
-                ->get();
+        $admins = User::with(['accountBank.bank'])->withTrashed()->where('role_id', 2)->get();
 
         return view('superadmin/admin/manage-admin', compact('admins'));
     }
@@ -42,7 +39,8 @@ class AdminController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
+            'role_id' => 2
         ]);
 
         $user->assignRole('admin');
@@ -64,7 +62,8 @@ class AdminController extends Controller
 
         $admin = User::with([
             'roles',
-            'accountBank.bank'
+            'accountBank.bank',
+            'bank'
             ])->findOrFail($id);
 
         return view('Superadmin/admin/detail-admin', compact('admin'));

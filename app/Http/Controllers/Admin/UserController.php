@@ -24,14 +24,8 @@ class UserController extends Controller
     }
 
     function detail($id)
-    {
-        $role = Role::where('name', 'user')->first();
-
-        $users = User::role($role)
-            ->with(['profile'])
-            ->withTrashed()
-            ->get();
-
+    {   
+            $user = User::with('profile')->withTrashed()->find($id);
             $transactions = Transaction::with(
                 'book',
                 'status',
@@ -46,15 +40,13 @@ class UserController extends Controller
             return view('admin/users/detail-user', compact('user', 'transactions'));
     }
 
-    function delete($id)
+    function delete(User $user)
     {
-        $user = User::findOrFail($id);
-
         $user->delete();
 
         Session::flash('alert', 'Berhasil menghapus user');
         Session::flash('alertType', 'Success');
 
-        return redirect()->route('detail-user', $id);
+        return redirect()->route('detail-user', $user->id);
     }
 }
