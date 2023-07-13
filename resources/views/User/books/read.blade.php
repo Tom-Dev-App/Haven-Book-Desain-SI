@@ -58,13 +58,64 @@
           </div>
           <div class="col-7">
             <h5>{{ $book->title }}</h5>
+            @if($is_used)
             <span class="d-none" id="book_path">{{ Storage::url($book->file) }}</span>
+            @else
+            <span class="d-none" id="book_path"></span>
+            @endif
           </div>
       </div>
     </div>
+
+      @if(session('success'))
+      <div class="d-flex mt-2 mx-auto justify-content-center">
+        <div class="alert alert-success alert-dismissible fade show col-md-4 mt-2 mb-3" role="alert">
+          <i class="fa-solid fa-circle-check"></i>
+          {{ session('success') }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      </div>
+    @endif
+
+    @if($is_used == 0)
+    <section class="d-flex justify-content-center align-items-center" style="min-height: 60vh">
+        <form role="form" action="{{ route('activate-keys') }}" method="POST" class="col-md-4">
+          @csrf
+              
+          @if(session('error'))
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          @endif
+
+          <input type="text" value="{{ $transaction_id }}" class="d-none" name="transaction_id">
+          <label class="fs-5">Activation Keys</label>
+          <div class="alert alert-info" role="alert">
+            Please enter the keys to read this book! <br/>
+            <b>The rent will not count before you enter the keys first</b>
+          </div>          
+          <div class="mb-3">
+              <input type="text" name="keys" class="form-control"
+                  placeholder="Enter Activation Keys..." aria-label="text"
+                  aria-describedby="text">
+          </div>
+          <div class="text-center">
+              <button type="submit" class="btn btn-outline-primary w-100 mb-0">
+                  Activate Now
+              </button>
+          </div>
+        </form>
+      </section>
+      @endif
     <section id="pdfViewer" class="mx-auto mt-3 d-flex justify-content-center">
+      @if($is_used == 1)
       <canvas id="canvas"></canvas>
+      @endif
     </section>
+
+
     <script>
       // Initialize tooltips
       var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));

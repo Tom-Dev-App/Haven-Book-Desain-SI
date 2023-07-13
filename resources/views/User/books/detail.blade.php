@@ -1,4 +1,5 @@
 <x-base>
+    <x-slot:title>{{ $title ?? '' }}</x-slot:title>
     <x-slot:content>
         <x-navbar />
         <section class="detail-buku py-7" style="min-height: 100%">
