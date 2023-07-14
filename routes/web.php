@@ -73,7 +73,7 @@ Route::group(['middleware' => ['role:admin|superadmin']], function(){
 
 Route::group(['middleware' => ['role:admin']], function(){
 	Route::get('/manage-user', [UserController::class, 'index'])->name('manage-user');
-	Route::get('/manage-user/detail/{user}', [UserController::class, 'detail'])->name('detail-user');
+	Route::get('/manage-user/detail/{id}', [UserController::class, 'detail'])->name('detail-user');
 	Route::get('/manage-user/delete/{id}', [UserController::class, 'delete'])->name('delete-user');
 
 	Route::get('/manage-book', [BookController::class, 'index'])->name('manage-book');

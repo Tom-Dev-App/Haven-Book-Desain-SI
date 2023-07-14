@@ -39,11 +39,14 @@ class BookController extends Controller
 
     public function readBook($slug)
     {
-        $book = Book::with('transactions')->where('slug', $slug)->first();
-        $transaction_id = $book->transactions()->first()->id;
+        $book = Book::firstWhere('slug', $slug);
+        $transaction = $book->transactions()->with(['invoice'])->where('user_id', Auth::id())
+            ->where('status_id', TransactionStatus::SUCCESS)->latest()->first();
+        $transaction_id = $transaction->id;
         $invoice = Invoice::firstWhere('transaction_id', $transaction_id);
-        $rent = BookRent::firstWhere('invoice_id', $invoice->id);
+        $rent = BookRent::where('invoice_id', $invoice->id)->first();
         $is_used = $rent->is_used;
+        
         return view('User.books.read', compact('book', 'is_used', 'transaction_id'));
     }
 
@@ -70,7 +73,7 @@ class BookController extends Controller
     {
         $title = 'Rent Payment';
         $book = Book::where('slug', $slug)->first();
-        $companyAccounts = BankAccount::with(['bank', 'user'])->whereHas('user', fn($query) => $query->where('role_id', 2)->orWhere('role_id', 1))->get();
+        $companyAccounts = BankAccount::with(['bank', 'user'])->whereHas('user', fn($query) => $query->where('role_id', 2))->get();
 
         $userAccounts = auth()->user()->accountBank()->with('bank')->get();
         return view('User.books.payment', compact('book', 'companyAccounts', 'userAccounts', 'title'));
@@ -123,7 +126,7 @@ class BookController extends Controller
         $title = 'My Books';
         $transactions = Transaction::with(['book'])
             ->where('user_id', Auth::id())
-            ->where('status_id', TransactionStatus::SUCCESS)
+            ->where('status_id', TransactionStatus::SUCCESS)->latest()
             ->get();
 
         $books = $transactions->map(fn ($transaction) => $transaction->book ?? null)->filter();

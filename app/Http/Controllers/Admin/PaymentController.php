@@ -30,14 +30,12 @@ class PaymentController extends Controller
                 'customerBank.bank',
                 'companyBank.bank'
             ])
-                ->where('transactions.status_id', '=', '1')
                 ->whereHas('companyBank', function ($query) use ($userId) {
                     $query->where('user_id', $userId);
                 })->orderBy('id', 'desc')
                 ->get();
 
             $cardholders = BankAccount::with('bank', 'user')->where('user_id', $userId)->get();
-
             return view('admin/payment/manage-payment', compact('transactions', 'cardholders'));
     }
 

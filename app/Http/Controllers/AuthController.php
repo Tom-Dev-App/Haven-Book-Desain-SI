@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use App\Models\User;
-use App\Models\UserhasRole;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -30,13 +29,20 @@ class AuthController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
- 
+
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
- 
-            return redirect()->intended('dashboard');
+
+            $user = Auth::user();
+
+            if ($user->hasRole('admin') || $user->hasRole('superadmin')) {
+                return redirect()->intended('dashboard');
+            }
+
+            return redirect()->intended('/');
         }
-        
+
+        // Authentication failed
         Session::flash('alert', 'Gagal, ulangi login');
         Session::flash('alertType', 'Danger');
 

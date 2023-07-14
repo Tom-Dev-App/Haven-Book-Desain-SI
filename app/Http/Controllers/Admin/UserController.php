@@ -40,13 +40,13 @@ class UserController extends Controller
             return view('admin/users/detail-user', compact('user', 'transactions'));
     }
 
-    function delete(User $user)
+    function delete($id)
     {
-        $user->delete();
+        User::find($id)->delete();
 
         Session::flash('alert', 'Berhasil menghapus user');
         Session::flash('alertType', 'Success');
 
-        return redirect()->route('detail-user', $user->id);
+        return redirect()->route('detail-user', $id);
     }
 }
