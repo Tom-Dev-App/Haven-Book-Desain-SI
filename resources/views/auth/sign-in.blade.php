@@ -6,8 +6,12 @@
 
                     <div class="container">
                         <div class="row">
-                            <div class="col-xl-4 col-lg-5 col-md-6 d-flex flex-column mx-auto">
-                                <div class="card card-plain mt-8">
+                            <div class="col-xl-4 col-lg-5 col-md-8 d-flex flex-column mx-auto">
+                                <div class="card card-plain mt-0">
+                                    <div class="card-header w-100 my-5 bg-transparent">
+                                        <h1 class="font-weight-bolder">the <span class="text-danger">Haven</span> Book
+                                        </h1>
+                                    </div>
                                     <div class="card-header pb-0 text-left bg-transparent">
                                         <h3 class="font-weight-bolder text-info text-gradient">Welcome back</h3>
                                         <p class="mb-0">Enter your email and password to sign in</p>
@@ -58,9 +62,9 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="oblique position-absolute top-0 h-100 d-md-block d-none me-n8">
+                                <div class="oblique top-0 h-100 d-md-block d-none me-n8">
                                     <div class="oblique-image bg-cover position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6"
-                                        style="background-image:url('{{ asset('soft-ui-dashboard-main/img/curved-images/curved6.jpg') }}')">
+                                        style="background-image:url('{{ asset('image/background.jpg') }}')">
                                     </div>
                                 </div>
                             </div>
