@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\BankAccount;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -15,8 +16,14 @@ class AdminController extends Controller
 {
     public function index()
     {
-        $admins = User::with(['accountBank.bank'])->withTrashed()->where('role_id', 2)->get();
-
+        
+        $admins = DB::table('users')
+            ->leftJoin('bank_accounts', 'users.id', '=', 'bank_accounts.user_id')
+            ->leftJoin('banks', 'bank_accounts.bank_id', '=', 'banks.id')
+            ->where('users.role_id', 2)
+            ->select('users.id', 'users.role_id', 'users.name as user_name', 'users.email', 'users.email_verified_at', 'users.deleted_at', 'users.created_at', 'users.updated_at', 'banks.name as bank_name', 'banks.codename', 'bank_accounts.account_number')
+            ->get();
+            //dd($admins);
         return view('superadmin/admin/manage-admin', compact('admins'));
     }
 

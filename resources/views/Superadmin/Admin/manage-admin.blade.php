@@ -1,3 +1,6 @@
+@php
+    $previousUser = null;
+@endphp
 <x-base-admin title="Manage Admin">
     <x-slot:content>
         <x-sidebar-admin />
@@ -53,24 +56,25 @@
                                         </thead>
                                         <tbody>
                                             @foreach ($admins as $admin)
+                                            @if ($admin->user_name !== $previousUser)
                                                 <tr>
                                                     <td>
                                                         <div class="d-flex px-2 py-1">
                                                             <div class="d-flex flex-column justify-content-center">
                                                                 <h6 class="mb-0 text-sm">
-                                                                    {{ $admin->name }}
+                                                                    {{ $admin->user_name }}
                                                                 </h6>
                                                                 <p class="text-xs text-secondary mb-0">
-                                                                    {{ $admin->email }}</p>
+                                                                    {{ $admin->email }}
+                                                                </p>
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td class="align-middle ">
-                                                        @if ($admin->accountBank)
-                                                            <span class="text-secondary text-sm font-weight-bold">
-                                                                {{ $admin->accountBank->bank->codename }} -
-                                                                {{ $admin->accountBank->account_number }}
-                                                            </span>
+                                                    <td class="align-middle">
+                                                        @if ($admin->bank_name && $admin->account_number)
+                                                            <p class="text-xs text-secondary mb-0">
+                                                                {{ $admin->codename }} - {{ $admin->account_number }}
+                                                            </p>
                                                         @endif
                                                     </td>
                                                     <td class="align-middle text-center text-sm">
@@ -82,20 +86,38 @@
                                                     </td>
                                                     <td class="align-middle text-center">
                                                         <span class="text-secondary text-sm font-weight-bold">
-                                                            {{ $admin['created_at'] }}
+                                                            {{ $admin->created_at }}
                                                         </span>
                                                     </td>
                                                     <td class="align-middle">
                                                         @if (!$admin->deleted_at)
-                                                            <a href="{{ route('delete-admin', $admin['id']) }}"
-                                                                class="my-auto btn bg-gradient-danger    fw-bold"
-                                                                data-toggle="tooltip"
-                                                                data-original-title="Edit user">Delete
-                                                            </a>
+                                                            <button class="my-auto btn bg-gradient-danger fw-bold" data-bs-toggle="modal"
+                                                                data-bs-target="#modal-delete" data-original-title="Edit user">Delete</button>
                                                         @endif
                                                     </td>
                                                 </tr>
-                                            @endforeach
+                                            @else
+                                                <tr>
+                                                    <td></td>
+                                                    <td class="align-middle">
+                                                        @if ($admin->bank_name && $admin->account_number)
+                                                            <p class="text-xs text-secondary mb-0">
+                                                                {{ $admin->codename }} - {{ $admin->account_number }}
+                                                            </p>
+                                                        @endif
+                                                    </td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            @endif
+                                        
+                                            @php
+                                                $previousUser = $admin->user_name;
+                                            @endphp
+                                        @endforeach
+
+                                        
 
                                         </tbody>
                                     </table>
@@ -104,6 +126,47 @@
                         </div>
                     </div>
                 </div>
+
+                {{-- DELET MODAL --}}
+                <div class="modal fade" id="modal-delete" tabindex="-1" role="dialog" aria-labelledby="modal-default"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
+                        <div class="modal-content w-75">
+                            <form action="{{ route('delete-admin', $admin->id) }}" method="POST">
+                                @csrf
+                                <div class="modal-header">
+                                    <h6 class="modal-title" id="modal-title-default">
+                                       Delete Admin
+                                    </h6>
+
+                                    <button type="button" class="btn-close text-dark" data-bs-dismiss="modal"
+                                        aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="alert" role="alert">
+                                            <h4 class="alert-heading">Are you sure!</h4>
+                                            <p>To delete this admin account?</p>
+                                            <hr>
+                                          </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn bg-gradient-dark">DELETE
+                                        ADMIN
+                                    </button>
+                                    <button type="button" class="btn btn-outline-link  ml-auto"
+                                        data-bs-dismiss="modal">CANCEL
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- ADD MODAL --}}
                 <div class="modal fade" id="modal-default" tabindex="-1" role="dialog" aria-labelledby="modal-default"
                     aria-hidden="true">
                     <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
@@ -165,7 +228,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="submit" class="btn bg-gradient-dark">Add
-                                        Book
+                                        Admin
                                     </button>
                                     <button type="button" class="btn btn-outline-link  ml-auto"
                                         data-bs-dismiss="modal">Close

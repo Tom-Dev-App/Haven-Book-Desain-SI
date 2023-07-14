@@ -18,7 +18,7 @@ class DashboardController extends Controller
     {
             $user = User::find(Auth::id());
             $banks = Bank::get();
-            $bankAccounts = BankAccount::with('bank', 'user')->get();
+            $bankAccounts = BankAccount::with(['bank', 'user'])->where('user_id', Auth::id())->get();
 
             return view('Admin/dashboard', compact('user', 'bankAccounts', 'banks'));
     }
@@ -134,7 +134,7 @@ class DashboardController extends Controller
 
         $bankAccount = BankAccount::create([
 
-            'user_id' => Session::get('id'),
+            'user_id' => Auth::id(),
             'bank_id' => $request->bank,
             'account_number' => $request->account_number
         ]);
