@@ -117,7 +117,7 @@
                                         <div class="col-md-6">
                                             <label for="" class="form-label">Durasi Penyewaan</label>
                                             <input readonly type="text" class="form-control w-25" id=""
-                                                value="{{ $transaction->duration }}">
+                                                value="{{ $transaction->months }}">
                                         </div>
                                     </div>
 
@@ -166,11 +166,11 @@
                                                 <div class="col-md-6">
                                                     <p class="h5">Rp
                                                         {{ number_format($transaction->book->price, 0, ',', '.') }},- x
-                                                        {{ $transaction->duration }} bulan</p>
+                                                        {{ $transaction->months }} bulan</p>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <p class="h5">Rp
-                                                        {{ number_format($transaction->book->price * $transaction->duration, 0, ',', '.') }},-
+                                                        {{ number_format($transaction->book->price * $transaction->months, 0, ',', '.') }},-
                                                     </p>
                                                 </div>
                                             </div>

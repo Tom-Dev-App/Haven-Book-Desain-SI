@@ -30,7 +30,7 @@
                                         </thead>
                                         <tbody>
                                             @foreach ($users as $user)
-                                                @if ($user->userhasrole->role['name'] == 'User')
+                                                @if ($user->hasRole('user'))
                                                     <tr>
                                                         <td>
                                                             <div class="d-flex px-2 py-1">

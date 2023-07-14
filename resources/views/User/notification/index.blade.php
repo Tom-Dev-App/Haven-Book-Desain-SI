@@ -102,7 +102,7 @@
                                                         @if ($transaction->status->name == 'PENDING')
                                                             <span class="badge bg-warning">{{ $transaction->status->name }}</span>
                                                         @elseif($transaction->status->name == 'SUCCESS')
-                                                            <span class="bg-success text-light px-2 py-1 rounded">
+                                                            <span class="badge bg-success text-light">
                                                                 {{ $transaction->status->name }}
                                                             </span>
                                                         @else
