@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Bank;
 use App\Models\BankAccount;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -19,7 +20,7 @@ class ProfileController extends Controller
     {
             $user = User::with(
                 'profile'
-            )->findOrFail(Session::get('id'));
+            )->findOrFail(Auth::id());
 
             $userAccounts = BankAccount::with('bank', 'user')->where('user_id', Session::get('id'))->get();
 

@@ -55,6 +55,8 @@ Route::group(['middleware' => ['role:user']], function(){
 	Route::post('/profile/update/{id}', [ProfileController::class, 'update'])->name('update-user-profile');
 	Route::post('/profile/upload/{id}', [ProfileController::class, 'upload'])->name('upload-user-profile');
 	Route::post('/books-activation', [UserBookController::class, 'activateKeys'])->name('activate-keys');
+	Route::post('/profile/addBankAccount/{id}', [ProfileController::class, 'addBankAccount'])->name('bank-user-profile');
+	Route::GET('/profile/deleteBankAccount/{id}', [ProfileController::class, 'deleteBankAccount'])->name('delete-bank-user-profile');
 	// Notification
 	Route::get('/payment', [NotificationController::class, 'index'])->name('notif');
 });
@@ -65,8 +67,7 @@ Route::group(['middleware' => ['role:admin|superadmin']], function(){
 	Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 	Route::post('/dashboard/update/{id}', [DashboardController::class, 'update'])->name('update-admin-profile');
 
-	Route::post('/profile/addBankAccount/{id}', [ProfileController::class, 'addBankAccount'])->name('bank-user-profile');
-	Route::GET('/profile/deleteBankAccount/{id}', [ProfileController::class, 'deleteBankAccount'])->name('delete-bank-user-profile');
+
 	Route::post('/dashboard/addBankAccount', [DashboardController::class, 'addBankAccount'])->name('bank-admin-profile');
 	Route::GET('/dashboard/deleteBankAccount/{id}', [DashboardController::class, 'deleteBankAccount'])->name('delete-bank-admin-profile');
 });
