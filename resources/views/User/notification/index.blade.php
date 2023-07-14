@@ -5,29 +5,14 @@
         <x-navbar />
         <section class="profile py-7" id="" style="min-height: 100%">
             <div class="container">
-                {{-- <div class="card shadow-lg mx-4 card-profile-bottom">
-                  <div class="card-body p-3">
-                      <div class="row gx-4">
-                          <div class="col-auto">
-                              <div class=" position-relative">
-                                  <img src="{{ asset('argon-dashboard-master/img/team-1.jpg') }}" alt="profile_image"
-                                      class="w-100 border-radius-lg shadow-sm rounded img-thumbnail"
-                                      style="width: 74px; height: 74px">
-                              </div>
-                          </div>
-                          <div class="col-auto my-auto">
-                              <div class="h-100">
-                                  <h5 class="mb-1">
-                                      Sayo Kravits
-                                  </h5>
-                                  <p class="mb-0 font-weight-bold text-sm">
-                                      Public Relations
-                                  </p>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div> --}}
+                @if (Session::has('success'))
+                    <script>
+                        Toast.fire({
+                            icon: 'success',
+                            title: '{{ Session::get('success') }}'
+                        })
+                    </script>
+                @endif
 
                 <div class="container-fluid py-4">
                     <ul class="nav nav-pills mb-5" id="myTab" role="tablist">
@@ -43,8 +28,8 @@
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link " id="contact-tab" data-bs-toggle="tab" data-bs-target="#activation"
-                                type="button" role="tab" aria-controls="contact"
-                                aria-selected="false">Activation Keys</button>
+                                type="button" role="tab" aria-controls="contact" aria-selected="false">Activation
+                                Keys</button>
                         </li>
                     </ul>
                     <div class="tab-content" id="myTabContent">
@@ -53,7 +38,7 @@
                             <div class="card  border-0">
                                 <div class="card-header">
                                     <div class="d-flex align-items-center">
-                                        <p class="mb-0 fw-bold ">Riwayat Transaksi</p>
+                                        <p class="mb-0 ">Riwayat Transaksi</p>
                                     </div>
                                 </div>
                                 <div class="card-body p-0">
@@ -75,8 +60,8 @@
                                                     </td>
                                                     <td class="align-middle">
                                                         <div class="my-auto ">
-                                                            <h6 class="text-sm mb-0">
-                                                                {{ $transaction->book->title }}</h6>
+                                                            <h5 class=" mb-0">
+                                                                {{ $transaction->book->title }}</h5>
                                                         </div>
                                                     </td>
                                                     <td class="align-middle">
@@ -100,13 +85,14 @@
                                                     </td>
                                                     <td class="align-middle">
                                                         @if ($transaction->status->name == 'PENDING')
-                                                            <span class="badge bg-warning">{{ $transaction->status->name }}</span>
+                                                            <span
+                                                                class="badge bg-warning">{{ $transaction->status->name }}</span>
                                                         @elseif($transaction->status->name == 'SUCCESS')
                                                             <span class="badge bg-success text-light">
                                                                 {{ $transaction->status->name }}
                                                             </span>
                                                         @else
-                                                            <span class="badge bg-danger"> 
+                                                            <span class="badge bg-danger">
                                                                 {{ $transaction->status->name }}
                                                             </span>
                                                         @endif
@@ -122,108 +108,56 @@
 
                         {{-- Informasi Transaksi --}}
                         <div class="tab-pane fade" id="faktur" role="tabpanel" aria-labelledby="contact-tab">
-                            <div class="card">
+                            <div class="card border-0">
                                 <div class="card-header">
                                     <div class="d-flex align-items-center">
-                                        <p class="mb-0">Informasi Transaksi</p>
+                                        <p class="mb-0">Informasi Faktur Pembayaran</p>
                                     </div>
                                 </div>
-                                <div class="card-body">
-                                    <p class="text-uppercase text-sm">Faktur Pembayaran</p>
+                                <div class="card-body p-0">
                                     <div class="container">
                                         <table class="table table-hover ">
-                                            <thead>
-                                                <tr>
-                                                    <td>#</td>
-                                                    <td>Buku</td>
-                                                    <td>Harga</td>
-                                                    <td>Tanggal Transaksi</td>
-                                                    <td>Batas Waktu</td>
-                                                    <td>Action</td>
-                                                </tr>
-                                            </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>
-                                                        <div class="d-flex">
-                                                            <div>
-                                                                <img src="{{ asset('soft-ui-dashboard-main/img/small-logos/logo-spotify.svg') }}"
-                                                                    class="rounded-circle me-2" alt="spotify"
-                                                                    style="max-width: 50px">
-                                                            </div>
-                                                            <div class="my-auto ">
-                                                                <h6 class="text-sm mb-0">Spotify</h6>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <p class="text-sm font-weight-bold mb-0">$2,500</p>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <p class=" mb-0">4 July 2023</p>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <p class=" mb-0">5 July 2023</p>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <a href="#" class="btn btn-primary">Baca</a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td>
-                                                        <div class="d-flex">
-                                                            <div>
-                                                                <img src="{{ asset('soft-ui-dashboard-main/img/small-logos/logo-spotify.svg') }}"
-                                                                    class="rounded-circle me-2" alt="spotify"
-                                                                    style="max-width: 50px">
-                                                            </div>
-                                                            <div class="my-auto ">
-                                                                <h6 class="text-sm mb-0">Spotify</h6>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <p class="text-sm font-weight-bold mb-0">$2,500</p>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <p class=" mb-0">4 July 2023</p>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <p class=" mb-0">5 July 2023</p>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <a href="#" class="btn btn-primary">Baca</a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3</td>
-                                                    <td>
-                                                        <div class="d-flex">
-                                                            <div>
-                                                                <img src="{{ asset('soft-ui-dashboard-main/img/small-logos/logo-spotify.svg') }}"
-                                                                    class="rounded-circle me-2" alt="spotify"
-                                                                    style="max-width: 50px">
-                                                            </div>
-                                                            <div class="my-auto ">
-                                                                <h6 class="text-sm mb-0">Spotify</h6>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <p class="text-sm font-weight-bold mb-0">$2,500</p>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <p class=" mb-0">4 July 2023</p>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <p class=" mb-0">5 July 2023</p>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <a href="#" class="btn btn-primary">Baca</a>
-                                                    </td>
-                                                </tr>
+                                                @if ($transactions->isEmpty())
+                                                    <div class="alert alert-primary m-3 text-center" role="alert">
+                                                        Belum ada transaksi
+                                                    </div>
+                                                @endif
+                                                @foreach ($transactions as $transaction)
+                                                    @if (!$transaction->invoice->isEmpty())
+                                                        <tr>
+                                                            <td class="p-3 d-flex justify-content-center">
+                                                                <img src="{{ Storage::url($transaction->book->image) }}"
+                                                                    class="img-thumbnail me-2" alt="spotify"
+                                                                    style="max-width: 100px">
+                                                            </td>
+                                                            <td class="align-middle">
+                                                                <h6 class="text-sm mb-0">
+                                                                    {{ $transaction->book->title }}</h6>
+                                                            </td>
+                                                            <td class="align-middle">
+                                                                <p class="text-sm font-weight-bold mb-0">
+                                                                    Rp
+                                                                    {{ number_format($transaction->rent_prices, 0, ',', '.') }}
+                                                                </p>
+                                                            </td>
+                                                            <td class="align-middle">
+                                                                <p class=" mb-0">Tanggal Pembayaran
+                                                                    : {{ $transaction->created_at }}</p>
+                                                            </td>
+                                                            <td class="align-middle">
+                                                                <p class=" mb-0">Peminjaman :
+                                                                    {{ $transaction->months }} bulan</p>
+                                                            </td>
+                                                            <td class="align-middle">
+                                                                <a href="{{ route('print-notif', $transaction->invoice[0]->invoice_number) }}"
+                                                                    class="btn btn-sm btn-secondary">Print
+                                                                    Invoice</a>
+                                                            </td>
+                                                        </tr>
+                                                    @endif
+                                                @endforeach
+
                                             </tbody>
                                         </table>
                                     </div>
@@ -256,42 +190,44 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach($rents as $rent)
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>
-                                                        <div class="d-flex">
-                                                            <div>
-                                                                <img src="{{ Storage::url($rent->book->image) }}"
-                                                                    class="me-2" alt="..."
-                                                                    style="max-width: 50px">
+                                                @foreach ($rents as $rent)
+                                                    <tr>
+                                                        <td>{{ $loop->iteration }}</td>
+                                                        <td>
+                                                            <div class="d-flex">
+                                                                <div>
+                                                                    <img src="{{ Storage::url($rent->book->image) }}"
+                                                                        class="me-2" alt="..."
+                                                                        style="max-width: 50px">
+                                                                </div>
+                                                                <div class="my-auto ">
+                                                                    <h6 class="text-sm mb-0">{{ $rent->book->title }}
+                                                                    </h6>
+                                                                </div>
                                                             </div>
-                                                            <div class="my-auto ">
-                                                                <h6 class="text-sm mb-0">{{ $rent->book->title }}</h6>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        @if($rent->is_used)
-                                                            <span class="badge bg-info">Terpakai</span>
-                                                        @else
-                                                            <span class="badge bg-success">Belum dipakai</span>
-                                                        @endif
+                                                        </td>
+                                                        <td class="align-middle">
+                                                            @if ($rent->is_used)
+                                                                <span class="badge bg-info">Terpakai</span>
+                                                            @else
+                                                                <span class="badge bg-success">Belum dipakai</span>
+                                                            @endif
 
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <p class=" mb-0">{{ $rent->due_date }}</p>
-                                                        
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <p class=" mb-0">{{ $rent->keys }}</p>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <button class="btn btn-outline-secondary copy-to-clipboard" data-book-keys="{{ $rent->keys }}">
-                                                            <i class="fa-solid fa-copy"  ></i> Copy
-                                                        </button>
-                                                    </td>
-                                                </tr>
+                                                        </td>
+                                                        <td class="align-middle">
+                                                            <p class=" mb-0">{{ $rent->due_date }}</p>
+
+                                                        </td>
+                                                        <td class="align-middle">
+                                                            <p class=" mb-0">{{ $rent->keys }}</p>
+                                                        </td>
+                                                        <td class="align-middle">
+                                                            <button class="btn btn-outline-secondary copy-to-clipboard"
+                                                                data-book-keys="{{ $rent->keys }}">
+                                                                <i class="fa-solid fa-copy"></i> Copy
+                                                            </button>
+                                                        </td>
+                                                    </tr>
                                                 @endforeach
                                             </tbody>
                                         </table>
@@ -341,27 +277,26 @@
             }
         </script>
         <script defer>
-             document.addEventListener('DOMContentLoaded', function() {
-              var buttons = document.querySelectorAll('.copy-to-clipboard'); // Replace with your button class
+            document.addEventListener('DOMContentLoaded', function() {
+                var buttons = document.querySelectorAll('.copy-to-clipboard'); // Replace with your button class
 
-              buttons.forEach(function(button) {
-                button.addEventListener('click', function() {
-                  var keys = button.getAttribute('data-book-keys');
-                  copyToClipboard(keys);
+                buttons.forEach(function(button) {
+                    button.addEventListener('click', function() {
+                        var keys = button.getAttribute('data-book-keys');
+                        copyToClipboard(keys);
+                    });
                 });
-              });
 
-              function copyToClipboard(text) {
-                navigator.clipboard.writeText(text)
-                  .then(function() {
-                    alert('Keys copied to clipboard!');
-                  })
-                  .catch(function(error) {
-                    console.error('Failed to copy keys to clipboard:', error);
-                  });
-              }
+                function copyToClipboard(text) {
+                    navigator.clipboard.writeText(text)
+                        .then(function() {
+                            alert('Keys copied to clipboard!');
+                        })
+                        .catch(function(error) {
+                            console.error('Failed to copy keys to clipboard:', error);
+                        });
+                }
             });
-
         </script>
     </x-slot:content>
 </x-base>

@@ -32,8 +32,8 @@ class BookController extends Controller
         $book = Book::where('slug', $slug)->first();
         $title = $book->title;
         $bankAccounts = BankAccount::where('user_id', Auth::id())->get();
-        $companyAccounts = BankAccount::with(['bank', 'user'])->whereHas('user', fn($query) => $query->where('role_id', 2)->orWhere('role_id', 1))->get();
-      
+        $companyAccounts = BankAccount::with(['bank', 'user'])->whereHas('user', fn ($query) => $query->where('role_id', 2)->orWhere('role_id', 1))->get();
+
         return view('user/books/detail', compact('book', 'bankAccounts', 'companyAccounts', 'title'));
     }
 
@@ -46,13 +46,13 @@ class BookController extends Controller
         $invoice = Invoice::firstWhere('transaction_id', $transaction_id);
         $rent = BookRent::where('invoice_id', $invoice->id)->first();
         $is_used = $rent->is_used;
-        
+
         return view('User.books.read', compact('book', 'is_used', 'transaction_id'));
     }
 
 
     public function activateKeys(Request $request)
-    
+
     {
         $invoice_id = Invoice::where('transaction_id', $request->transaction_id)->first()->id;
         $rent = BookRent::where('invoice_id', $invoice_id)->first();
@@ -73,7 +73,7 @@ class BookController extends Controller
     {
         $title = 'Rent Payment';
         $book = Book::where('slug', $slug)->first();
-        $companyAccounts = BankAccount::with(['bank', 'user'])->whereHas('user', fn($query) => $query->where('role_id', 2))->get();
+        $companyAccounts = BankAccount::with(['bank', 'user'])->whereHas('user', fn ($query) => $query->where('role_id', 2))->get();
 
         $userAccounts = auth()->user()->accountBank()->with('bank')->get();
         return view('User.books.payment', compact('book', 'companyAccounts', 'userAccounts', 'title'));
@@ -122,7 +122,7 @@ class BookController extends Controller
     }
 
     public function bookshelf()
-    {   
+    {
         $title = 'My Books';
         $transactions = Transaction::with(['book'])
             ->where('user_id', Auth::id())

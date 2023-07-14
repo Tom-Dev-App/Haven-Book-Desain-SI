@@ -1,16 +1,16 @@
 <x-base-admin title="Detail Buku">
     @push('head')
         <script>
-            document.addEventListener('DOMContentLoaded', function () {
+            document.addEventListener('DOMContentLoaded', function() {
                 const slug = document.querySelector('#slug')
                 const title = document.querySelector('#book-title')
 
-                title.addEventListener('change', function(e){
+                title.addEventListener('change', function(e) {
                     fetch(`/api/checkSlug?title=${title.value}`).then(response => response.json())
-                    .then(data => slug.value = data.slug)
-                    
-                    title.addEventListener('keyup', function(){
-                        if(title.value == "") slug.value = ""
+                        .then(data => slug.value = data.slug)
+
+                    title.addEventListener('keyup', function() {
+                        if (title.value == "") slug.value = ""
                     })
                 })
             })
@@ -50,7 +50,7 @@
                             @endif
                             <div class="card-img-overlay m-3">
                                 <span class="badge badge-pill badge-lg bg-gradient-primary">
-                                    Rp {{ number_format($book->price, 2, ',', '.') }}
+                                    Rp {{ number_format($book->price, 0, ',', '.') }},-
                                 </span>
                             </div>
                         </div>
@@ -131,16 +131,17 @@
                                             <div class="form-group">
                                                 <label for="book-title" class="form-control-label">
                                                     Title
-                                                <span class="text-danger text-sm">*</span>
+                                                    <span class="text-danger text-sm">*</span>
                                                 </label>
-                                                <input class="form-control" type="text" value="{{ old('title',$book->title) }}"
+                                                <input class="form-control" type="text"
+                                                    value="{{ old('title', $book->title) }}"
                                                     placeholder="example: The Alchemist" id="book-title" name="title">
                                             </div>
                                             <div class="form-group">
                                                 <label for="slug" class="form-control-label">Slug</label>
                                                 <input class="form-control" readonly type="text"
-                                                    value="{{ old('slug', $book->slug) }}" placeholder="example: $-123-x"
-                                                    id="slug" name="slug">
+                                                    value="{{ old('slug', $book->slug) }}"
+                                                    placeholder="example: $-123-x" id="slug" name="slug">
                                             </div>
 
                                             <div class="form-group">
@@ -167,8 +168,8 @@
                                                     <span class="text-danger text-sm">*</span>
                                                 </label>
                                                 <input class="form-control" type="text"
-                                                    value="{{ old('author',$book->author) }}" placeholder="" id="author"
-                                                    name="author">
+                                                    value="{{ old('author', $book->author) }}" placeholder=""
+                                                    id="author" name="author">
                                             </div>
                                             <div class="form-group">
 
@@ -177,7 +178,8 @@
                                                 <div class="input-group">
                                                     <span class="input-group-text" id="">Link</span>
                                                     <input type="text" class="form-control" id="author-url"
-                                                        aria-describedby="" value="{{ old('author_attachment',$book->author_attachment) }}"
+                                                        aria-describedby=""
+                                                        value="{{ old('author_attachment', $book->author_attachment) }}"
                                                         name="author_attachment">
                                                 </div>
                                             </div>
@@ -187,8 +189,8 @@
                                                     <span class="text-danger text-sm">*</span>
                                                 </label>
                                                 <input class="form-control" type="text"
-                                                    value="{{ old('publisher', $book->publisher) }}" placeholder="" id="publisher"
-                                                    name="publisher">
+                                                    value="{{ old('publisher', $book->publisher) }}" placeholder=""
+                                                    id="publisher" name="publisher">
                                             </div>
                                             <div class="form-group">
                                                 <label class="form-control-label" for="publisher-url">publisher
@@ -196,20 +198,21 @@
                                                 <div class="input-group">
                                                     <span class="input-group-text" id="">Link</span>
                                                     <input type="text" class="form-control" id="publisher-url"
-                                                        aria-describedby="" value="{{ old('publishser_attachment',$book->publisher_attachment) }}"
+                                                        aria-describedby=""
+                                                        value="{{ old('publishser_attachment', $book->publisher_attachment) }}"
                                                         name="publishser_attachment">
                                                 </div>
                                             </div>
                                             <div class="form-group">
-=======
+                                                =======
                                                 <label class="form-control-label" for="price">
->>>>>>> development
+                                                    >>>>>>> development
                                                     Price</label>
                                                 <div class="input-group">
                                                     <input type="text" class="form-control" id="priceInput"
                                                         oninput="formatPrice(event)" aria-describedby=""
                                                         name="price"
-                                                        value="{{ number_format(@old('price',$book->price, 2, ',', '.')) }}">
+                                                        value="{{ number_format(@old('price', $book->price, 2, ',', '.')) }}">
                                                 </div>
                                             </div>
                                         </div>

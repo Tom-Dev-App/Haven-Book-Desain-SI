@@ -1,16 +1,16 @@
 <x-base-admin title="Manage Buku">
     @push('head')
         <script>
-            document.addEventListener('DOMContentLoaded', function () {
+            document.addEventListener('DOMContentLoaded', function() {
                 const slug = document.querySelector('#slug')
                 const title = document.querySelector('#book-title')
 
-                title.addEventListener('change', function(e){
+                title.addEventListener('change', function(e) {
                     fetch(`/api/checkSlug?title=${title.value}`).then(response => response.json())
-                    .then(data => slug.value = data.slug)
-                    
-                    title.addEventListener('keyup', function(){
-                        if(title.value == "") slug.value = ""
+                        .then(data => slug.value = data.slug)
+
+                    title.addEventListener('keyup', function() {
+                        if (title.value == "") slug.value = ""
                     })
                 })
             })
@@ -133,7 +133,7 @@
                                                                         </div>
                                                                     @enderror
                                                                 </div>
-                                                                
+
                                                                 <div class="form-group">
                                                                     <label for="synopsis">
                                                                         Synopsis
@@ -142,7 +142,7 @@
                                                                     <textarea class="form-control @error('synopsis') is-invalid @enderror" name="synopsis" id="synopsis" rows="3"
                                                                         aria-describedby="synopsisHelp">{{ old('synopsis') }}</textarea>
                                                                     <div class="form-text text-sm">
-                                                                        <span id="synopsisCounter">200</span> character
+                                                                        <span id="synopsisCounter"></span> character
                                                                         remains
                                                                     </div>
                                                                     @error('synopsis')
@@ -159,7 +159,7 @@
                                                                     <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="desc"
                                                                         rows="3">{{ old('description') }}</textarea>
                                                                     <div class="form-text text-sm">
-                                                                        <span id="descCounter">300</span>
+                                                                        <span id="descCounter"></span>
                                                                         character remains
                                                                     </div>
 
@@ -178,8 +178,8 @@
                                                                     </label>
                                                                     <input required
                                                                         class="form-control @error('author') is-invalid @enderror"
-                                                                        type="text" value="{{ @old('author') }}" placeholder=""
-                                                                        name="author" id="author">
+                                                                        type="text" value="{{ @old('author') }}"
+                                                                        placeholder="" name="author" id="author">
                                                                     @error('author')
                                                                         <div class="invalid-feedback">
                                                                             {{ $message }}
@@ -196,7 +196,8 @@
                                                                         <input type="text"
                                                                             class="form-control @error('author_attachment') is-invalid @enderror"
                                                                             id="author-url" name="author_attachment"
-                                                                            aria-describedby="" value="{{ @old('author_attachment') }}">
+                                                                            aria-describedby=""
+                                                                            value="{{ @old('author_attachment') }}">
                                                                         @error('author_attachment')
                                                                             <div class="invalid-feedback">
                                                                                 {{ $message }}
@@ -212,8 +213,10 @@
                                                                     </label>
                                                                     <input required
                                                                         class="form-control @error('publisher') is-invalid @enderror"
-                                                                        type="text" value="{{ @old('publisher')}}" placeholder=""
-                                                                        id="publisher" name="publisher">
+                                                                        type="text"
+                                                                        value="{{ @old('publisher') }}"
+                                                                        placeholder="" id="publisher"
+                                                                        name="publisher">
                                                                     @error('publisher')
                                                                         <div class="invalid-feedback">
                                                                             {{ $message }}
@@ -222,7 +225,6 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="form-control-label"
-
                                                                         for="publisher-url">Publisher
                                                                         Attachment</label>
                                                                     <div class="input-group">
@@ -231,7 +233,8 @@
                                                                         <input type="text"
                                                                             class="form-control @error('publisher_attachment') is-invalid @enderror"
                                                                             id="publisher-url" aria-describedby=""
-                                                                            name="publisher_attachment" value="{{@old('publisher_attachment')}}">
+                                                                            name="publisher_attachment"
+                                                                            value="{{ @old('publisher_attachment') }}">
                                                                         @error('publisher_attachment')
                                                                             <div class="invalid-feedback">
                                                                                 {{ $message }}
@@ -371,7 +374,7 @@
                                 </div>
                             </div>
                         </div>
-                            {{-- END CONTENT ABOVE --}}
+                        {{-- END CONTENT ABOVE --}}
 
                     </div>
                 </div>
@@ -516,47 +519,94 @@
                 event.target.value = formattedPrice;
             }
 
-            var maxSynopsis = 400;
+            document.addEventListener('DOMContentLoaded', function() {
 
-            const synopsis = document.getElementById('synopsis');
-            const synopsisCounter = document.getElementById('synopsisCounter');
+                const synopsis = document.getElementById('synopsis');
+                var synopsisValueNow = synopsis.value.length;
+                const synopsisCounter = document.getElementById('synopsisCounter');
+                synopsisCounter.innerHTML = 400
 
-            synopsis.addEventListener('keydown', function(e) {
-                if (maxSynopsis === 0 && e.key !== 'Backspace' || maxSynopsis === 400 && e.key === 'Backspace') {
-                    e.preventDefault();
-                    return;
-                }
+                console.log(synopsisValueNow)
 
-                if (e.key === 'Backspace') {
-                    maxSynopsis = maxSynopsis + 1;
-                    synopsisCounter.innerHTML = maxSynopsis;
-                } else {
-                    maxSynopsis = maxSynopsis - 1;
-                    synopsisCounter.innerHTML = maxSynopsis;
-                }
+                synopsis.addEventListener('input', function(e) {
+                    var synopsisValueNow = synopsis.value.length;
+                    console.log(synopsisValueNow)
 
-            });
+                    if (synopsis.value.length >= 400) {
+                        var truncatedValue = synopsis.value.substring(0,
+                            400); // Memotong nilai menjadi 400 karakter
+                        synopsis.value = truncatedValue;
+                    }
 
-            var maxDesc = 500;
+                    if (synopsisValueNow === 400 && e.key !== 'Backspace' || synopsisValueNow === 0 && e.key ===
+                        'Backspace') {
+                        e.preventDefault();
+                        return;
+                    }
 
-            const desc = document.getElementById('desc');
-            const descCounter = document.getElementById('descCounter');
+                    if (e.key === 'Backspace') {
+                        synopsisValueNow = (400 - synopsisValueNow) + 1;
+                        synopsisCounter.innerHTML = synopsisValueNow;
+                    } else {
+                        synopsisValueNow = (400 - synopsisValueNow) - 1;
+                        synopsisCounter.innerHTML = synopsisValueNow;
+                    }
 
-            desc.addEventListener('keydown', function(e) {
-                if (maxDesc === 0 && e.key !== 'Backspace' || maxDesc === 500 && e.key === 'Backspace') {
-                    e.preventDefault();
-                    return;
-                }
+                });
 
-                if (e.key === 'Backspace') {
-                    maxDesc = maxDesc + 1;
-                    descCounter.innerHTML = maxDesc;
-                } else {
-                    maxDesc = maxDesc - 1;
-                    descCounter.innerHTML = maxDesc;
-                }
+                const desc = document.getElementById('desc');
+                var descValueNow = desc.value.length;
+                const descCounter = document.getElementById('descCounter');
+                descCounter.innerHTML = 500
 
-            });
+                console.log(descValueNow)
+
+                desc.addEventListener('input', function(e) {
+                    var descValueNow = desc.value.length;
+                    console.log(descValueNow)
+
+                    if (desc.value.length >= 500) {
+                        var truncatedValue = desc.value.substring(0,
+                            500); // Memotong nilai menjadi 400 karakter
+                        desc.value = truncatedValue;
+                    }
+
+                    if (descValueNow === 500 && e.key !== 'Backspace' || descValueNow === 0 && e.key ===
+                        'Backspace') {
+                        e.preventDefault();
+                        return;
+                    }
+
+                    if (e.key === 'Backspace') {
+                        descValueNow = (500 - descValueNow) + 1;
+                        descCounter.innerHTML = descValueNow;
+                    } else {
+                        descValueNow = (500 - descValueNow) - 1;
+                        descCounter.innerHTML = descValueNow;
+                    }
+
+                });
+
+                // const desc = document.getElementById('desc');
+                // const descCounter = document.getElementById('descCounter');
+
+                // desc.addEventListener('keydown', function(e) {
+                //     if (maxDesc === 0 && e.key !== 'Backspace' || maxDesc === 500 && e.key === 'Backspace') {
+                //         e.preventDefault();
+                //         return;
+                //     }
+
+                //     if (e.key === 'Backspace') {
+                //         maxDesc = maxDesc + 1;
+                //         descCounter.innerHTML = maxDesc;
+                //     } else {
+                //         maxDesc = maxDesc - 1;
+                //         descCounter.innerHTML = maxDesc;
+                //     }
+
+                // });
+
+            })
         </script>
     </x-slot:content>
 </x-base-admin>

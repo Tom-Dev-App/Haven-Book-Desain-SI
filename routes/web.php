@@ -59,6 +59,7 @@ Route::group(['middleware' => ['role:user']], function () {
 	Route::GET('/profile/deleteBankAccount/{id}', [ProfileController::class, 'deleteBankAccount'])->name('delete-bank-user-profile');
 	// Notification
 	Route::get('/payment', [NotificationController::class, 'index'])->name('notif');
+	Route::get('/payment/print/{id}', [NotificationController::class, 'print'])->name('print-notif');
 });
 
 
