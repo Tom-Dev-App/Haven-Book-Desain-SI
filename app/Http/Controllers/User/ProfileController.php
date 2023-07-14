@@ -22,9 +22,9 @@ class ProfileController extends Controller
                 'profile'
             )->findOrFail(Auth::id());
 
-            $userAccounts = BankAccount::with('bank', 'user')->where('user_id', Session::get('id'))->get();
+            $userAccounts = BankAccount::with('bank', 'user')->where('user_id', Auth::id())->get();
 
-            $banks = Bank::get();
+            $banks = Bank::all();
 
             return view('user/profile/profile', compact('user',  'banks', 'userAccounts'));
     }
