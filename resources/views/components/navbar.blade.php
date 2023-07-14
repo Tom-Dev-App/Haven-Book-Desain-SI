@@ -49,15 +49,15 @@
                     </li>
                     @guest
 
-                    <li class="nav-item ">
+                        <li class="nav-item ">
                             <a href="{{ route('sign-in') }}" class="nav-link smoth-scroll">
                                 Sign in
                             </a>
-                    </li>
+                        </li>
                     @endguest
 
                 </ul>
-                    @auth
+                @auth
                     <div class="dropdown">
                         <a class="btn btn-danger dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -66,24 +66,24 @@
 
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                             @role('user')
-                            <li>
-                                <a class="dropdown-item" href="{{ route('user-profile') }}">
-                                    Profile
-                                </a>
-                            </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('user-profile') }}">
+                                        Profile
+                                    </a>
+                                </li>
                             @endrole
                             <li>
                                 <form action="{{ route('logout') }}" method="post">
                                     @csrf
-                                    <button type="submit" class="dropdown-item" >
-                                    Logout
-                                </button> 
+                                    <button type="submit" class="dropdown-item">
+                                        Logout
+                                    </button>
                                 </form>
-                               
+
                             </li>
                         </ul>
                     </div>
-                    @endauth
+                @endauth
             </div>
         </div>
     </nav>

@@ -68,7 +68,8 @@
         .colored-toast .swal2-html-container {
             color: white;
         }
-    @stack('head')
+
+        @stack('head')
     </style>
     <script>
         const Toast = Swal.mixin({

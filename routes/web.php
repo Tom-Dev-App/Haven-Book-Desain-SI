@@ -46,7 +46,7 @@ Route::get('/', [HomepageController::class, 'index'])->name('homepage');
 Route::get('/book', [UserBookController::class, 'index'])->name('book');
 Route::get('/book/detail/{slug}', [UserBookController::class, 'detail'])->name('book-detail');
 
-Route::group(['middleware' => ['role:user']], function(){
+Route::group(['middleware' => ['role:user']], function () {
 	Route::get('/book-rents/pay/{slug}', [UserBookController::class, 'pay'])->name('pay');
 	Route::post('/book-rents/pay/{id}', [UserBookController::class, 'payNow'])->name('pay-rent');
 	Route::get('/bookshelf', [UserBookController::class, 'bookshelf'])->name('bookshelf');
@@ -61,7 +61,7 @@ Route::group(['middleware' => ['role:user']], function(){
 
 
 // Admin
-Route::group(['middleware' => ['role:admin|superadmin']], function(){
+Route::group(['middleware' => ['role:admin|superadmin']], function () {
 	Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 	Route::post('/dashboard/update/{id}', [DashboardController::class, 'update'])->name('update-admin-profile');
 
@@ -71,7 +71,7 @@ Route::group(['middleware' => ['role:admin|superadmin']], function(){
 	Route::GET('/dashboard/deleteBankAccount/{id}', [DashboardController::class, 'deleteBankAccount'])->name('delete-bank-admin-profile');
 });
 
-Route::group(['middleware' => ['role:admin']], function(){
+Route::group(['middleware' => ['role:admin']], function () {
 	Route::get('/manage-user', [UserController::class, 'index'])->name('manage-user');
 	Route::get('/manage-user/detail/{id}', [UserController::class, 'detail'])->name('detail-user');
 	Route::get('/manage-user/delete/{id}', [UserController::class, 'delete'])->name('delete-user');
@@ -94,10 +94,9 @@ Route::group(['middleware' => ['role:admin']], function(){
 
 
 // Superadmin
-Route::group(['middleware' => ['role:superadmin']], function(){
+Route::group(['middleware' => ['role:superadmin']], function () {
 	Route::get('/manage-admin', [AdminController::class, 'index'])->name('manage-admin');
 	Route::post('/manage-admin/add', [AdminController::class, 'store'])->name('add-admin');
 	Route::get('/manage-admin/detail/{id}', [AdminController::class, 'detail'])->name('detail-admin');
 	Route::get('/manage-admin/delete/{id}', [AdminController::class, 'delete'])->name('delete-admin');
 });
-
