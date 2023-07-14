@@ -17,8 +17,6 @@ class ProfileController extends Controller
 {
     function index()
     {
-        if (Session::get('role') == 'User') {
-
             $user = User::with(
                 'profile'
             )->findOrFail(Session::get('id'));
@@ -28,9 +26,6 @@ class ProfileController extends Controller
             $banks = Bank::get();
 
             return view('user/profile/profile', compact('user',  'banks', 'userAccounts'));
-        } else {
-            return view('auth/sign-in');
-        }
     }
 
     public function upload(Request $request, $id)

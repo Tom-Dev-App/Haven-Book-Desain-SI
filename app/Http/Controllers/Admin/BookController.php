@@ -11,33 +11,29 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Support\Facades\File;
+use App\Http\Middleware\AdminRoleMiddleware;
+use App\Http\Middleware\SuperadminRoleMiddleware;
+
 
 class BookController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(AdminRoleMiddleware::class)->only('publicMethod');
+    }
+
     function index()
     {
-        if (Session::get('role') == 'Admin') {
+        $books = Book::orderByDesc('id')->withTrashed()->get();
 
-            $books = Book::orderByDesc('id')->withTrashed()->get();
-
-            return view('admin/books/manage-book', compact('books'));
-        } else {
-            return redirect()->route('sign-in');
-        }
+        return view('admin/books/manage-book', compact('books'));        
     }
 
     function detail($slug)
     {
-
-        if (Session::get('role') == 'Admin') {
-
             $book = Book::where('slug', $slug)->first();
-            // return $book;
-
             return view('admin/books/detail-book', compact('book'));
-        } else {
-            return redirect()->route('sign-in');
-        }
     }
 
     public function store(Request $request)

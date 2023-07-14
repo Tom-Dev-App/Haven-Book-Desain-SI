@@ -190,7 +190,7 @@
                                             <input type="number"
                                                 class="form-control @error('number_of_month') is-invalid @enderror"
                                                 placeholder="Berapa bulan" aria-label="number"
-                                                aria-describedby="basic-addon1" min="1" value="1"
+                                                aria-describedby="basic-addon1" min="1" value="{{ @old('number_of_month') }}"
                                                 id="" name="" required>
                                             @error('number_of_month')
                                                 <div class="alert alert-danger">{{ $message }}</div>
