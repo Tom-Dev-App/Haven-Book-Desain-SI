@@ -221,8 +221,7 @@
                                         necessary regelialia. It is a paradisematic country, in which roasted parts of
                                         sentences fly into your mouth.&rdquo;</p>
                                     <div class="author mt-5">
-                                        <img src="{{ asset('treaser/images/about/person_1.jpg') }}"
-                                            alt="Image placeholder" class="mb-4">
+
                                         <h4 class="mb-0">Maxim Smith</h4>
                                         <p>CEO, Founder</p>
                                     </div>
@@ -236,8 +235,7 @@
                                         ocean.&rdquo;
                                     </p>
                                     <div class="author mt-5">
-                                        <img src="{{ asset('treaser/images/about/person_2.jpg') }}"
-                                            alt="Image placeholder" class="mb-4">
+
                                         <h4 class="mb-0">Geert Green</h4>
                                         <p>CEO, Founder</p>
                                     </div>
@@ -249,8 +247,7 @@
                                         an almost unorthographic life One day however a small line of blind text by the
                                         name of Lorem Ipsum decided to leave for the far World of Grammar.&rdquo;</p>
                                     <div class="author mt-5">
-                                        <img src="{{ asset('treaser/images/about/person_3.jpg') }}"
-                                            alt="Image placeholder" class="mb-4">
+
                                         <h4 class="mb-0">Dennis Roman</h4>
                                         <p>CEO, Founder</p>
                                     </div>
@@ -263,8 +260,7 @@
                                         didn’t listen. She packed her seven versalia, put her initial into the belt and
                                         made herself on the way.&rdquo;</p>
                                     <div class="author mt-5">
-                                        <img src="{{ asset('treaser/images/about/person_2.jpg') }}"
-                                            alt="Image placeholder" class="mb-4">
+
                                         <h4 class="mb-0">Geert Green</h4>
                                         <p>CEO, Founder</p>
                                     </div>
@@ -277,7 +273,7 @@
         </div> <!-- .section -->
 
         <!-- Counter -->
-        <section class="section counter border-bottom">
+        {{-- <section class="section counter border-bottom">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-3 col-md-6 col-sm-6">
@@ -326,10 +322,10 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> --}}
 
         <!-- About Author -->
-        <section class="about section" id="author">
+        {{-- <section class="about section" id="author">
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-lg-5">
@@ -374,10 +370,10 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> --}}
 
         <!-- Others books -->
-        <section class="section-bottom others-book">
+        <section class="section-bottom others-book mt-5">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6">
