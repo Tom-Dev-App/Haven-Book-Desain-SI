@@ -1,4 +1,5 @@
 <x-base>
+    <x-slot:title>Update Profile</x-slot>
     <x-slot:content>
         <x-navbar />
         <section class="profile py-7" id="" style="min-height: 100%">
