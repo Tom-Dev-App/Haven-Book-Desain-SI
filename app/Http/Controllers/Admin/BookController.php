@@ -27,13 +27,13 @@ class BookController extends Controller
     {
         $books = Book::orderByDesc('id')->withTrashed()->get();
 
-        return view('admin/books/manage-book', compact('books'));        
+        return view('Admin/books/manage-book', compact('books'));        
     }
 
     function detail($slug)
     {
             $book = Book::where('slug', $slug)->first();
-            return view('admin/books/detail-book', compact('book'));
+            return view('Admin/books/detail-book', compact('book'));
     }
 
     public function store(Request $request)

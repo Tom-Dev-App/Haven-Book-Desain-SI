@@ -36,7 +36,7 @@ class PaymentController extends Controller
                 ->get();
 
             $cardholders = BankAccount::with('bank', 'user')->where('user_id', $userId)->get();
-            return view('admin/payment/manage-payment', compact('transactions', 'cardholders'));
+            return view('Admin/payment/manage-payment', compact('transactions', 'cardholders'));
     }
 
     function detail($transaction_number)
@@ -57,7 +57,7 @@ class PaymentController extends Controller
                 ->where('transaction_number', $transaction_number)->first();
 
 
-            return view('admin/payment/payment-verification-detail', compact('transaction'));
+            return view('Admin/payment/payment-verification-detail', compact('transaction'));
     }
 
     function accPembayaran($transaction_number)

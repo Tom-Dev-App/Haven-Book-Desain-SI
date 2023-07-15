@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const zoomInButton = document.getElementById("zoom_in");
   const zoomOutButton = document.getElementById("zoom_out");
   const container = document.getElementById('pdfViewer');
-  const pdfUrl = document.getElementById("book_path");
+  const pdfSlug = document.getElementById("book_path");
   const totalPagesTitle = document.getElementById("totalPage");
   const resetZoomButton = document.getElementById('resetZoom');
 
@@ -16,32 +16,32 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Loaded via <script> tag, create shortcut to access PDF.js exports.
   var pdfjsLib = window['pdfjs-dist/build/pdf'];
-  console.log(pdfUrl.innerText);
+  console.log(pdfSlug.innerText);
 
   // The workerSrc property shall be specified.
   pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
 
   // Asynchronous download of PDF
-  var loadingTask = pdfjsLib.getDocument(pdfUrl.innerText);
-  var pdfInstance;
-  var currentPage = 1;
-  var totalPages = 0;
-  var scale = 1.5;
-  var canvas = document.getElementById('canvas');
-  var context = canvas.getContext('2d');
-  var renderTask = null; // Reference to the current rendering task
+ var loadingTask = pdfjsLib.getDocument('/proxy-pdf/' + pdfSlug.innerText);
+var pdfInstance;
+var currentPage = 1;
+var totalPages = 0;
+var scale = 1.5;
+var canvas = document.getElementById('canvas');
+var context = canvas.getContext('2d');
+var renderTask = null; // Reference to the current rendering task
 
-  loadingTask.promise.then(function(pdf) {
-    console.log('PDF loaded');
-    pdfInstance = pdf;
-    totalPages = pdf.numPages;
-    totalPagesTitle.innerText = totalPages;
-    pageNumInput.value = currentPage;
-    displayPage(currentPage);
-  }, function(reason) {
-    // PDF loading error
-    console.error(reason);
-  });
+loadingTask.promise.then(function(pdf) {
+  console.log('PDF loaded');
+  pdfInstance = pdf;
+  totalPages = pdf.numPages;
+  totalPagesTitle.innerText = totalPages;
+  pageNumInput.value = currentPage;
+  displayPage(currentPage);
+}, function(reason) {
+  // PDF loading error
+  console.error(reason);
+});
 
   previousButton.addEventListener("click", () => {
     goToPreviousPage();

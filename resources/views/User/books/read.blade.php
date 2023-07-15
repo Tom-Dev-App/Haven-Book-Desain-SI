@@ -59,7 +59,7 @@
           <div class="col-7">
             <h5>{{ $book->title }}</h5>
             @if($is_used)
-            <span class="d-none" id="book_path">{{ Storage::url($book->file) }}</span>
+            <span class="d-none" id="book_path">{{ $book->slug }}</span>
             @else
             <span class="d-none" id="book_path"></span>
             @endif

@@ -10,7 +10,6 @@ use App\Models\BookRent;
 use App\Models\Invoice;
 use App\Models\Transaction;
 use App\Models\TransactionStatus;
-use App\Models\UserhasRole;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -24,7 +23,7 @@ class BookController extends Controller
     {
         $books = Book::all();
         $title = "Books";
-        return view('user/books/book', compact('books', 'title'));
+        return view('User/books/book', compact('books', 'title'));
     }
 
     public function detail($slug)
@@ -34,7 +33,7 @@ class BookController extends Controller
         $bankAccounts = BankAccount::where('user_id', Auth::id())->get();
         $companyAccounts = BankAccount::with(['bank', 'user'])->whereHas('user', fn ($query) => $query->where('role_id', 2)->orWhere('role_id', 1))->get();
 
-        return view('user/books/detail', compact('book', 'bankAccounts', 'companyAccounts', 'title'));
+        return view('User/books/detail', compact('book', 'bankAccounts', 'companyAccounts', 'title'));
     }
 
     public function readBook($slug)

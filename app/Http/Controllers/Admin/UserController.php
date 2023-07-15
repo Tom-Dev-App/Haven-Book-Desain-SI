@@ -20,7 +20,7 @@ class UserController extends Controller
             ->withTrashed()
             ->get();
 
-        return view('admin/users/manage-user', compact('users'));
+        return view('Admin/users/manage-user', compact('users'));
     }
 
     function detail($id)
@@ -37,7 +37,7 @@ class UserController extends Controller
                 ->withTrashed()
                 ->get();
 
-            return view('admin/users/detail-user', compact('user', 'transactions'));
+            return view('Admin/users/detail-user', compact('user', 'transactions'));
     }
 
     function delete($id)

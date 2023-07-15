@@ -26,7 +26,7 @@ class ProfileController extends Controller
 
             $banks = Bank::all();
 
-            return view('user/profile/profile', compact('user',  'banks', 'userAccounts'));
+            return view('User/profile/profile', compact('user',  'banks', 'userAccounts'));
     }
 
     public function upload(Request $request, $id)

@@ -24,7 +24,7 @@ class AdminController extends Controller
             ->select('users.id', 'users.role_id', 'users.name as user_name', 'users.email', 'users.email_verified_at', 'users.deleted_at', 'users.created_at', 'users.updated_at', 'banks.name as bank_name', 'banks.codename', 'bank_accounts.account_number')
             ->get();
             //dd($admins);
-        return view('superadmin/admin/manage-admin', compact('admins'));
+        return view('Superadmin/admin/manage-admin', compact('admins'));
     }
 
     public function store(Request $request)

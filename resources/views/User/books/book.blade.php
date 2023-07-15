@@ -2,7 +2,7 @@
     <x-slot:title>{{ $title ?? '' }}</x-slot:title>
     <x-slot:content>
         <x-navbar />
-        <section class="banner-main py-7 h-100" id="banner">
+        <section class="banner-main py-7 min-h-100" id="banner">
             <div class="container">
 
 
