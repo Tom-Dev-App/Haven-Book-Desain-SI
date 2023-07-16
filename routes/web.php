@@ -112,7 +112,7 @@ Route::group(['middleware' => ['auth','role:superadmin']], function () {
 	Route::get('/manage-admin', [AdminController::class, 'index'])->name('manage-admin');
 	Route::post('/manage-admin/add', [AdminController::class, 'store'])->name('add-admin');
 	Route::get('/manage-admin/detail/{id}', [AdminController::class, 'detail'])->name('detail-admin');
-	Route::get('/manage-admin/delete/{id}', [AdminController::class, 'delete'])->name('delete-admin');
+	Route::post('/manage-admin/delete/{id}', [AdminController::class, 'delete'])->name('delete-admin');
 });
 
 

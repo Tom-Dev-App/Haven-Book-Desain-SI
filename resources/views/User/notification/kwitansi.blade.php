@@ -188,7 +188,7 @@
                         {{ $invoice->transaction->book->title }}
                     </td>
                     <td class="unit">Rp {{ number_format($invoice->transaction->book->price) }}</td>
-                    <td class="qty">{{ 2 }}</td>
+                    <td class="qty">{{ $invoice->transaction->months }}</td>
                     <td class="total">Rp {{ number_format($invoice->transaction->book->price * $invoice->transaction->months, 2, ',', '.') }}</td>
                 </tr>
 

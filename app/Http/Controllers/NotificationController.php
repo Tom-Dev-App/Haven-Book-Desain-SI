@@ -28,7 +28,6 @@ class NotificationController extends Controller
             'transaction.customerBank.bank',
         )->where('invoice_number', $invoice_number)
             ->first();
-
         return view('User/notification/kwitansi', compact('invoice'));
     }
 }

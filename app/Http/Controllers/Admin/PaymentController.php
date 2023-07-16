@@ -85,7 +85,7 @@ class PaymentController extends Controller
         $bookRent->book_id = $transaction->book->id;
         $bookRent->invoice_id = $invoice->id;
         $bookRent->keys = '$' . uniqid() . random_int(1, PHP_INT_MAX);
-        $bookRent->due_date = now();
+        $bookRent->due_date = $transaction->months;
 
         $bookRent->save();
 
