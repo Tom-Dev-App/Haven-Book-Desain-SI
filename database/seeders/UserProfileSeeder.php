@@ -16,35 +16,38 @@ class UserProfileSeeder extends Seeder
     {
         DB::table('user_profiles')->insert([
             'user_id' => 1,
+            'first_name' => 'Local',
+            'last_name' => 'Host',
+            'created_at' => now(),
+        ]);
+
+        DB::table('user_profiles')->insert([
+            'user_id' => 2,
             'first_name' => 'Ilham',
             'last_name' => 'Alkahfiardy',
             'created_at' => now(),
         ]);
 
         DB::table('user_profiles')->insert([
-            'user_id' => 2,
+            'user_id' => 3,
             'first_name' => 'Ahmad',
             'last_name' => 'Barosimi',
             'created_at' => now(),
         ]);
 
         DB::table('user_profiles')->insert([
-            'user_id' => 3,
+            'user_id' => 4,
             'first_name' => 'Candra',
             'last_name' => 'Wiryawan',
             'created_at' => now(),
         ]);
 
         DB::table('user_profiles')->insert([
-            'user_id' => 4,
+            'user_id' => 5,
             'first_name' => 'Rahman',
             'created_at' => now(),
         ]);
 
-        DB::table('user_profiles')->insert([
-            'user_id' => 5,
-            'created_at' => now(),
-        ]);
 
         DB::table('user_profiles')->insert([
             'user_id' => 6,

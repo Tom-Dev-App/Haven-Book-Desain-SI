@@ -19,9 +19,7 @@ return new class extends Migration
             $table->text("synopsis");
             $table->text("description");
             $table->string("author");
-            $table->string("author_attachment")->nullable();
             $table->string("publisher");
-            $table->string("publisher_attachment")->nullable();
             $table->unsignedInteger("release_year")->nullable();
             $table->string("file")->unique()->nullable();
             $table->float('price', 12, 2);

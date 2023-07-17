@@ -10,18 +10,12 @@ use Illuminate\Support\Facades\Validator;
 
 class ProfileController extends Controller
 {
+
     function index()
     {
-        if (Session::get('role') == 'Admin') {
 
-            $user = User::with('userhasrole.role')->findOrFail(Session::get('id'));
-
-            // return $user;
-
-            return view('Admin/profile/profile', compact('user'));
-        } else {
-            return redirect()->route('sign-in');
-        }
+        $user = User::with('userhasrole.role')->findOrFail(Session::get('id'));
+        return view('Admin/profile/profile', compact('user'));
     }
 
     function update(Request $request, $id)

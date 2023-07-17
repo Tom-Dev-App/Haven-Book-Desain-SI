@@ -28,27 +28,36 @@
                         </a>
                     </li>
 
-                    <li class="nav-item ">
-                        <a href="#chapter" class="nav-link smoth-scroll">
-                            My Book
-                        </a>
-                    </li>
+                    @role('user')
+                        <li class="nav-item">
+                            <a href="{{ route('bookshelf') }}" class="nav-link smoth-scroll">
+                                My Book
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('notif') }}" class="nav-link smoth-scroll">
+                                Payment
+                            </a>
+                        </li>
+                    @endrole
+
+
                     <li class="nav-item ">
                         <a href="#book" class="nav-link smoth-scroll">
                             About
                         </a>
                     </li>
-                    @if (Session::get('role') == null)
+                    @guest
+
                         <li class="nav-item ">
                             <a href="{{ route('sign-in') }}" class="nav-link smoth-scroll">
                                 Sign in
                             </a>
                         </li>
-                    @endif
+                    @endguest
 
                 </ul>
-
-                @if (Session::get('role') != null)
+                @auth
                     <div class="dropdown">
                         <a class="btn btn-danger dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -56,19 +65,25 @@
                         </a>
 
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            @role('user')
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('user-profile') }}">
+                                        Profile
+                                    </a>
+                                </li>
+                            @endrole
                             <li>
-                                <a class="dropdown-item" href="{{ route('user-profile') }}">
-                                    Profile
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="{{ route('logout') }}">
-                                    Logout
-                                </a>
+                                <form action="{{ route('logout') }}" method="post">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item">
+                                        Logout
+                                    </button>
+                                </form>
+
                             </li>
                         </ul>
                     </div>
-                @endif
+                @endauth
             </div>
         </div>
     </nav>

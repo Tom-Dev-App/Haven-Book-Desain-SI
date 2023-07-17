@@ -12,7 +12,7 @@
     <meta name="author" content="dreambuzz">
     <link rel="icon" type="image/png" href="{{ asset('image/havenbook.png') }}">
 
-    <title>The Haven Book | @yield('title')</title>
+    <title>The Haven Book | {{ $title ?? '' }}</title>
 
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('treaser/images/favicon.ico') }}" />
@@ -68,6 +68,8 @@
         .colored-toast .swal2-html-container {
             color: white;
         }
+
+        @stack('head')
     </style>
     <script>
         const Toast = Swal.mixin({
@@ -132,7 +134,7 @@
     <script src="{{ asset('treaser/js/theme.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Bootstrap 5 CSS -->
-
+    @stack('scripts')
 
 
 </body>

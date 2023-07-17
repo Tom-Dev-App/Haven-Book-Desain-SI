@@ -1,4 +1,5 @@
 <x-base>
+    <x-slot:title>{{ $title ?? '' }}</x-slot:title>
     <x-slot:content>
         <x-navbar />
         <section class="detail-buku py-7" style="min-height: 100%">
@@ -6,7 +7,8 @@
                 <div class="row" style="margin-top: 30px;margin-bottom: 0px">
                     <div class="col-md-4">
                         @if ($book->image)
-                            <img src="{{ asset($book->image) }}" class="card-img-top w-100 m-3 rounded" alt="...">
+                            <img src="{{ Storage::url($book->image) }}" class="card-img-top w-100 m-3 rounded"
+                                alt="...">
                         @else
                             <img src="{{ asset('image/error.png') }}" class="card-img-top w-100 m-3 rounded"
                                 alt="...">
@@ -36,10 +38,30 @@
                                     <i class="text-sm">Written by ~{{ $book->author }}</i>
                                     <p class="fw-bolder text-sm">Published by {{ $book->publisher }}</p>
                                 </div>
-                                <div class="button d-flex flex-row justify-content-center">
-                                    <a class="btn btn-lg btn-danger text-light d-flex align-items-center">
-                                        Sewa Buku<i class="ti-check mr-2 ml-2"></i>Rp {{ $book->price }}
-                                    </a>
+                                <div class="">
+                                    @if ($bankAccounts->isEmpty())
+                                        <button disabled
+                                            class="btn btn-lg btn-danger text-light d-flex align-items-center"
+                                            href="{{ route('pay', $book->slug) }}">
+                                            Sewa Buku<i class="ti-check mr-2 ml-2"></i>Rp
+                                            {{ number_format($book->price, 0, ',', '.') }},-
+                                        </button>
+                                        <p class="fw-light text-danger">Rekening tidak ditemukan</p>
+                                    @elseif($companyAccounts->isEmpty())
+                                        <button disabled
+                                            class="btn btn-lg btn-danger text-light d-flex align-items-center"
+                                            href="{{ route('pay', $book->slug) }}">
+                                            Sewa Buku<i class="ti-check mr-2 ml-2"></i>Rp
+                                            {{ number_format($book->price, 0, ',', '.') }},-
+                                        </button>
+                                        <p class="fw-light text-danger">Buku belum tersedia</p>
+                                    @else
+                                        <a class="btn btn-lg btn-danger text-light d-flex align-items-center"
+                                            href="{{ route('pay', $book->slug) }}">
+                                            Sewa Buku<i class="ti-check mr-2 ml-2"></i>Rp
+                                            {{ number_format($book->price, 0, ',', '.') }},-
+                                        </a>
+                                    @endif
                                 </div>
                             </div>
                         </div>

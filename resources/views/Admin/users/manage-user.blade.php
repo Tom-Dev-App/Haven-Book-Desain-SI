@@ -24,16 +24,13 @@
                                                     Status</th>
                                                 <th
                                                     class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                    Book Rented</th>
-                                                <th
-                                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                     Register at</th>
                                                 <th class="text-secondary opacity-7"></th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach ($users as $user)
-                                                @if ($user->userhasrole->role['name'] == 'User')
+                                                @if ($user->hasRole('user'))
                                                     <tr>
                                                         <td>
                                                             <div class="d-flex px-2 py-1">
@@ -63,9 +60,6 @@
                                                             @else
                                                                 <span class="badge bg-gradient-primary">Active</span>
                                                             @endif
-                                                        </td>
-                                                        <td class="align-middle text-center text-sm">
-                                                            3
                                                         </td>
                                                         <td class="align-middle text-center">
                                                             <span class="text-secondary text-xs font-weight-bold">

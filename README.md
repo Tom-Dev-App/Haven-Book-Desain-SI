@@ -70,8 +70,16 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 1. Clone atau download file dari repository
 2. Buka di text editor anda
 3. Pastikan sudah terinstall composer pada laptop / pc anda
-4. Install npm
-5. Jalankan server
-6. Buka server, arahkan url ke /homepage
-7. Jika ingin masuk halaman admin, tekan sign in pada halaman login
-   Jika ingin masuk halaman use, tekan sign up pada halaman register
+4. Jalankan command : composer install
+5. Jalankan command : npm i
+6. Jalankan command : cp .env.example .env
+7. Jalankan command : php artisan key:generate
+8. Jalankan command : php artisan migrate --seed
+9. Jalankan command : php artisan serve
+10. Buka server, arahkan url ke /homepage
+11. Jika ingin masuk halaman admin,
+    email : 21081000005@student.unmer.ac.id,
+    password ilham123
+    Jika ingin masuk halaman user,
+    email : 21081000002@student.unmer.ac.id
+    password : candra123

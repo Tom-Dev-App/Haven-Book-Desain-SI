@@ -12,7 +12,7 @@
     <hr class="horizontal dark mt-0">
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
         <ul class="navbar-nav">
-            @if (Session::get('role') == 'Admin')
+            @role('admin')
                 <li class="nav-item">
                     <a class="nav-link " href="{{ route('dashboard') }}">
                         <div
@@ -154,9 +154,10 @@
                         <span class="nav-link-text ms-1">Report</span>
                     </a>
                 </li>
-            @elseif(Session::get('role') == 'Superadmin')
+            @endrole
+            @role('superadmin')
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin-controller') }}">
+                    <a class="nav-link" href="{{ route('manage-admin') }}">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <svg width="12px" height="12px" viewBox="0 0 40 44" version="1.1"
@@ -182,7 +183,7 @@
                         <span class="nav-link-text ms-1">Manage Admin</span>
                     </a>
                 </li>
-            @endif
+            @endrole
         </ul>
     </div>
     <div class="sidenav-footer mx-3 ">
@@ -205,8 +206,12 @@
             </div>
         </div>
 
-        <a class="btn bg-gradient-primary mt-3 w-100" href="{{ route('logout') }}">
-            Logout
-        </a>
+        <form action="{{ route('logout') }}" method="post">
+            @csrf
+            <button class="btn bg-gradient-primary mt-3 w-100" >
+                Logout
+            </button>   
+        </form>
+
     </div>
 </aside>

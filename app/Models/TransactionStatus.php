@@ -8,11 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class TransactionStatus extends Model
 {
     use HasFactory;
-
-    // protected $PENDING = 1;
-    protected $SUCCESS = 2;
-    protected $CANCEL = 3;
-
+    
+    const PENDING = 1;
     const SUCCESS = 2;
     const CANCEL = 3;
 

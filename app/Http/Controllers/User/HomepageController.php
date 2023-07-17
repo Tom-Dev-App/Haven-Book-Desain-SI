@@ -11,6 +11,7 @@ class HomepageController extends Controller
     function index()
     {
         // return Session::get('role');
-        return view('homepage');
+        return view('homepage', [
+            "title" => 'Home']);
     }
 }

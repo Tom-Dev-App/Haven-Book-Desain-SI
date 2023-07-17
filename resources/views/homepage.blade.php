@@ -1,9 +1,10 @@
 <x-base>
+    <x-slot:title>{{ $title ?? '' }}</x-slot:title>
     <x-slot:content>
         <x-navbar />
         <!-- Banner -->
         <section class="banner-main py-7" id="banner">
-            <div class="container">
+            <div class="container mt-5">
                 <div class="row align-items-center">
                     <div class="col-lg-7 col-md-12">
                         <div class="main-banner">
@@ -19,15 +20,14 @@
                                 deliver on product perfection, but also delivers on time.</p>
 
                             <a href="#" class="btn btn-lg btn-danger mt-2">
-                                Rent at <i class="ti-check mr-2 ml-2"></i> $14.99
+                                Rent now, Read later
                             </a>
                             <p class="mt-4 text-muted">* eBook includes iBooks, PDF & ePub versions</p>
                         </div>
                     </div>
                     <div class="col-lg-5">
                         <div class="banner-img">
-                            <img src="{{ asset('treaser/images/about/book.png') }}" alt=""
-                                class="img-fluid w-100">
+                            <img src="{{ asset('image/background.jpg') }}" alt="" class="img-fluid w-100">
                         </div>
                     </div>
                 </div>
@@ -36,36 +36,7 @@
 
         <!-- Featured CLients -->
         <section class="featured-client section-bottom">
-            {{-- <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="text-center border p-4">
-                            <div class="row align-items-center">
-                                <div class="col-lg-4 col-sm-12">
-                                    <span class="h5">Featured by companies like:</span>
-                                </div>
-                                <div class="col-lg-2 col-sm-3">
-                                    <img src="{{ asset('treaser/images/client/client-1.png') }}" alt=""
-                                        class="img-fluid">
-                                </div>
 
-                                <div class="col-lg-2 col-sm-3">
-                                    <img src="{{ asset('treaser/images/client/client-2.png') }}" alt=""
-                                        class="img-fluid">
-                                </div>
-                                <div class="col-lg-2 col-sm-3">
-                                    <img src="{{ asset('treaser/images/client/client-3.png') }}" alt=""
-                                        class="img-fluid">
-                                </div>
-                                <div class="col-lg-2 col-sm-3">
-                                    <img src="{{ asset('treaser/images/client/client-4.png') }}" alt=""
-                                        class="img-fluid">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
         </section>
 
         <!-- Book preview -->
@@ -74,36 +45,9 @@
                 <div class="row">
                     <div class="col-lg-5 col-md-6">
                         <div class="book-preview">
-                            <img src="{{ asset('images/about/kindle.png') }}" class="background-device img-fluid"
-                                alt="">
                             <div class="owl-book owl-carousel owl-theme" style="opacity: 1; display: block;">
                                 <div class="book-item">
-                                    <img src="{{ asset('treaser/images/about/book_page.png') }}" alt=""
-                                        class="img-fluid">
-                                    <div class="overlay">
-                                        <a href="{{ asset('treaser/images/about/book_page.png') }}"
-                                            class="popup-gallery img-fluid" data-title="Image Caption"><i
-                                                class="ti-fullscreen"></i></a>
-                                    </div>
-                                </div>
-
-                                <div class="book-item">
-                                    <img src="{{ asset('treaser/images/about/book_page2.png') }}" alt=""
-                                        class="img-fluid">
-                                    <div class="overlay">
-                                        <a href="{{ asset('treaser/images/about/book_page2.png') }}"
-                                            class="popup-gallery img-fluid" data-title="Image Caption"><i
-                                                class="ti-fullscreen"></i></a>
-                                    </div>
-                                </div>
-
-                                <div class="book-item">
-                                    <img src="{{ asset('treaser/images/about/book_page.png') }}" alt=""
-                                        class="img-fluid">
-                                    <div class="overlay">
-                                        <a href="images/about/book_page.png" class="popup-gallery img-fluid"
-                                            data-title="Image Caption"><i class="ti-fullscreen"></i></a>
-                                    </div>
+                                    <img src="{{ asset('image/books/book1.jpg') }}" alt="" class="img-fluid">
                                 </div>
                             </div>
                         </div>
@@ -120,21 +64,15 @@
                             <div class="about-features mt-5">
                                 <div class="about-item mb-40">
                                     <p class="fs-4">More than 10+ award achieved</p>
-                                    <p>Fugit ratione, repellendus, dignissimos, ducimus voluptatem, quos. Consequatur
-                                        non
-                                        eum facilis, ex repellendus, vitae debitis.</p>
+                                    <p>Awards for good quality books.</p>
                                 </div>
                                 <div class="about-item mb-40">
                                     <p class="fs-4">Read On Any Device</p>
-                                    <p>Debitis ab ipsum a autem sit ducimus voluptatem, quos. Consequatur non eum
-                                        facilis,
-                                        ex repellendus, vitae debitis.</p>
+                                    <p>Read anything, everything, anywhere </p>
                                 </div>
                                 <div class="about-item">
-                                    <p class="fs-4">Very high resolution</p>
-                                    <p>Possimus debitis ab ipsum a autem sit ducimus voluptatem, quos. Consequatur non
-                                        eum
-                                        facilis, ex repellendus, vitae debitis.</p>
+                                    <p class="fs-4">Simple for people</p>
+                                    <p>Just a few clicks, you can read</p>
                                 </div>
                             </div>
                         </div>
@@ -283,8 +221,7 @@
                                         necessary regelialia. It is a paradisematic country, in which roasted parts of
                                         sentences fly into your mouth.&rdquo;</p>
                                     <div class="author mt-5">
-                                        <img src="{{ asset('treaser/images/about/person_1.jpg') }}"
-                                            alt="Image placeholder" class="mb-4">
+
                                         <h4 class="mb-0">Maxim Smith</h4>
                                         <p>CEO, Founder</p>
                                     </div>
@@ -298,8 +235,7 @@
                                         ocean.&rdquo;
                                     </p>
                                     <div class="author mt-5">
-                                        <img src="{{ asset('treaser/images/about/person_2.jpg') }}"
-                                            alt="Image placeholder" class="mb-4">
+
                                         <h4 class="mb-0">Geert Green</h4>
                                         <p>CEO, Founder</p>
                                     </div>
@@ -311,8 +247,7 @@
                                         an almost unorthographic life One day however a small line of blind text by the
                                         name of Lorem Ipsum decided to leave for the far World of Grammar.&rdquo;</p>
                                     <div class="author mt-5">
-                                        <img src="{{ asset('treaser/images/about/person_3.jpg') }}"
-                                            alt="Image placeholder" class="mb-4">
+
                                         <h4 class="mb-0">Dennis Roman</h4>
                                         <p>CEO, Founder</p>
                                     </div>
@@ -325,8 +260,7 @@
                                         didn’t listen. She packed her seven versalia, put her initial into the belt and
                                         made herself on the way.&rdquo;</p>
                                     <div class="author mt-5">
-                                        <img src="{{ asset('treaser/images/about/person_2.jpg') }}"
-                                            alt="Image placeholder" class="mb-4">
+
                                         <h4 class="mb-0">Geert Green</h4>
                                         <p>CEO, Founder</p>
                                     </div>
@@ -339,7 +273,7 @@
         </div> <!-- .section -->
 
         <!-- Counter -->
-        <section class="section counter border-bottom">
+        {{-- <section class="section counter border-bottom">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-3 col-md-6 col-sm-6">
@@ -388,10 +322,10 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> --}}
 
         <!-- About Author -->
-        <section class="about section" id="author">
+        {{-- <section class="about section" id="author">
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-lg-5">
@@ -436,10 +370,10 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> --}}
 
         <!-- Others books -->
-        <section class="section-bottom others-book">
+        <section class="section-bottom others-book mt-5">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6">
@@ -451,32 +385,36 @@
 
                 <div class="row">
                     <div class="col-lg-3 col-md-6 col-sm-6">
-                        <div class="book-item mb-4 mb-lg-0">
-                            <img src="{{ asset('treaser/images/about/b-1.jpg') }}" alt="" class="img-fluid">
+                        <div class="book-item mb-4 mb-lg-0 d-flex justify-content-center">
+                            <img src="{{ asset('image/books/1.jpg') }}" alt="" class="w-100   "
+                                style="max-height: 295px">
                             <a href="#" class="hover-item">
                                 <i class="ti-link"></i>
                             </a>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6 col-sm-6">
-                        <div class="book-item mb-4 mb-lg-0">
-                            <img src="{{ asset('treaser/images/about/b-2.jpg') }}" alt="" class="img-fluid">
+                        <div class="book-item mb-4 mb-lg-0 d-flex justify-content-center">
+                            <img src="{{ asset('image/books/2.jpg') }}" alt="" class="w-100 "
+                                style="max-height: 295px">
                             <a href="#" class="hover-item">
                                 <i class="ti-link"></i>
                             </a>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6 col-sm-6">
-                        <div class="book-item mb-4 mb-lg-0">
-                            <img src="{{ asset('treaser/images/about/b-3.jpg') }}" alt="" class="img-fluid">
+                        <div class="book-item mb-4 mb-lg-0 d-flex justify-content-center">
+                            <img src="{{ asset('image/books/3.jpg') }}" alt="" class="w-100 "
+                                style="max-height: 295px">
                             <a href="#" class="hover-item">
                                 <i class="ti-link"></i>
                             </a>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6 col-sm-6">
-                        <div class="book-item mb-4 mb-lg-0">
-                            <img src="{{ asset('treaser/images/about/b-4.jpg') }}" alt="" class="img-fluid">
+                        <div class="book-item mb-4 mb-lg-0 d-flex justify-content-center">
+                            <img src="{{ asset('image/books/4.jpg') }}" alt="" class="w-100 "
+                                style="max-height: 295px">
                             <a href="#" class="hover-item">
                                 <i class="ti-link"></i>
                             </a>
